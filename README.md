@@ -5,3 +5,4 @@ This project archives terminal **commands** and **configuration** files that I u
 Everything here is **ephemeral** because softwares and hardwares constantly evolve.
 
 Feel **free** to copy and paste.
+# STACKS
