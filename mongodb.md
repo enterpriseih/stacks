@@ -27,7 +27,6 @@ sudo service mongod start
 
 ## shell
 
-
 ### user & role
 ```js
 // create
