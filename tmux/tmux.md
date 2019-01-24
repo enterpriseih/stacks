@@ -1,5 +1,7 @@
 # tmux
 
+<PREFIX> = <Ctrl+b> by default, my preference is <Ctrl-a>
+
 ```bash
 # install
 brew install tmux
@@ -38,32 +40,42 @@ tmux kill-session -t <session_name>
 ## window
 ```bash
 # create new window
-ctrl+b c
+<PREFIX> c
 
 # close window
-ctrl+b &
+<PREFIX> &
 
 # rename window
-ctrl+b ,
+<PREFIX> ,
 
 # previous window
-ctrl+b p
+<PREFIX> p
 
 # next window
-ctrl+b n
+<PREFIX> n
 ```
 
 ## panes
 ```bash
 # split horizontal
-ctrl+b \"
+<PREFIX> \"
 
 # split vertical
-ctrl+b %
+<PREFIX> %
 
 # convert to a window
-ctrl+b !
+<PREFIX> !
 
 # close pane
-ctrl+b x
+<PREFIX> x
+
+# copy
+<PREFIX> [
+
+# paste
+<PREFIX> ]
+
+# enable paste to clipboard
+# in iTerm2 Preference > General, click
+# applications in terminal may access clipboard
 ```
