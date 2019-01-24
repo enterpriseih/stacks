@@ -35,7 +35,7 @@ git merge <branch>
 ```bash
 # use tag to archive
 git tag archive/<branch_name> <branch_name>
-  
+
 # delete tag
 git tag -d oldtag
 
@@ -86,4 +86,36 @@ git clean  -d  -fx ""
 
 # error: you need to resolve your current index first
 git reset —merge
+```
+
+## .gitconfig
+```
+[push]
+ 	default = simple
+[user]
+	name = zhiyang.wang
+	email = wzy816@gmail.com
+[core]
+    editor = vim
+    compression = 0
+[alias]
+    l = log --oneline --decorate --graph --all
+    l20 = log --oneline --decorate --graph -20
+
+    s = status
+    co = checkout
+    a = add -A
+    cm = commit -a -m
+    cb = checkout -b
+    d = branch -d
+    pd = push origin --delete
+
+    cf= config --global -e
+
+    pl= pull origin HEAD
+    ps= push origin HEAD
+    pss= push --set-upstream origin HEAD
+
+[color]
+    ui = always
 ```
