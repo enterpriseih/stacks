@@ -89,12 +89,6 @@ grep -E "pattern1|pattern2" <file>
 # search lines end with ,
 grep ',[[:cntrl:]]*$' <file>
 
-```
-
-## sed
-a stream editor
-
-```bash
 # basic regex
 # char * . ^ $ [] [^]
 grep <file>
@@ -102,7 +96,12 @@ grep <file>
 # extended regex
 # ? + () {} |
 grep -E <file>
+```
 
+## sed
+a stream editor
+
+```bash
 ```
 
 ## hexdump
@@ -111,4 +110,15 @@ display  file contents in hexadecimal, decimal, octal, or ascii
 # 0a -> LF
 # 0d -> CR
 hexdump -e '"%08_ad (0x%08_ax)    "8/1 "%02x ""   "8/1 "%02x "' -e '"    "8/1 "%_p""|"8/1 "%_p""\n"'  <file>
+```
+
+## curl
+
+```bash
+# download file
+curl -O <address>
+
+# post
+curl <address> -H "Content-Type: application/json" -X POST -d '{"key1":"value1", "key2":"value2"}'
+curl <address> -H "Content-Type: application/json" -X POST -d '@data.json'
 ```
