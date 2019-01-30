@@ -1,6 +1,6 @@
 # tmux
 
-<PREFIX> = <Ctrl+b> by default, my preference is <Ctrl-a>
+<PREFIX> = &lt;Ctrl+b> by default, my preference is <Ctrl-a>
 
 ```bash
 # install
@@ -11,6 +11,7 @@ tmux -V
 ```
 
 ## session
+
 ```bash
 # new session
 tmux new
@@ -38,6 +39,7 @@ tmux kill-session -t <session_name>
 ```
 
 ## window
+
 ```bash
 # create new window
 <PREFIX> c
@@ -56,6 +58,7 @@ tmux kill-session -t <session_name>
 ```
 
 ## panes
+
 ```bash
 # split horizontal
 <PREFIX> \"
@@ -81,7 +84,8 @@ tmux kill-session -t <session_name>
 ```
 
 ## .tmux.conf
-```
+
+```conf
 # remap prefix from 'C-b' to 'C-a'
 unbind C-b
 set-option -g prefix C-a
@@ -96,15 +100,6 @@ unbind %
 # reload config file (change file location to your the tmux.conf you want to use)
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded..."
 
-# Enable mouse control (clickable windows, panes, resizable panes)
-set -g mouse-select-window on
-set -g mouse-select-pane on
-set -g mouse-resize-pane on
-
 # Enable mouse mode (tmux 2.1 and above)
 set -g mouse on
-
-# Enable copy by mouse drag
-setw -g mode-mouse on
-set -g mouse-select-window on
 ```

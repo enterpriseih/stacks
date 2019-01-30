@@ -50,3 +50,37 @@ docker run -d --name <container_name> --restart=always -v <server_dir>:<containe
 # check port
 docker port <container_name>
 ```
+
+## build.sh
+
+```bash
+#!/bin/bash
+PUSH_REGISTRY=docker-registry.com
+PULL_REGISTRY=docker.com
+GIT_COMMIT_ID=`git rev-parse HEAD`
+PROJECT=my-project
+IMAGE_TAG=${PUSH_REGISTRY}/${PROJECT}:${GIT_COMMIT_ID}
+
+docker build -t ${IMAGE_TAG} .
+docker push ${IMAGE_TAG}
+```
+
+## Dockerfile
+
+### node
+
+```Dockerfile
+FROM node:8.10
+
+RUN mkdir -p /my-group/my-project
+
+COPY . /my-group/my-project
+
+WORKDIR /my-group/my-project
+
+RUN npm install --registry=https://registry.npm.taobao.org
+
+EXPOSE 3000
+
+CMD [ "npm", "start" ]
+```
