@@ -1,6 +1,7 @@
 # tensorflow
 
 ## install
+
 ```bash
 # create env
 conda create -n tensorflow python=3.6
@@ -20,8 +21,8 @@ pip install pandas
 pip install opencv-python
 
 # in mac
-conda install python.app
 # use pythonw instead of python
+conda install python.app
 
 # export
 export PYTHONPATH=$PYTHONPATH:my_models/:my_slim/

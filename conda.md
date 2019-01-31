@@ -1,7 +1,7 @@
 # Conda
 
 ```bash
-#install anaconda
+# install anaconda
 wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
 bash Anaconda3-5.0.1-Linux-x86_64.sh
 export PATH=~/anaconda3/bin:$PATH
@@ -17,6 +17,9 @@ source activate aws
 
 # show installed packages inside
 conda list
+
+# update outdated packages
+pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 
 # exit aws env
 source deactivate
