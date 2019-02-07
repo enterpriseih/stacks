@@ -28,6 +28,7 @@ sudo service mongod start
 ## shell
 
 ### user & role
+
 ```js
 // create
 db.createUser({ user: "new_user", pwd: "new_password", roles:[{role:"dbOwner", db:"my_db"}],mechanisms : ["SCRAM-SHA-1"]})
@@ -37,11 +38,13 @@ db.getSiblingDB('my_db').createUser({ user: "new_user", pwd: "new_password", rol
 ```
 
 ### db
+
 ```js
 db.copyDatabase("source_db","target_db")
 ```
 
 ### collection
+
 ```js
 // create collection
 db.createCollection('new_collection');
@@ -57,6 +60,7 @@ db.source_collection.find().forEach(function(v){db.target_collection.insert(v)})
 ```
 
 ### document
+
 ```js
 // distinct
 db.my_collection.distinct("key.nested_key",{$find})
@@ -78,7 +82,9 @@ db.my_collection.updateMany({}, {$rename: {"old_key": "new_key"}})
 // delete key
 db.my_collection.updateMany({}, {$unset: {"key": ""}})
 ```
+
 ### aggregate operation
+
 ```js
 // count total number of matched documents
 db.my_collection.aggregate([
@@ -199,4 +205,10 @@ if (cursor && cursor.hasNext()) {
     print(tem.key1 + ',' + item.key2 + ',' + item.key3 + ',' + item.key4);
   }
 }
+```
+
+## ~/.robomongorc.js
+
+```javascript
+DBQuery.prototype.to_csv = function(deliminator, textQualifier){ var count = -1; var headers = []; var data = {};var cursor = this;deliminator = deliminator == null ? ',' : deliminator; textQualifier = textQualifier == null ? '\"' : textQualifier;while (cursor.hasNext()) {var array = new Array(cursor.next());count++;for (var index in array[0]) { if (headers.indexOf(index) == -1) { headers.push(index); } }for (var i = 0; i < array.length; i++) { for (var index in array[i]) { data[count + '_' + index] = array[i][index]; } } }var line = '';for (var index in headers) { line += textQualifier + headers[index] + textQualifier + deliminator; }line = line.slice(0, -1); print(line);for (var i = 0; i < count + 1; i++) {var line = ''; var cell = ''; for (var j = 0; j < headers.length; j++) { cell = data[i + '_' + headers[j]]; if (cell == undefined) cell = ''; line += textQualifier + cell + textQualifier + deliminator; }line = line.slice(0, -1); print(line); }}
 ```
