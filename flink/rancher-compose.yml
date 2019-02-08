@@ -1,0 +1,8 @@
+version: "2"
+services:
+  jobmanager:
+    scale: 1
+    start_on_create: true
+  taskmanager:
+    scale: 2
+    start_on_create: true
