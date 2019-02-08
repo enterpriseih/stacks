@@ -4,7 +4,7 @@ services:
     scale: 1
     start_on_create: true
   elasticsearch:
-    scale: 1
+    scale: 3
     start_on_create: true
   kibana:
     scale: 1
