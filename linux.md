@@ -1,6 +1,7 @@
 # centos
 
 ## basic
+
 ```bash
 # check disk
 df -h
@@ -30,9 +31,13 @@ ip addr show
 
 # show filesystem hierachy
 man hier
+
+# list of all available encodings
+iconv --list
 ```
 
 ## cat
+
 concatenate files
 
 ```bash
@@ -59,6 +64,7 @@ cat -e <file>
 ```
 
 ## grep
+
 general regular expression print
 
 ```bash
@@ -99,13 +105,17 @@ grep -E <file>
 ```
 
 ## sed
+
 a stream editor
 
 ```bash
+
 ```
 
 ## hexdump
+
 display  file contents in hexadecimal, decimal, octal, or ascii
+
 ```bash
 # 0a -> LF
 # 0d -> CR
