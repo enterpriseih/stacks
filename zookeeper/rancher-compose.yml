@@ -1,0 +1,11 @@
+version: "2"
+services:
+  zoo3:
+    scale: 1
+    start_on_create: true
+  zoo2:
+    scale: 1
+    start_on_create: true
+  zoo1:
+    scale: 1
+    start_on_create: true
