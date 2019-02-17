@@ -1,0 +1,23 @@
+version: '2'
+services:
+  scheduler:
+    scale: 1
+    start_on_create: true
+  worker1:
+    scale: 1
+    start_on_create: true
+  webserver:
+    scale: 1
+    start_on_create: true
+  worker2:
+    scale: 1
+    start_on_create: true
+  postgres:
+    scale: 1
+    start_on_create: true
+  redis:
+    scale: 1
+    start_on_create: true
+  flower:
+    scale: 1
+    start_on_create: true
