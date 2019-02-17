@@ -11,6 +11,7 @@
 <script>
   export default {
     name: 'App',
+    components: {},
     data() {
       return {}
     },
@@ -28,7 +29,8 @@
 </script>
 
 <style lang="scss" scoped>
-  #app {
-    height: 100%;
-  }
+@import "./assets/styles/common";
+#app {
+  height: 100%;
+}
 </style>
