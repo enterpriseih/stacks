@@ -5,7 +5,6 @@
 ```bash
 # install on centos
 sudo yum install git
-
 ```
 
 ## Branch
@@ -66,7 +65,7 @@ git remote set-url origin <repo>
 
 ```bash
 # add other project as submodule
-git submodule add <repo> <local_dir>
+git submodule add <repo> <submodule_path_or_local_dir_name>
 
 # init submodule
 git submodule init
@@ -75,7 +74,9 @@ git submodule init
 git submodule update
 
 # delete submodule
-git submodule rm <local_dir>
+git submodule deinit <submodule_path_or_local_dir_name>
+git rm <submodule_path_or_local_dir_name>
+rm -rf .git/modules/<submodule_path_or_local_dir_name>
 ```
 
 ## Error
@@ -86,10 +87,15 @@ git clean  -d  -fx ""
 
 # error: you need to resolve your current index first
 git reset —merge
+
+# fatal: pathspec '...' did not match any files
+# list all index
+git ls-files
 ```
 
 ## .gitconfig
-```
+
+```config
 [push]
  	default = simple
 [user]
