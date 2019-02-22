@@ -24,65 +24,53 @@ sbt sbtVersion
 sbt
 sbt -Dsbt.override.build.repos=true
 
-# in terminal
+# show class path
+sbt 'export fullClasspath'
+```
+
+## terminal
+
+```bash
 # clean
 clean
+
 # run
 run
+
 # continuous compile
 ~ compile
+
 # build jar
 package
+
 # run with params运行带参数
 run <param1> <param2>
 
 # check plugins
-sbt plugins
+plugins
 
-# show class path
-sbt 'export fullClasspath'
+# show subprojects of multiple projects
+projects
 
-# build fat jar
-sbt clean assembly
+# select subproject
+project <project-id>
 
 # generate docs in target/scala-2.11/api
-sbt doc
+doc
 
 # check dependencies
-sbt evicted
+evicted
+
+# use sbt-assembly to build all subprojects
+assembly
+
+# build subproject fat jar only
+<subproject>/assembly
 ```
 
-## scalariform
+## jar
 
-```
-alignArguments=true
-alignParameters=true
-alignSingleLineCaseStatements=true
-alignSingleLineCaseStatements.maxArrowIndent=40
-allowParamGroupsOnNewlines=false
-compactControlReadability=true
-compactStringConcatenation=false
-danglingCloseParenthesis=Force
-doubleIndentClassDeclaration=false
-doubleIndentConstructorArguments=false
-doubleIndentMethodDeclaration=false
-firstArgumentOnNewline=Force
-firstParameterOnNewline=Force
-formatXml=true
-indentLocalDefs=false
-indentPackageBlocks=true
-indentSpaces=2
-indentWithTabs=false
-multilineScaladocCommentsStartOnFirstLine=false
-newlineAtEndOfFile=false
-placeScaladocAsterisksBeneathSecondAsterisk=false
-preserveSpaceBeforeArguments=false
-rewriteArrowSymbols=false
-singleCasePatternOnNewline=true
-spaceBeforeColon=false
-spaceBeforeContextColon=false
-spaceInsideBrackets=false
-spaceInsideParentheses=false
-spacesAroundMultiImports=true
-spacesWithinPatternBinders=true
+```bash
+# show content
+jar tf <path_to_my_jar>
 ```
