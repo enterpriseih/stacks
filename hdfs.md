@@ -1,11 +1,33 @@
 # FS Shell
 
-## basic
+## install
 
 ```bash
 # install on mac
 brew search hadoop
 
+# install on linux
+wget http://apache.claz.org/hadoop/common/hadoop-2.8.5/hadoop-2.8.5.tar.gz
+tar -xvf hadoop-2.8.5.tar.gz
+mv hadoop-2.8.5 /usr/local/hadoop
+
+# find java path
+readlink -f /usr/bin/java | sed "s:bin/java::"
+
+# set java_home
+# in ~/.bashrc, add
+export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+export HADOOP_CONF_DIR='/etc/hadoop/conf'
+export HADOOP_HOME='/usr/local/hadoop'
+export HADOOP_CLASSPATH=$(find $HADOOP_HOME -name '*.jar' | xargs echo | tr ' ' ':')
+
+# check java_home
+echo $JAVA_HOME
+```
+
+## basic
+
+```bash
 # check version
 hadoop version
 
@@ -24,6 +46,14 @@ hadoop fs -count <path>>
 ```bash
 # list files
 hadoop fs -ls <URI>
+
+# list s3
+/usr/local/hadoop/bin/hadoop fs \
+  -Dfs.s3a.access.key=<access_key> \
+  -Dfs.s3a.secret.key=<secret_key> \
+  -Dfs.s3a.impl=org.apache.hadoop.fs.s3a.S3AFileSystem \
+  -Dfs.s3a.endpoint=s3.<region>.amazonaws.com.cn \
+  -ls s3://<URI>
 
 # put file
 hadoop fs -put <localsrc> <dst>
@@ -47,7 +77,7 @@ hadoop fs -find <path> -name <pattern> -print
 hdfs dfsadmin -allowSnapshot <path>
 
 # disallow
-hdfs dfsadmin -disallowSnapshot hdfs://10.132.144.39:8020/temp/
+hdfs dfsadmin -disallowSnapshot hdfs://<ip>/temp/
 
 # User ops
 # create
