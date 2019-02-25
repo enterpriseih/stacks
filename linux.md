@@ -34,6 +34,9 @@ man hier
 
 # list of all available encodings
 iconv --list
+
+# find file
+find / -name <file_name_prefix>*.jar
 ```
 
 ## cat
