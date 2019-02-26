@@ -53,7 +53,7 @@ plugins
 projects
 
 # select subproject
-project <project-id>
+project <my_subproject>
 
 # generate docs in target/scala-2.11/api
 doc
@@ -65,12 +65,12 @@ evicted
 assembly
 
 # build subproject fat jar only
-<subproject>/assembly
+<my_subproject>/assembly
 ```
 
 ## jar
 
 ```bash
 # show content
-jar tf <path_to_my_jar>
+jar tvf <path_to_my_jar>
 ```

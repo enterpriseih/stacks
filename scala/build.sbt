@@ -16,6 +16,7 @@ lazy val MyProjectA = (project in file("MyProjectA"))
   libraryDependencies ++= Seq(
     "org.apache.spark" %% "spark-core" % "2.3.2" % "provided",
     "org.apache.spark" %% "spark-sql" % "2.3.2" % "provided",
+    "org.apache.hadoop" % "hadoop-aws" % "2.8.5" % "provided",
   )
 )
 
@@ -31,9 +32,5 @@ lazy val settings = Seq(
 
   assembly / assemblyOption := (assembly / assemblyOption).value
     .copy(includeScala = false),
-
-  resolvers ++= Seq(
-    "Apache Development Snapshot Repository" at "https://repository.apache.org/content/repositories/snapshots/",
-    Resolver.mavenLocal
   )
 )
