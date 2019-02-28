@@ -41,6 +41,9 @@ git tag -d oldtag
 # rename tag
 git tag <new_tag> <old_tag>
 git tag -d <old_tag>
+
+# update an exsisting Tag
+git tag -f <tag_name>
 ```
 
 ## Remote
