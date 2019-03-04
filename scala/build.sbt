@@ -1,4 +1,4 @@
-//  THISBUILD
+//  THIS BUILD
 ThisBuild / name := "my-projects"
 ThisBuild / organization := "com.example"
 ThisBuild / scalaVersion := "2.11.12"
@@ -17,6 +17,7 @@ lazy val MyProjectA = (project in file("MyProjectA"))
     "org.apache.spark" %% "spark-core" % "2.3.2" % "provided",
     "org.apache.spark" %% "spark-sql" % "2.3.2" % "provided",
     "org.apache.hadoop" % "hadoop-aws" % "2.8.5" % "provided",
+    "com.amazonaws" % "aws-java-sdk-s3" % "1.10.6" % "provided",
   )
 )
 
