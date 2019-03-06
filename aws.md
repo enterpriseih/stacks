@@ -53,6 +53,9 @@ aws configure list --profile=my_profile_1
 # list
 aws s3 ls s3://my_bucket/my_path --profile=my_profile_1
 
-# copy
-aws s3 cp s3://my_bucket/my_path . --recursive
+# copy source to target
+aws s3 cp s3://my_bucket/my_path local_path --recursive
+
+# remove
+aws s3 rm s3://my_bucket/my_path --recursive
 ```

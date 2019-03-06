@@ -27,6 +27,9 @@ git checkout <branch>
 git merge -s ours master
 git checkout master
 git merge <branch>
+
+# merge specific file
+git checkout <feature_branch> my_file1 my_file2
 ```
 
 ## Tag
