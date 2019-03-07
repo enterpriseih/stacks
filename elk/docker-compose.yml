@@ -23,7 +23,10 @@ services:
       cluster.name: docker-cluster
       discovery.type: zen
       discovery.zen.ping.unicast.hosts: elasticsearch
+      xpack.security.enabled: 'false'
     stdin_open: true
+    volumes:
+    - /data/elasticsearch/data:/usr/share/elasticsearch/data
     tty: true
     ports:
     - 9200:9200/tcp
