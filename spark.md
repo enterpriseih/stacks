@@ -1,6 +1,7 @@
 # spark
 
 ## start master & slave
+
 ```bash
 # download
 wget http://mirror.bit.edu.cn/apache/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
@@ -17,6 +18,7 @@ cd spark-2.4.0-bin-hadoop2.7
 ```
 
 ## install on mac
+
 ```bash
 # check java version
 java -version
@@ -35,6 +37,7 @@ brew upgrade apache-spark
 ```
 
 ## shell
+
 ```bash
 # open shell
 spark-shell
@@ -48,6 +51,7 @@ pyspark
 ```
 
 ## submit
+
 ```bash
 # check spark version
 spark-submit --version
@@ -69,6 +73,7 @@ spark-submit --master local[4] my_job.py
 ```
 
 ## config
+
 ```scala
 spark.sparkContext.hadoopConfiguration.set("fs.s3.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem")
 spark.sparkContext.hadoopConfiguration.set("fs.s3.awsAccessKeyId", "my_key")
@@ -79,6 +84,7 @@ spark.sparkContext.hadoopConfiguration.set("fs.s3a.secret.key", "my_secret")
 ```
 
 ## spark-shell
+
 ```scala
 spark.read.parquet("path/to/file").printSchema()
 
@@ -93,9 +99,13 @@ df.sort($"column1".desc)
 df.groupBy($"column1", $"column2").agg(sum($"column2").as("column3"))
 
 df.withColumn("hour",hour(col("sample_ts")))
+
+// multiple line mode
+:paste
 ```
 
 ## pyspark
+
 ```python
 # config
 conf = SparkConf()
@@ -139,6 +149,9 @@ lines.filter(lambda line: "Python" in line)
 
 #
 df.withColumn('column1',psf.explode('column1.list_field'))
+
+# distinct
+df.select($"my_field").distinct.show()
 
 # dedup
 df.dropDuplicates(['name', 'height'])
