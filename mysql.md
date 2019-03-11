@@ -1,6 +1,7 @@
 # mysql
 
 ## install
+
 ```bash
 wget <http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm>
 sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
@@ -9,12 +10,14 @@ sudo yum install mysql-server
 ```
 
 ## user
+
 ```sql
 CREATE USER my_user IDENTIFIED BY 'my_password';
 GRANT ALL ON * TO my_user;
 ```
 
 ## database & table
+
 ```sql
 -- create db
 CREATE DATABASE my_db;
@@ -52,6 +55,7 @@ ALTER TABLE my_table AUTO_INCREMENT = 1010;
 ```
 
 ## query
+
 ```sql
 -- describe
 describe my_table;
@@ -64,4 +68,11 @@ delete from my_table where my_column > 0;
 
 -- insert
 insert into my_table (my_column1, my_column2, my_column3) values ('my_value1', 'my_value2', 'my_value3');
+```
+
+## process
+
+```sql
+-- show process
+SHOW FULL PROCESSLIST
 ```
