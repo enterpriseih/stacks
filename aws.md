@@ -53,8 +53,14 @@ aws configure list --profile=my_profile_1
 # list
 aws s3 ls s3://my_bucket/my_path --profile=my_profile_1
 
+# total size
+aws s3 ls s3://my_bucket/my_path --profile=my_profile_1 --human-readable --recursive --summarize
+
 # copy source to target
 aws s3 cp s3://my_bucket/my_path local_path --recursive
+
+# copy selected under s3://my_bucket/my_path that match my_pattern
+aws s3 cp s3://my_bucket/my_path local_path --recursive --exclude "*" --include "my_pattern"
 
 # remove
 aws s3 rm s3://my_bucket/my_path --recursive
