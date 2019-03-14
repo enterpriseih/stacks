@@ -36,21 +36,24 @@ brew install apache-spark
 brew upgrade apache-spark
 ```
 
-## shell
+## spark-shell
 
 ```bash
 # open shell
 spark-shell
 
+# local
+spark-shell --master local[*]
+
+# yarn
+spark-shell --master yarn-client
+
 # open shell with es
 # use wan.only to turn off auto lookup
 spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/org.elasticsearch/elasticsearch-hadoop/jars/elasticsearch-hadoop-6.5.4.jar --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true
-
-# open pyspark
-pyspark
 ```
 
-## submit
+## spark-submit
 
 ```bash
 # check spark version
@@ -70,17 +73,6 @@ spark-submit --master spark://my_cluster_ip:7077 --executor-memory 2G --total-ex
 
 # submit job in python to local
 spark-submit --master local[4] my_job.py
-```
-
-## config
-
-```scala
-spark.sparkContext.hadoopConfiguration.set("fs.s3.impl","org.apache.hadoop.fs.s3native.NativeS3FileSystem")
-spark.sparkContext.hadoopConfiguration.set("fs.s3.awsAccessKeyId", "my_key")
-spark.sparkContext.hadoopConfiguration.set("fs.s3.awsSecretAccessKey", "my_secret")
-spark.sparkContext.hadoopConfiguration.set("fs.s3.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-spark.sparkContext.hadoopConfiguration.set("fs.s3a.access.key", "my_key")
-spark.sparkContext.hadoopConfiguration.set("fs.s3a.secret.key", "my_secret")
 ```
 
 ## spark-shell
@@ -105,6 +97,11 @@ df.withColumn("hour",hour(col("sample_ts")))
 ```
 
 ## pyspark
+
+```bash
+# open pyspark
+pyspark
+```
 
 ```python
 # config
