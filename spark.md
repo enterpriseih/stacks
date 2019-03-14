@@ -51,6 +51,9 @@ spark-shell --master yarn-client
 # open shell with es
 # use wan.only to turn off auto lookup
 spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/org.elasticsearch/elasticsearch-hadoop/jars/elasticsearch-hadoop-6.5.4.jar --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true
+
+# multiple line mode
+:paste
 ```
 
 ## spark-submit
@@ -77,23 +80,172 @@ spark-submit --master local[4] my_job.py
 
 ## spark-shell
 
-```scala
+```java
+// scala
+// input
 spark.read.parquet("path/to/file").printSchema()
 
-df.select(List($"column1", $"column2.column2sub".getItem(0).getField("field1")):_*).show(100, false)
+// output parquet
+df.coalesce(1)
+.write
+.mode("overwrite")
+.parquet(OUTPUT_PATH)
 
+// select
+df.select(List($"column1", $"column2.column2sub".getItem(0).getField("field1")):_*)
+df.select($"*", posexplode($"parent_field.nested_fields").as("nested_fields_index" :: "nested_fields_list" :: Nil))
+df.select(
+  List(
+    $"column1",
+    to_timestamp(extract_first($"time"), "yyyyMMddHHmmssSSS").as("timestamp")
+    when($"nested_fields_index".isNull, typedLit(null))
+      .otherwise(callUDF("extract_first", $"nested_fields_index"))
+      .as("nested_fields_index")
+  )
+  ++ List.range(0,42).map( i => $"nested_fields_list".getItem(i).as(s"nested_fields_list_$i").cast(DoubleType))
+)
+
+// filter
 df.filter($"column1".isNotNull && $"column2" === "value2" && $"column3" =!= "value3")
 df.filter($"column1".isin("column1", "column2"))
 
 df.orderBy($"column1")
 df.sort($"column1".desc)
 
-df.groupBy($"column1", $"column2").agg(sum($"column2").as("column3"))
-
+// withColumn
 df.withColumn("hour",hour(col("sample_ts")))
+df.withColumn("column1", typedLit(null))
+df.withColumnRenamed("column1", "new_column1")
 
-// multiple line mode
-:paste
+// output jdbc
+val OUTPUT_URL: String = "jdbc:mysql://ip:port/db?characterEncoding=UTF-8&useSSL=false&useUnicode=true"
+val OUTPUT_TABLE: String = "my_table"
+val OUTPUT_PROP = new java.util.Properties()
+OUTPUT_PROP.put("user", "user")
+OUTPUT_PROP.put("password", "pwd")
+OUTPUT_PROP.put("driver", "com.mysql.jdbc.Driver")
+OUTPUT_PROP.put("batchsize", "5000")
+OUTPUT_PROP.put("numPartitions", "8")
+OUTPUT_PROP.put("truncate", "true")
+df.repartition(8)
+  .write.mode("overwrite")
+  .jdbc(OUTPUT_URL, OUTPUT_TABLE, OUTPUT_PROP)
+
+
+// udf
+def extract_first = udf((key:String) => key.split("#")(0))
+def secondsBetween(c1: Column, c2: Column) = c2.cast("timestamp").cast("bigint") - c1.cast("timestamp").cast("bigint")
+def previousHalf(pre: Column, cur: Column) = (cur.cast("timestamp").cast("bigint") - pre.cast("timestamp").cast("bigint")) / 2.0
+def bothHalf(pre: Column, cur: Column, next: Column) = {
+  (cur.cast("timestamp").cast("bigint") - pre.cast("timestamp").cast("bigint")) / 2.0 +
+  (next.cast("timestamp").cast("bigint") - cur.cast("timestamp").cast("bigint")) / 2.0
+}
+def nextHalf(cur: Column, next: Column) = (next.cast("timestamp").cast("bigint") - cur.cast("timestamp").cast("bigint")) / 2.0
+
+// udf
+def avg_list: Row => Double = (row) => {
+  row.getAs[Seq[Short]]("list_field")
+  .map(_.doubleValue)
+  .foldLeft((0.0, 1))((acc, i) =>((acc._1 + (i - acc._1) / acc._2), acc._2 + 1))
+  ._1
+  .asInstanceOf[Double]
+}
+spark.udf.register("avg_list", avg_list)
+
+
+// udaf
+// merge rows by use any non-null value
+class MergeSingleWithNulls (field : String, data_type: DataType) extends UserDefinedAggregateFunction {
+   override def inputSchema: StructType = StructType(StructField(field, data_type) :: Nil)
+   override def bufferSchema: StructType = StructType(StructField(field, data_type) :: Nil)
+   override def dataType: DataType = data_type
+   override def deterministic: Boolean = true
+   override def initialize(buffer: MutableAggregationBuffer): Unit = {
+     buffer.update(0, null)
+   }
+   override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
+     if(buffer(0) == null && input(0) != null){
+       buffer.update(0, input(0))
+     }
+   }
+   override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = {
+     if(buffer1(0) == null && buffer2(0) != null){
+       buffer1.update(0, buffer2(0))
+     }
+   }
+   override def evaluate(buffer: Row): Any = {
+     buffer(0)
+   }
+}
+// merge seq[double] lists by element-wise sum
+class MergeListSum (field : String) extends UserDefinedAggregateFunction {
+   override def inputSchema: StructType = StructType(StructField(field,  ArrayType(DoubleType)) :: Nil)
+   override def bufferSchema: StructType = StructType(StructField(field,  ArrayType(DoubleType)) :: Nil)
+   override def dataType: DataType =  ArrayType(DoubleType)
+   override def deterministic: Boolean = true
+   override def initialize(buffer: MutableAggregationBuffer): Unit = {
+     buffer(0) = Array.fill[Double](42)(0.0).toSeq
+   }
+   override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
+     val b1 = buffer.getAs[Seq[Double]](0)
+     val b2 = input.getAs[Seq[Double]](0)
+     buffer.update(0, b1.zip(b2).map { case(x,y) => x+y})
+   }
+   override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = update(buffer1, buffer2)
+   override def evaluate(buffer: Row): Any = {
+     buffer(0)
+   }
+}
+// concat all string
+class ConcatString (field : String) extends UserDefinedAggregateFunction {
+   override def inputSchema: StructType = StructType(StructField(field, StringType) :: Nil)
+   override def bufferSchema: StructType = StructType(StructField(field,  StringType) :: Nil)
+   override def dataType: DataType =  StringType
+   override def deterministic: Boolean = true
+   override def initialize(buffer: MutableAggregationBuffer): Unit = {
+     buffer(0) = ""
+   }
+   override def update(buffer: MutableAggregationBuffer, input: Row): Unit = {
+     val b1 = buffer.getAs[String](0)
+     val b2 = input.getAs[String](0)
+     if(b1 == ""){
+       buffer.update(0,b2)
+     }else{
+       if(b2 != ""){
+         buffer.update(0, b1+"#"+b2)
+       }
+     }
+   }
+   override def merge(buffer1: MutableAggregationBuffer, buffer2: Row): Unit = update(buffer1, buffer2)
+   override def evaluate(buffer: Row): Any = {
+     buffer(0)
+   }
+}
+
+spark.udf.register("field1", new MergeSingleWithNulls("field1", TimestampType))
+spark.udf.register("list_field1", new MergeListSum("list_field1"))
+df.groupBy($"field1", $"field2")
+  .agg(
+    callUDF("field1", $"field1").as("field1"),
+    callUDF("list_field1", $"list_field1").as("list_field1"),
+  )
+
+// window
+// using temp to merge (start_timestamp - end_timestamp) < 10min rows
+val window = Window.partitionBy($"id").orderBy($"start_timestamp")
+val window2 = Window.partitionBy($"id").orderBy($"start_timestamp".desc)
+df.withColumn("merge_start", when(
+    row_number.over(window) === 1 ||
+    secondsBetween(lag($"end_timestamp", 1).over(window), $"start_timestamp") > 600, $"start_timestamp"))
+  .withColumn("merge_end", when(
+    row_number.over(window2) === 1 ||
+    secondsBetween($"end_timestamp", lead($"start_timestamp", 1).over(window)) > 600, $"end_timestamp"))
+  .withColumn("start", last($"merge_start", ignoreNulls = true).over(window.rowsBetween(Window.unboundedPreceding,0)))
+  .withColumn("end", first($"merge_end", ignoreNulls = true).over(window.rowsBetween(0,Window.unboundedFollowing)))
+  .withColumn("merged_id", concat(
+    $"start".cast(StringType),
+    typedLit("#"),
+    $"end".cast(StringType)))
 ```
 
 ## pyspark
