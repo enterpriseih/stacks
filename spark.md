@@ -109,6 +109,7 @@ df.select(
 df.filter($"column1".isNotNull && $"column2" === "value2" && $"column3" =!= "value3")
 df.filter($"column1".isin("column1", "column2"))
 
+//
 df.orderBy($"column1")
 df.sort($"column1".desc)
 
