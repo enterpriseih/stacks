@@ -104,14 +104,14 @@ df.select(
   )
   ++ List.range(0,42).map( i => $"nested_fields_list".getItem(i).as(s"nested_fields_list_$i").cast(DoubleType))
 )
-
-// filter
+df.first
+df.take(10)
 df.filter($"column1".isNotNull && $"column2" === "value2" && $"column3" =!= "value3")
 df.filter($"column1".isin("column1", "column2"))
-
-//
 df.orderBy($"column1")
 df.sort($"column1".desc)
+df.foreach(println)
+df.cache()
 
 // withColumn
 df.withColumn("hour",hour(col("sample_ts")))
