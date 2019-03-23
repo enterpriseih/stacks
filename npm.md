@@ -33,4 +33,17 @@ npm publish
 
 # create tarball
 npm pack <package>
+
+# install global module
+npm install -g <package>
+
+# show global module
+npm list -g
+
+# show global module dir
+npm root -g
+
+# use global module
+export NODE_PATH=/usr/local/lib/node_modules
+# then open node shell
 ```
