@@ -52,6 +52,9 @@ ALTER TABLE my_table drop primary key;
 
 -- auto_increment
 ALTER TABLE my_table AUTO_INCREMENT = 1010;
+
+-- drop
+DROP TABLE my_table
 ```
 
 ## query
