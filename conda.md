@@ -18,9 +18,6 @@ source activate aws
 # show installed packages inside
 conda list
 
-# update outdated packages
-pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
-
 # exit aws env
 source deactivate
 
