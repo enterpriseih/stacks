@@ -64,4 +64,9 @@ aws s3 cp s3://my_bucket/my_path local_path --recursive --exclude "*" --include 
 
 # remove
 aws s3 rm s3://my_bucket/my_path --recursive
+
+# sync
+aws s3 sync s3://my_bucket s3://my_bucket2
+aws s3 sync /my/local/path s3://my_bucket2
+aws s3 sync s3://my_bucket2 /my/local/path
 ```
