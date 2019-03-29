@@ -35,6 +35,9 @@ git checkout <feature_branch> my_file1 my_file2
 ## Tag
 
 ```bash
+# add tag
+git tag <tag_name>
+
 # use tag to archive
 git tag archive/<branch_name> <branch_name>
 
