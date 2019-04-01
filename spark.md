@@ -34,6 +34,23 @@ brew install scala
 brew install apache-spark
 # to upgrade to 2.4.0
 brew upgrade apache-spark
+# show current version
+brew info apache-spark
+# switch to 2.3.1
+brew switch apache-spark 2.3.1
+# list all available version
+brew list apache-spark --versions
+
+# install specific version via formula
+# find commit
+cd "$(brew --repo homebrew/core)"
+git log Formula/apache-spark.rb
+# 2.3.2 0f3992a1e6d036dab8b420903d856231e7701ba1
+# or use github history
+# then download formula rb https://github.com/Homebrew/homebrew-core/blob/0f3992a1e6d036dab8b420903d856231e7701ba1/Formula/apache-spark.rb
+# modify line4 to a correct url "http://archive.apache.org/dist/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz"
+# save rb to local and install via it
+brew install ./apache-spark.rb
 ```
 
 ## spark-shell
@@ -52,6 +69,8 @@ spark-shell --master yarn-client
 # use wan.only to turn off auto lookup
 spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/org.elasticsearch/elasticsearch-hadoop/jars/elasticsearch-hadoop-6.5.4.jar --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true
 
+# open shell with cassandra
+spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/com.datastax.spark/spark-cassandra-connector_2.11/jars/spark-cassandra-connector_2.11-2.3.2.jar --conf spark.cassandra.connection.host=10.125.235.46,10.125.235.116,10.125.233.198
 # multiple line mode
 :paste
 ```
