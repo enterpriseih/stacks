@@ -66,8 +66,8 @@ docker swarm init --advertise-addr <manager_ip>
 
 # join a swarm as a worker
 docker swarm join \
---token <token> \
-<manager_ip>:2377
+  --token <token> \
+  <manager_ip>:2377
 
 # check swarm state
 docker info
@@ -84,20 +84,23 @@ docker node update --availability drain <node_name>
 
 # inspect a node
 docker node inspect --pretty <node_name>
+
+# add label
+docker node update --label-add <label_key>=<label_value> <node_name>
 ```
 
 ### service
 
-#### manager node
-
 ```bash
 # create service
 docker service create \
---replicas 1 \
---name <service_name> \
---publish published=8080,target=80 \
-<image> \
-<command>
+  --replicas 1 \
+  --env MYVAR=myvalue \
+  --name <service_name> \
+  --publish published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
+  --constraint node.labels.<label_key>=<label_value> \
+  <image> \
+  <command>
 
 # show service
 docker service ls
@@ -117,22 +120,53 @@ docker service rm <service_name>
 
 # update a service
 docker service update \
-# update image
---image <new_image> \
-# update port
---publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
---publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT>,protocol=udp \
--p <PUBLISHED-PORT>:<CONTAINER-PORT> \
--p <PUBLISHED-PORT>:<CONTAINER-PORT>/udp \
-#
-<service_name>
+  # update image
+  --image <new_image> \
+  # update port
+  --publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
+  --publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT>,protocol=udp \
+  -p <PUBLISHED-PORT>:<CONTAINER-PORT> \
+  -p <PUBLISHED-PORT>:<CONTAINER-PORT>/udp \
+  #
+  <service_name>
 ```
 
-### worker node
+### network
+
+### basic
 
 ```bash
-# check process
-docker ps
+# show network
+docker network ls
+```
+
+#### overlay
+
+```bash
+# create network
+docker network create --driver overlay <network_name>
+
+# attach service when create
+docker service create \
+  --network <network_name> \
+  --name my-web \
+  nginx
+
+# attach service by updating
+docker service update \
+  --network-add <network_name> \
+  <service_name>
+
+# detach
+docker service update \
+  --network-rm <network_name> \
+  <service_name>
+
+# change network
+docker service update \
+  --network-add <new_network_name> \
+  --network-rm <old_network_name> \
+  <service_name>
 ```
 
 ## build.sh
