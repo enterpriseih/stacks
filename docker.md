@@ -51,6 +51,90 @@ docker run -d --name <container_name> --restart=always -v <server_dir>:<containe
 docker port <container_name>
 ```
 
+## swarm
+
+### init
+
+```bash
+# prepare
+# 1. install docker
+# 2. check ip
+# 3. check port 2377, 7946, 4789
+
+# init a swarm
+docker swarm init --advertise-addr <manager_ip>
+
+# join a swarm as a worker
+docker swarm join \
+--token <token> \
+<manager_ip>:2377
+
+# check swarm state
+docker info
+```
+
+### node
+
+```bash
+# check node
+docker node ls
+
+# drain a node to prevent it from receiving tasks
+docker node update --availability drain <node_name>
+
+# inspect a node
+docker node inspect --pretty <node_name>
+```
+
+### service
+
+#### manager node
+
+```bash
+# create service
+docker service create \
+--replicas 1 \
+--name <service_name> \
+--publish published=8080,target=80 \
+<image> \
+<command>
+
+# show service
+docker service ls
+
+# inspect service
+docker service inspect --pretty <service_name>
+docker service inspect --format="{{json .Endpoint.Spec.Ports}}" <service_name>
+
+# check nodes that are running the service
+docker service ps <service_name>
+
+# scale a service
+docker service scale <service_name>=<number>
+
+# delete a service
+docker service rm <service_name>
+
+# update a service
+docker service update \
+# update image
+--image <new_image> \
+# update port
+--publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
+--publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT>,protocol=udp \
+-p <PUBLISHED-PORT>:<CONTAINER-PORT> \
+-p <PUBLISHED-PORT>:<CONTAINER-PORT>/udp \
+#
+<service_name>
+```
+
+### worker node
+
+```bash
+# check process
+docker ps
+```
+
 ## build.sh
 
 ```bash
