@@ -5,10 +5,11 @@
 ```bash
 # check disk
 df -h
-du
 
 # check dir size
 du -sh my_dir
+du -h --max-depth=1
+
 
 # check port
 netstat -tulpn
