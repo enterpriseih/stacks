@@ -70,7 +70,7 @@ spark-shell --master yarn-client
 spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/org.elasticsearch/elasticsearch-hadoop/jars/elasticsearch-hadoop-6.5.4.jar --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true
 
 # open shell with cassandra
-spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/com.datastax.spark/spark-cassandra-connector_2.11/jars/spark-cassandra-connector_2.11-2.3.2.jar --conf spark.cassandra.connection.host=10.125.235.46,10.125.235.116,10.125.233.198
+spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/com.datastax.spark/spark-cassandra-connector_2.11/jars/spark-cassandra-connector_2.11-2.3.2.jar --conf spark.cassandra.connection.host=<my_ip1>,<my_ip2>
 # multiple line mode
 :paste
 ```
