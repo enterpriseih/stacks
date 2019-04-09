@@ -32,8 +32,7 @@ sudo systemctl start docker
 sudo systemctl stop docker
 
 # restart
-sudo systemctl daemon-reload
-sudo systemctl restart docker
+sudo systemctl daemon-reload && sudo systemctl restart docker
 
 # login
 docker login <registry> -u <username> -p <password>
@@ -98,7 +97,10 @@ docker service create \
   --env MYVAR=myvalue \
   --name <service_name> \
   --publish published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
-  --constraint node.labels.<label_key>=<label_value> \
+  --constraint node.labels.<label_key>==<label_value> \
+  --constraint node.hostname==<host_name> \
+  --mount type=bind,source=/path/on/host,destination=/path/in/container \
+  # --mount type=bind,source=/data/elasticsearch/data,destination=/usr/share/elasticsearch/data \
   <image> \
   <command>
 
@@ -122,18 +124,26 @@ docker service rm <service_name>
 docker service update \
   # update image
   --image <new_image> \
+  # env
+  --env-add MYVAR=myvalue \
   # update port
   --publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
   --publish-add published=<PUBLISHED-PORT>,target=<CONTAINER-PORT>,protocol=udp \
   -p <PUBLISHED-PORT>:<CONTAINER-PORT> \
   -p <PUBLISHED-PORT>:<CONTAINER-PORT>/udp \
+  # mount
+  --mount-add type=volume,source=other-volume,target=/somewhere-else \
+  --mount-rm /somewhere \
   #
   <service_name>
+
+# restart a service
+docker service update --force <id>
 ```
 
 ### network
 
-### basic
+#### basic
 
 ```bash
 # show network
@@ -169,6 +179,29 @@ docker service update \
   <service_name>
 ```
 
+### Monitor
+
+```bash
+# show usage
+docker system df
+
+# show status
+docker stats
+
+# show containers
+docker ps -a
+```
+
+### clean
+
+```bash
+# remove
+docker image prune
+docker container prune
+docker volume prune
+docker network prune
+```
+
 ## build.sh
 
 ```bash
@@ -201,4 +234,18 @@ RUN npm install --registry=https://registry.npm.taobao.org
 EXPOSE 3000
 
 CMD [ "npm", "start" ]
+```
+
+## daemon.json
+
+```json
+{
+        "data-root": "/data/docker",
+        "log-driver": "gelf",
+        "log-opts": {
+                "gelf-address": "udp://ip:port"
+        },
+        "metrics-addr" : "127.0.0.1:9323",
+        "experimental" : true
+}
 ```
