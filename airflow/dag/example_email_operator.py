@@ -21,7 +21,7 @@ dag = DAG(
 
 t1 = EmailOperator(
     task_id="simple_email_opearetor",
-    to=["receiver@nio.com"],
+    to=["receiver@example.com"],
     subject="Testing Email Operator",
     html_content="<h3>Welcome to Airflow</h3>",
     dag=dag,

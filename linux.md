@@ -65,6 +65,9 @@ cat -T <file>
 
 # display end-of-line
 cat -e <file>
+
+# merge files
+cat *.csv>merged.csv
 ```
 
 ## grep
