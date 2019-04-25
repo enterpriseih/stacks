@@ -40,14 +40,33 @@ docker login <registry> -u <username> -p <password>
 # pull image
 docker pull <image>
 
-# remove container
-docker container stop <container_name> && docker container rm <container_name>
+# check port
+docker port <container_name>
+```
+
+## container
+
+```bash
+# show containers
+docker container ls -a
 
 # run image
 docker run -d --name <container_name> --restart=always -v <server_dir>:<container_dir>  -p <server_port>:<container_port> <image>
 
-# check port
-docker port <container_name>
+# remove container
+docker container stop <container_name> && docker container rm <container_name>
+
+# remove stopped containers
+docker container prune
+
+# remove
+docker container rm <container_id>
+```
+
+## logs
+
+```bash
+docker logs <container_name>
 ```
 
 ## swarm

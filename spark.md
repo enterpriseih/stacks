@@ -58,6 +58,8 @@ brew install ./apache-spark.rb
 ```bash
 # open shell
 spark-shell
+spark-shell --executor-memory 8g --total-executor-cores 8 --num-executors 8 --driver-memory 8g
+
 
 # local
 spark-shell --master local[*]
@@ -75,8 +77,6 @@ spark-shell \
 --conf spark.cassandra.connection.host=<my_ip1>,<my_ip2>
 
 # multiple line mode
-
-
 :paste
 ```
 
