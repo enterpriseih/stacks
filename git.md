@@ -104,6 +104,11 @@ git ls-files
 
 ## .gitconfig
 
+```bash
+# set email of a single respository
+git config user.email "zhiyang.wang@nio.com"
+```
+
 ```config
 [push]
  	default = simple
