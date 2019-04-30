@@ -17,6 +17,7 @@ sudo yum install docker-ce-18.03.0.ce
 # modifier image dir
 touch /etc/docker/daemon.json
 
+
 # add following lines assuming /data is sufficient
 {
     "data-root": "/data/docker"
@@ -81,6 +82,10 @@ docker logs <container_name>
 
 # init a swarm
 docker swarm init --advertise-addr <manager_ip>
+
+# show how to join
+docker swarm join-token worker
+docker swarm join-token manager
 
 # join a swarm as a worker
 docker swarm join \
