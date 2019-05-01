@@ -15,4 +15,7 @@ ps aux -O pcpu | head -5
 # create custom domain/ip mapping
 sudo vi /etc/hosts
 # add [real-ip] [custom-domain] in file
+
+# can't open
+sudo xattr -rd com.apple.quarantine /Applications/<APP>.app
 ```
