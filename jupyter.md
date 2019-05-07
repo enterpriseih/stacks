@@ -1,6 +1,7 @@
 # jupyter
 
 ## basic
+
 ```bash
 source activate my_env
 
@@ -10,4 +11,8 @@ conda install nb_conda_kernels
 
 # activate notebook
 jupyter notebook
+
+# install extension
+pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
 ```
