@@ -1,4 +1,4 @@
-# mad
+  w34r mad
 
 ## basic
 
@@ -18,4 +18,12 @@ sudo vi /etc/hosts
 
 # can't open
 sudo xattr -rd com.apple.quarantine /Applications/<APP>.app
+sudo xattr -rd com.apple.quarantine "/Applications/Adobe Acrobat DC/Adobe Acrobat.app"
+sudo spctl --master-disable
+
+# convert caj to pdf
+pip install PyPDF2
+brew install mupdf
+./caj2pdf show <source.pdf>
+./caj2pdf convert <source.pdf> -o <target.pdf>
 ```
