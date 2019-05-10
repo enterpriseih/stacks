@@ -38,6 +38,9 @@ iconv --list
 
 # find file
 find / -name <file_name_prefix>*.jar
+
+# process
+ps aux --sort=-pcpu | head -n 10
 ```
 
 ## cat
@@ -138,4 +141,14 @@ curl -O <address>
 # post
 curl <address> -H "Content-Type: application/json" -X POST -d '{"key1":"value1", "key2":"value2"}'
 curl <address> -H "Content-Type: application/json" -X POST -d '@data.json'
+```
+
+## fs
+
+```bash
+# copy folder
+cp -avr <source> <target>
+
+# move folder
+mv <source>.* <target>
 ```
