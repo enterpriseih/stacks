@@ -5,6 +5,7 @@
 ```bash
 # download
 wget http://mirror.bit.edu.cn/apache/spark/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
+wget http://mirrors.tuna.tsinghua.edu.cn/apache/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
 
 # unzip
 tar xf spark-2.4.0-bin-hadoop2.7.tgz
@@ -15,6 +16,9 @@ cd spark-2.4.0-bin-hadoop2.7
 
 # start slave
 ./sbin/start-slave.sh spark://my_ip:7077
+
+# path
+export PATH=/data/spark/bin:$PATH
 ```
 
 ## install on mac
@@ -51,6 +55,12 @@ git log Formula/apache-spark.rb
 # modify line4 to a correct url "http://archive.apache.org/dist/spark/spark-2.3.2/spark-2.3.2-bin-hadoop2.7.tgz"
 # save rb to local and install via it
 brew install ./apache-spark.rb
+```
+
+## install pyspark via pip
+
+```bash
+pip install pyspark
 ```
 
 ## spark-shell
@@ -93,13 +103,19 @@ spark-submit --class my_main_class --master local[4] path_to_my_jar my_param_1 m
 spark-submit --master spark://my_cluster_ip:7077 --executor-memory 2G --total-executor-cores 8 --num-executors 4 --class my_main_class path_to_my_jar my_param_1 my_param_2
 
 # submit job with hdfs & es
-HADOOP_USER_NAME=root spark-submit ---master local[4] --num-executors 4 --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true --class my_main_class path_to_my_jar my_param_1 my_param_2
+HADOOP_USER_NAME=root spark-submit --master local[4] --num-executors 4 --conf spark.es.nodes="my_elasticsearch_ip" --conf spark.es.port=9200 --conf spark.es.nodes.wan.only=true --class my_main_class path_to_my_jar my_param_1 my_param_2
 
 # submit job in python to cluster
 spark-submit --master spark://my_cluster_ip:7077 --executor-memory 2G --total-executor-cores 8 --num-executors 50 my_job.py
 
 # submit job in python to local
 spark-submit --master local[4] my_job.py
+spark-submit \
+  --master local[4] \
+  --driver-memory 4G --executor-memory 4G  \
+  --num-executors 4 --total-executor-cores 8 \
+  --conf spark.driver.maxResultSize=2G \
+  my_job.py
 ```
 
 ## spark-shell
@@ -275,14 +291,23 @@ df.withColumn("merge_start", when(
 
 ## pyspark
 
+不支持 udaf，不支持多行
+
 ```bash
-# open pyspark
+// open pyspark
 pyspark
 ```
 
 ```python
 # config
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import col, udf
+from pyspark.sql.types import StringType
+
+
 conf = SparkConf()
+conf.set("spark.executor.memory", "4g")
 """
 conf.set('fs.defaultFS', 'hdfs://hdfs')
 conf.set('dfs.nameservices', 'hdfs')
@@ -292,6 +317,11 @@ conf.set('dfs.namenode.http-address.hdfs.name-1-node', 'ip:9002')
 conf.set('dfs.client.failover.proxy.provider.hdfs', 'org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider')
 """
 spark = SparkSession.builder.appName('my_app').config(conf=conf).getOrCreate()
+
+# udf
+def my_func(text):
+  return text
+my_udf = udf(my_func, StringType())
 
 # read hdfs file
 df = spark.read.csv('hdfs://ip:9001/my_file.csv', inferSchema=True, header=True)
