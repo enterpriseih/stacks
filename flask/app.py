@@ -1,12 +1,11 @@
+# -*- coding: utf-8 -*-
 from time import gmtime, strftime
 from flask import Flask, request, Response
 from flask.logging import default_handler
 import logging
 import json
 
-
-# wrap external function with flask http
-def api_func(x): return x
+# from * import * as api_func
 
 
 class RequestFormatter(logging.Formatter):
