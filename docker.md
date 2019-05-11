@@ -94,6 +94,9 @@ docker swarm join \
 
 # check swarm state
 docker info
+
+# remove from swarm, at leave node
+docker swarm leave
 ```
 
 ### node
@@ -120,7 +123,8 @@ docker service create \
   --replicas 1 \
   --env MYVAR=myvalue \
   --name <service_name> \
-  --publish published=<PUBLISHED-PORT>,target=<CONTAINER-PORT> \
+  --network <network_name> \
+  --publish published=<HOST_PORT>,target=<CONTAINER_PORT> \
   --constraint node.labels.<label_key>==<label_value> \
   --constraint node.hostname==<host_name> \
   --mount type=bind,source=/path/on/host,destination=/path/in/container \
@@ -163,6 +167,9 @@ docker service update \
 
 # restart a service
 docker service update --force <id>
+
+# show log
+docker service logs <service>
 ```
 
 ### network
