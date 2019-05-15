@@ -68,7 +68,7 @@ pip install pyspark
 ```bash
 # open shell
 spark-shell
-spark-shell --executor-memory 8g --total-executor-cores 8 --num-executors 8 --driver-memory 8g
+spark-shell --executor-memory 9g --total-executor-cores 9 --num-executors 9 --driver-memory 9g
 
 
 # local
