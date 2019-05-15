@@ -13,10 +13,20 @@ chmod 777 /data/elasticsearch/data/
 curl -XPUT -u elastic 'my_ip:9200/_xpack/security/user/elastic/_password'  -H "Content-Type: application/json" -d '{"password" : "my_password"}'
 ```
 
-## elasticsearch
+## run
 
 ```bash
-
+# elasticsearch
+docker run -d \
+    --name elasticsearch \
+    -p 9200:9200 \
+    -p 9300:9300 \
+    --env ES_JAVA_OPTS="-Xmx256m -Xms256m" \
+    --env discovery.type=zen \
+    --env discovery.zen.ping.unicast.hosts=elasticsearch \
+    --env xpack.security.enabled=false \
+    -v /data/elasticsearch/data:/usr/share/elasticsearch/data \
+    docker.elastic.co/elasticsearch/elasticsearch:6.4.2
 ```
 
 ## service
@@ -29,13 +39,14 @@ docker service create \
   --name elasticsearch \
   -p 9200:9200 \
   -p 9300:9300 \
-  --env LS_JAVA_OPTS="-Xmx256m -Xms256m" \
+  --env ES_JAVA_OPTS="-Xmx256m -Xms256m" \
   --env discovery.type=zen \
   --env discovery.zen.ping.unicast.hosts=elasticsearch \
   --env xpack.security.enabled=false \
   --constraint node.hostname==<my_host> \
   --mount type=bind,source=/data/elasticsearch/data,destination=/usr/share/elasticsearch/data \
   docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+
 
 # logstash
 docker service create \
