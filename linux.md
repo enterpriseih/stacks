@@ -41,6 +41,8 @@ find / -name <file_name_prefix>*.jar
 
 # process
 ps aux --sort=-pcpu | head -n 10
+# kill process
+kill -9 <PID>
 ```
 
 ## cat
@@ -151,4 +153,23 @@ cp -avr <source> <target>
 
 # move folder
 mv <source>.* <target>
+
+# remove all contents, not the folder
+rm -r /path/to/dir/*
+
+# remove all contents and the folder
+rm -r /path/to/dir
+```
+
+# http server
+
+```bash
+python3 -m http.server
+```
+
+# zip
+
+```bash
+unzip my.zip 
+unzip my.zip -d /path/to/dir
 ```

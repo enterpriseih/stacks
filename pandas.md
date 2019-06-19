@@ -34,6 +34,7 @@ df.columns
 df.values
 df.describe()
 df.dtypes
+df.inro()
 df.<TAB>
 
 # select
@@ -134,6 +135,8 @@ df.groupby("grade").size()
 # time
 df['time'] = df['time'].astype(int)
 df['time'] = df.to_datetime(df['time'], unit='s')
+df['timestamp'] = pd.to_datetime(df["timestamp"],format='%Y-%m-%d %H:%M:%S',errors='ignore')
+
 df.loc[df['url'].str.startswith('/data')].groupby('url').count().to_csv('url.csv')
 
 # timezone

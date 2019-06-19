@@ -46,6 +46,9 @@ s3 cp s3://my_bucket/my_path local_path --recursive
 ## aws cli
 
 ```bash
+# set credentials
+aws configure
+
 # show credentials
 aws configure list
 aws configure list --profile=my_profile_1

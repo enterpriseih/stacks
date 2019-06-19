@@ -13,6 +13,26 @@ chmod 777 /data/elasticsearch/data/
 curl -XPUT -u elastic 'my_ip:9200/_xpack/security/user/elastic/_password'  -H "Content-Type: application/json" -d '{"password" : "my_password"}'
 ```
 
+## ES REST
+
+```bash
+# get all indices
+/_cat/indices?v
+
+# get mapping
+/<index>/mapping
+/_all/_mapping
+/_mapping
+```
+
+## Kibana
+
+### Timelion
+
+    .es(index=my_index,timefield=timestamp,metric=max:soc),
+    .es(q= field:2,index=my_index,timefield=timestamp,metric=max:soc),
+    .es(index=my_index,timefield=timestamp,metric=max:soc).label("soc").color(#ee1122)
+
 ## run
 
 ```bash

@@ -62,6 +62,9 @@ docker container prune
 
 # remove
 docker container rm <container_id>
+
+# check ip
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
 ```
 
 ## logs

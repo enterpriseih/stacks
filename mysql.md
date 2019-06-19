@@ -16,6 +16,13 @@ CREATE USER my_user IDENTIFIED BY 'my_password';
 GRANT ALL ON * TO my_user;
 ```
 
+## profile
+
+```sql
+-- show all column names
+select * from information_schema.columns where TABLE_SCHEMA = 'my_table';
+```
+
 ## database & table
 
 ```sql

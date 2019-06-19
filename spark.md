@@ -69,7 +69,7 @@ pip install pyspark
 # open shell
 spark-shell
 spark-shell --executor-memory 9g --total-executor-cores 9 --num-executors 9 --driver-memory 9g
-
+spark-shell --executor-memory 4g --total-executor-cores 8 --num-executors 8 --driver-memory 4g
 
 # local
 spark-shell --master local[*]
@@ -85,6 +85,9 @@ spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/org.elasticsearch/elasticsear
 spark-shell \
 --jars /Users/zhiyang.wang/.ivy2/cache/com.datastax.spark/spark-cassandra-connector_2.11/jars/spark-cassandra-connector_2.11-2.3.2.jar,/Users/zhiyang.wang/.ivy2/cache/com.twitter/jsr166e/jars/jsr166e-1.1.0.jar \
 --conf spark.cassandra.connection.host=<my_ip1>,<my_ip2>
+
+# open shell with jdbc
+spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.24.jar
 
 # multiple line mode
 :paste
@@ -124,12 +127,21 @@ spark-submit \
 // scala
 // input
 spark.read.parquet("path/to/file").printSchema()
+spark.read.option("header", "true").csv("/path/to/csv.csv")
 
 // output parquet
 df.coalesce(1)
 .write
 .mode("overwrite")
 .parquet(OUTPUT_PATH)
+
+// output csv
+df.coalesce(1)
+.write
+.format("csv")
+.option("header","true")
+.mode("overwrite")
+.save("/tmp/")
 
 // select
 df.select(List($"column1", $"column2.column2sub".getItem(0).getField("field1")):_*)
@@ -287,6 +299,9 @@ df.withColumn("merge_start", when(
     $"start".cast(StringType),
     typedLit("#"),
     $"end".cast(StringType)))
+
+// join
+df1.join(df2, Seq("key column"), "left_outer")
 ```
 
 ## pyspark
