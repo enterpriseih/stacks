@@ -302,6 +302,15 @@ df.withColumn("merge_start", when(
 
 // join
 df1.join(df2, Seq("key column"), "left_outer")
+
+// count time
+spark.time(
+// code
+)
+
+// df size
+import org.apache.spark.util.SizeEstimator
+SizeEstimator.estimate(df)
 ```
 
 ## pyspark
