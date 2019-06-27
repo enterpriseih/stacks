@@ -30,4 +30,7 @@ brew install mupdf
 
 # zip with maxsize
 zip -r -s 1g 20190516_bak.zip ./
+
+# stop creating .DS_Store files
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 ```
