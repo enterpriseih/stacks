@@ -45,6 +45,7 @@ df['20130102':'20130104'] # key
 # sort
 df.sort_index(axis=1, ascending=False)
 df.sort_values(by='B')
+df.sort_values(by='col1', ascending=False)
 
 # access
 df.loc[:,['A','B']] # 多轴选择
@@ -61,7 +62,7 @@ df.iat[1,1] # 同上
 # filter
 df[df.A > 0]
 df2[df2['E'].isin(['two','four'])]
-df[(df.AAA &lt;= 6) & (df.index.isin([0,2,4]))]
+df[(df.AAA >= 6) & (df.index.isin([0,2,4]))]
 df['logic'] = np.where(df['AAA'] > 5,'high','low')
 
 # add new column
