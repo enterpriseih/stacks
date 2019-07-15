@@ -31,6 +31,27 @@ brew install mupdf
 # zip with maxsize
 zip -r -s 1g 20190516_bak.zip ./
 
+# unzip error: Unzipping large file: bad zipfile offset (local header sig)
+zip -FF original.zip --out fixed.zip
+unzip fixed.zip
+
 # stop creating .DS_Store files
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+
+# delete .DS_Store file
+find . -name '.DS_Store' -type f -delete
+
+# upon start
+sudo launchctl list
+sudo launchctl unload /Library/LaunchDaemons/com.symantec.manufacturer.agent.plist
+sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.Eupdate.plist
+sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.ScanFactory.plist
+sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.ScanManager.plist
+sudo launchctl unload /Library/LaunchDaemons/com.mcafee.virusscan.fmpd.plist
+sudo launchctl unload "/Library/Manufacturer/Endpoint Agent/CUI.plist"
+
+# restart audio
+sudo killall coreaudiod
+
+# delete .DS
 ```
