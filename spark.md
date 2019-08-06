@@ -57,12 +57,6 @@ git log Formula/apache-spark.rb
 brew install ./apache-spark.rb
 ```
 
-## install pyspark via pip
-
-```bash
-pip install pyspark
-```
-
 ## spark-shell
 
 ```bash
@@ -123,12 +117,34 @@ spark-submit \
 
 ## spark-shell
 
+### fs
+
+```scala
+import org.apache.hadoop.fs.{FileSystem,Path}
+import org.apache.commons.io.FileUtils
+
+val statuses = FileSystem.get( sc.hadoopConfiguration ).listStatus(new Path("/user"))
+
+for (status <- statuses) {
+    println(status.toString())
+    println(FileUtils.byteCountToDisplaySize(status.getLen()))
+}
+```
+
+### read
+
 ```java
 // scala
 // input
 spark.read.parquet("path/to/file").printSchema()
 spark.read.option("header", "true").csv("/path/to/csv.csv")
+val path = "s3a://my_bucket/my_path/201907{10,11,12,13,14,15,16,17,18}"
+spark.read.option("basePath",base_path).parquet(base_path + "day=20181030")
+```
 
+### write
+
+```scala
 // output parquet
 df.coalesce(1)
 .write
@@ -142,7 +158,17 @@ df.coalesce(1)
 .option("header","true")
 .mode("overwrite")
 .save("/tmp/")
+```
 
+### view
+
+```scala
+trueUserOrderData.createOrReplaceTempView("order_data")
+```
+
+### select
+
+```scala
 // select
 df.select(List($"column1", $"column2.column2sub".getItem(0).getField("field1")):_*)
 df.select($"*", posexplode($"parent_field.nested_fields").as("nested_fields_index" :: "nested_fields_list" :: Nil))
@@ -164,8 +190,11 @@ df.orderBy($"column1")
 df.sort($"column1".desc)
 df.foreach(println)
 df.cache()
+```
 
-// withColumn
+### withColumn
+
+```scala
 df.withColumn("hour",hour(col("sample_ts")))
 df.withColumn("column1", typedLit(null))
 df.withColumnRenamed("column1", "new_column1")
@@ -183,19 +212,39 @@ OUTPUT_PROP.put("truncate", "true")
 df.repartition(8)
   .write.mode("overwrite")
   .jdbc(OUTPUT_URL, OUTPUT_TABLE, OUTPUT_PROP)
+```
 
+### udf
 
-// udf
+```scala
+def getHours(start:java.sql.Timestamp,end:java.sql.Timestamp): List[Int] = {
+  if(start != null && end != null) {
+    val result = ListBuffer[Int]()
+    while(start.before(end)) {
+      val hour = start.getHours()
+      result += hour
+      val timestamp = start.getTime() + 3600000
+      start.setTime(timestamp)
+    }
+    result.toList
+  } else {
+    List()
+  }
+}
+
 def extract_first = udf((key:String) => key.split("#")(0))
+
 def secondsBetween(c1: Column, c2: Column) = c2.cast("timestamp").cast("bigint") - c1.cast("timestamp").cast("bigint")
+
 def previousHalf(pre: Column, cur: Column) = (cur.cast("timestamp").cast("bigint") - pre.cast("timestamp").cast("bigint")) / 2.0
+
 def bothHalf(pre: Column, cur: Column, next: Column) = {
   (cur.cast("timestamp").cast("bigint") - pre.cast("timestamp").cast("bigint")) / 2.0 +
   (next.cast("timestamp").cast("bigint") - cur.cast("timestamp").cast("bigint")) / 2.0
 }
+
 def nextHalf(cur: Column, next: Column) = (next.cast("timestamp").cast("bigint") - cur.cast("timestamp").cast("bigint")) / 2.0
 
-// udf
 def avg_list: Row => Double = (row) => {
   row.getAs[Seq[Short]]("list_field")
   .map(_.doubleValue)
@@ -203,10 +252,13 @@ def avg_list: Row => Double = (row) => {
   ._1
   .asInstanceOf[Double]
 }
+
 spark.udf.register("avg_list", avg_list)
+```
 
+### udaf
 
-// udaf
+```scala
 // merge rows by use any non-null value
 class MergeSingleWithNulls (field : String, data_type: DataType) extends UserDefinedAggregateFunction {
    override def inputSchema: StructType = StructType(StructField(field, data_type) :: Nil)
@@ -282,8 +334,11 @@ df.groupBy($"field1", $"field2")
     callUDF("field1", $"field1").as("field1"),
     callUDF("list_field1", $"list_field1").as("list_field1"),
   )
+```
 
-// window
+### window
+
+```scala
 // using temp to merge (start_timestamp - end_timestamp) < 10min rows
 val window = Window.partitionBy($"id").orderBy($"start_timestamp")
 val window2 = Window.partitionBy($"id").orderBy($"start_timestamp".desc)
@@ -299,140 +354,33 @@ df.withColumn("merge_start", when(
     $"start".cast(StringType),
     typedLit("#"),
     $"end".cast(StringType)))
+```
 
-// join
+### join
+
+```scala
 df1.join(df2, Seq("key column"), "left_outer")
+```
 
-// count time
+## util
+
+### time
+
+```scala
 spark.time(
 // code
 )
+```
 
-// df size
+### size
+
+```scala
 import org.apache.spark.util.SizeEstimator
 SizeEstimator.estimate(df)
 ```
 
-## pyspark
+### explain physical plan
 
-不支持 udaf，不支持多行
-
-```bash
-// open pyspark
-pyspark
-```
-
-```python
-# config
-from pyspark import SparkConf
-from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, udf
-from pyspark.sql.types import StringType
-
-
-conf = SparkConf()
-conf.set("spark.executor.memory", "4g")
-"""
-conf.set('fs.defaultFS', 'hdfs://hdfs')
-conf.set('dfs.nameservices', 'hdfs')
-conf.set('dfs.ha.namenodes.hdfs', 'name-0-node,name-1-node')
-conf.set('dfs.namenode.http-address.hdfs.name-0-node', 'ip:9002')
-conf.set('dfs.namenode.http-address.hdfs.name-1-node', 'ip:9002')
-conf.set('dfs.client.failover.proxy.provider.hdfs', 'org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider')
-"""
-spark = SparkSession.builder.appName('my_app').config(conf=conf).getOrCreate()
-
-# udf
-def my_func(text):
-  return text
-my_udf = udf(my_func, StringType())
-
-# read hdfs file
-df = spark.read.csv('hdfs://ip:9001/my_file.csv', inferSchema=True, header=True)
-
-# create RDD
-lines = sc.parallelize(["pandas", "i like pandas"])
-lines = sc.textFile("/path/to/README.md")
-rdd = sc.textFile("s3://...")
-sc.wholeTextFiles("hdfs://...")
-
-# read
-df = spark.read.parquet("*.parquet")
-df = spark.read.csv("*.csv")
-
-# write
-df.saveAsTextFile()
-df.saveAsSequenceFile()
-df.write.option("header", True).csv('/temp/')
-df.write.mode('append').parquet('/temp/')
-df.write.format("parquet").save('/temp/')
-
-# dataframe API
-# transformation (returns a new RDD)
-# filter
-df.filter(df.column1=="value1")
-df.filter("column1=='value1'")
-df.filter(df.column1.isNotNull())
-lines.filter(lambda line: "Python" in line)
-
-#
-df.withColumn('column1',psf.explode('column1.list_field'))
-
-# distinct
-df.select($"my_field").distinct.show()
-
-# dedup
-df.dropDuplicates(['name', 'height'])
-
-# map
-squared = nums.map(lambda x: x * x).collect()
-words = rdd.flatMap(lambda x: x.split(" "))
-
-# flatMap
-words = lines.flatMap(lambda line: line.split(" "))
-
-# set
-df1.union(df2)
-.intersection()
-.substract()
-.cartesian()
-
-# aggregate in pair RDD
-df.reduceByKey()
-df.foldByKey()
-df.combineByKey()
-
-# partition
-df.partitionBy()
-
-# actions (return a result of other data type to the driver program)
-df.count()
-df.countByValue()
-
-# retrieve
-lines.first()
-df.take(10)
-df.collect()
-df.top()
-
-#
-df.reduce()
-df.combine()
-df.fold(zero,func)
-df.foreach()
-
-#
-df.countByKey()
-df.collectAsMap()
-df.lookup(key)
-
-# sort
-df.sortByKey()
-
-# persist in memory
-df.cache()
-df.storageLevel
-df.cache().storageLevel
-df2.persist(StorageLevel.DISK_ONLY_2).storageLevel
-df.unpersist
+```scala
+spark.sql("select * from db.table").explain
 ```
