@@ -52,6 +52,10 @@ print("\n".join(['%s = %s' % (kv[0],kv[1]) for kv in confs]))
 
 ## pyspark
 
+## module
+
+sc.addPyFile("hdfs:///user/a.zip")
+
 ### udf
 
 ```python
@@ -60,6 +64,13 @@ def my_func(text):
 my_udf = udf(my_func, StringType())
 
 spark.udf.register("my_udf", my_func, StringType())
+
+@udf("double")
+def avg(arr):
+    if arr is None:
+        return None
+    l = [x for x in arr if x >= 0]
+    return sum(l) / len(l)
 ```
 
 ### sql
