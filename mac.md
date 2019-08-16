@@ -54,4 +54,6 @@ sudo launchctl unload "/Library/Manufacturer/Endpoint Agent/CUI.plist"
 sudo killall coreaudiod
 
 # delete .DS
+cd /my/dir
+find . -name '.DS_Store' -type f -delete
 ```
