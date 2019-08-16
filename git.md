@@ -100,6 +100,15 @@ git reset —merge
 # fatal: pathspec '...' did not match any files
 # list all index
 git ls-files
+
+# re init repo
+cat .git/config  # note <github-uri>
+rm -rf .git
+git init
+git add .
+git commit -m "Initial commit"
+git remote add origin <github-uri>
+git push -u --force origin master
 ```
 
 ## .gitconfig
