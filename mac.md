@@ -48,7 +48,13 @@ sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.Eupdate.plist
 sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.ScanFactory.plist
 sudo launchctl unload /Library/LaunchDaemons/com.mcafee.ssm.ScanManager.plist
 sudo launchctl unload /Library/LaunchDaemons/com.mcafee.virusscan.fmpd.plist
+sudo launchctl unload /Library/LaunchDaemons/com.mcafee.aac.plist
 sudo launchctl unload "/Library/Manufacturer/Endpoint Agent/CUI.plist"
+sudo launchctl unload /Library/LaunchDaemons/com.vmware.hub.installer.daemon.plist
+sudo launchctl unload /Library/LaunchDaemons/com.airwatch.airwatchd.plist
+sudo launchctl unload /Library/LaunchDaemons/com.airwatch.awcmd.plist
+sudo launchctl unload /Library/LaunchDaemons/com.airwatch.AWRemoteManagementDaemon.plist
+sudo launchctl unload /Library/LaunchDaemons/com.airwatch.AWRemoteTunnelAgent.plist
 
 # restart audio
 sudo killall coreaudiod

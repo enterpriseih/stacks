@@ -47,3 +47,13 @@ npm root -g
 export NODE_PATH=/usr/local/lib/node_modules
 # then open node shell
 ```
+
+## n
+
+```bash
+# switch node
+n
+
+# install newest Long Term Support
+n lts
+```

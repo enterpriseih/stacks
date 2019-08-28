@@ -12,6 +12,7 @@ name=nginx repo
 baseurl=<http://nginx.org/packages/centos/6/$basearch/>
 gpgcheck=0
 enabled=1
+
 # install on centos
 yum install nginx
 ```
@@ -50,14 +51,26 @@ http{
     }
 }
 
-# start service
+# https server only
+http{
+  server {
+    listen       3001 ssl;
+    root         /data/project/dist;
+    index index.html;
+    server_name  my.ip;
+    ssl_certificate "/etc/nginx/ssl/nginx.crt";
+    ssl_certificate_key "/etc/nginx/ssl/nginx.key";
 
+}
+
+# start service
 systemctl start nginx
 
 # restart service
-
 service nginx restart
 
+# check status
+service nginx status -l
 ```
 
 ## check
@@ -66,5 +79,4 @@ service nginx restart
 # check syntax
 
 nginx -t -c /etc/nginx/nginx.conf
-
 ```
