@@ -39,6 +39,9 @@ iconv --list
 # find file
 find / -name <file_name_prefix>*.jar
 
+# find by pattern and print in one line separated with space
+find $PWD/Astro* | tr '\n' ' '
+
 # process
 ps aux --sort=-pcpu | head -n 10
 # kill process
@@ -170,6 +173,6 @@ python3 -m http.server
 # zip
 
 ```bash
-unzip my.zip 
+unzip my.zip
 unzip my.zip -d /path/to/dir
 ```
