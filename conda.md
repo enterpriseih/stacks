@@ -32,4 +32,8 @@ conda env remove --name aws
 # add tsinghua
 conda config --show-sources
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+
+# rename env
+conda create --name new_name --clone old_name
+conda remove --name old_name --all # or conda env remove --name old_name
 ```
