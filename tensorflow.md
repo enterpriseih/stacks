@@ -42,4 +42,28 @@ tensorboard --logdir=/path/to/train/dir
 # inspect
 saved_model_cli show --dir /path/to/model/dir
 saved_model_cli show --dir /path/to/model/dir --tag_set serve --signature_def serving_default
+
+# when error
+# __new__() got an unexpected keyword argument 'serialized_options'
+pip install -U protobuf
+```
+
+## serving
+
+```bash
+# deploy
+docker pull tensorflow/serving
+docker run -t --rm -p [port]:8501 -v "/path/to/model/with/version/subfolder:/models/[my_model_name]" -e MODEL_NAME=[my_model_name] tensorflow/serving -n [my_model_name]
+
+# rest api
+# metadata
+curl -X GET http://[ip]:[port]/v1/models/my_model_name/metadata
+
+# predict
+curl -X POST \
+  http://[ip]:[port]/v1/models/my_model_name/versions/[version]:predict \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"instances":[[0.5026455,0.48942696,0.67499523,0.3115942,...]]
+}'
 ```
