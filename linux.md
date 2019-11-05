@@ -7,7 +7,7 @@
 df -h
 
 # check dir size
-du -sh my_dir
+du -h my_dir
 du -h --max-depth=1
 
 

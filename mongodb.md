@@ -23,6 +23,9 @@ mongorestore --host <host> --port <port> --username <username> --password <passw
 
 # start service
 sudo service mongod start
+
+./mongod --maxConns 20000  --config /root/mongodb/bin/mongodb.conf
+./mongod -f /root/mongodb/bin/mongodb.conf --shutdown
 ```
 
 ## shell
@@ -32,6 +35,8 @@ sudo service mongod start
 ```js
 // create
 db.createUser({ user: "new_user", pwd: "new_password", roles:[{role:"dbOwner", db:"my_db"}],mechanisms : ["SCRAM-SHA-1"]})
+// updat
+db.updateUser("user_name", {pwd:"password", roles: [{ role: "read", db: "my_db" }]})
 
 // create role
 db.getSiblingDB('my_db').createUser({ user: "new_user", pwd: "new_password", roles:[{role:"readWrite", db:"my_db"}]})
@@ -210,6 +215,23 @@ if (cursor && cursor.hasNext()) {
 db.my_collection.aggregate([
   ...
 ]).to_csv()
+
+
+// find unique
+db.getCollection('my_collection').aggregate([
+{
+  $group: {
+    _id: {key1:"key1", key2:"key2"},
+    uniqueIds: {$addToSet: "$_id"},
+    count: {$sum: 1}
+  }
+},
+{
+  $match: {
+    count: {"$gt": 1}
+  }
+}
+])
 ```
 
 ## ~/.robomongorc.js

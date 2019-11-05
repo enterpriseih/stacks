@@ -1,5 +1,12 @@
 # ssh
 
+## basic
+
+```bash
+# key permission are too open
+chmod 400 ./.ssh/your_key
+```
+
 ## ~/.ssh/config
 
     Host *
