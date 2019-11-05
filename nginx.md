@@ -80,3 +80,7 @@ service nginx status -l
 
 nginx -t -c /etc/nginx/nginx.conf
 ```
+
+## docker
+
+/path/to/index/html/folder:/usr/share/nginx/html:ro
