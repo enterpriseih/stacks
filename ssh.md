@@ -71,3 +71,9 @@ launchctl start sync.git
 </dict>
 </plist>
 ```
+
+### use proxy
+
+```bash
+ssh -i '/path/to/your/pem'  -o 'ProxyCommand=/usr/local/bin/ncat --proxy <proxy_ip>:<proxy_port> --proxy-type http %h %p' <user_name>@<ip>
+```
