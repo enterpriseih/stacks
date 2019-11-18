@@ -28,6 +28,9 @@ aws_secret_access_key= my_secret_2
 # install
 pip3 install awscli
 pip3 install aws-shell
+
+pip3 install --upgrade --user awscli
+export PATH=~/.local/bin:$PATH
 ```
 
 ## aws-shell

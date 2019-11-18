@@ -86,3 +86,14 @@ hdfs dfs -createSnapshot <path> [<snapshotName>]
 # delete
 hdfs dfs -deleteSnapshot <path> [<snapshotName>]
 ```
+
+## core-site.xml
+
+```bash
+# update
+vim /etc/hadoop/conf/core-site.xml
+
+# apply change
+su - hdfs
+hdfs dfsadmin -refreshNodes
+```

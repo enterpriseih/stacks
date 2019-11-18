@@ -10,6 +10,8 @@ df -h
 du -h my_dir
 du -h --max-depth=1
 
+# count files
+ls -1 | wc -l
 
 # check port
 netstat -tulpn
@@ -175,4 +177,11 @@ python3 -m http.server
 ```bash
 unzip my.zip
 unzip my.zip -d /path/to/dir
+```
+
+# user
+
+```bash
+# show  all user
+less /etc/passwd
 ```
