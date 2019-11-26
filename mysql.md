@@ -86,3 +86,17 @@ insert into my_table (my_column1, my_column2, my_column3) values ('my_value1', '
 -- show process
 SHOW FULL PROCESSLIST
 ```
+
+## mysql shell
+
+```bash
+# download
+wget https://dev.mysql.com/get/Downloads/MySQL-Shell/mysql-shell-8.0.18-linux-glibc2.12-x86-64bit.tar.gz
+
+# unzip
+tar -xzvf mysql-shell-8.0.18-linux-glibc2.12-x86-64bit.tar.gz
+
+#
+mv mysql-shell-8.0.18-linux-glibc2.12-x86-64bit mysql-shell
+./mysql-shell/bin/mysqlsh
+```
