@@ -22,6 +22,8 @@ lscpu
 
 # check memory
 cat /proc/meminfo
+#  show in gb
+awk '{ printf "%.2f", $2/1024/1024 ; exit}' /proc/meminfo
 
 # check kernel
 uname -a
@@ -48,6 +50,9 @@ find $PWD/Astro* | tr '\n' ' '
 ps aux --sort=-pcpu | head -n 10
 # kill process
 kill -9 <PID>
+
+#  show all env
+printenv | more
 ```
 
 ## cat
@@ -158,6 +163,9 @@ cp -avr <source> <target>
 
 # move folder
 mv <source>.* <target>
+
+# rename files
+for f in <file_regex>; do mv -v "$f" "${f/<old_string>/<new_string>}";done;
 
 # remove all contents, not the folder
 rm -r /path/to/dir/*
