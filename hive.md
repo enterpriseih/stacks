@@ -1,39 +1,32 @@
 # hive
 
+## install
+
 ()[https://docs.cloudera.com/documentation/enterprise/5-6-x/topics/cdh_ig_hive_installation.html]
-
-## basic
-
-data stored in hdfs /user/hive/warehouse
-
-use remote mode, start metastore(aka HCatalog) before hiveserver2
-
-add s3a key in core-site.xml and create external table in hive
-
-## permission
-
-by default everyone is superadmin
 
 ## metastore
 
 ```bash
+# avoid plain text password create jerk
+hadoop credential create javax.jdo.option.ConnectionPassword -provider jceks://file/usr/lib/hive/conf/hive.jceks
+# then remove javax.jdo.option.ConnectionPassword in xml
+
 # start metastore
 sudo service hive-metastore start
-
-# Test connectivity to metastore
-hive –e “show tables;”
+hive --service metastore
 ```
 
-## hiveserver2
+### hiveserver2
 
 ```bash
 # start hiveserver2
 sudo service hive-server2 start
+$HIVE_HOME/bin/hiveserver2
+$HIVE_HOME/bin/hive --service hiveserver2
+
 
 # stop hiveserver2
 sudo service hive-server2 stop
-
-# verify using beeline
 ```
 
 ## beeline
@@ -54,20 +47,39 @@ show tables;
 ```bash
 # enter shell
 hive
+
+# single line
+hive –e “show tables;”
+
+# show all partitions
+show partitions my_db.my_table
 ```
 
-## hive sql
+## security
 
-```sql
-DROP DATABASE IF EXISTS my_db;
+don't use default Hive Authorization
+
+### Storage Based Authorization via metastore
+
+control hcatalog access (MapReduce，impala，pig，Spark SQL，hive Command line)
+
+via control user's hdfs permission
+()[https://cwiki.apache.org/confluence/display/Hive/Storage+Based+Authorization+in+the+Metastore+Server]
+
+()[https://cwiki.apache.org/confluence/display/Hive/HCatalog+Authorization]
+
+```bash
+# grant user test
+hadoop fs -setfacl -m user:test:rwx /user/hive/warehouse
 ```
 
 ## hive-site.xml
 
 ```xml
+<!-- fs -->
 <property>
-  <name>hive.execution.engine</name>
-  <value>tez</value>
+  <name>fs.defaultFS</name>
+  <value>hdfs://ip:8020</value>
 </property>
 
 <!-- dir -->
@@ -84,13 +96,45 @@ DROP DATABASE IF EXISTS my_db;
   <value>/user/hive/log</value>
 </property>
 
-<!-- fs -->
+<!-- exec -->
 <property>
-  <name>fs.defaultFS</name>
-  <value>hdfs://ip:8020</value>
+  <name>hive.execution.engine</name>
+  <value>spark</value>
+</property>
+<property>
+   <name>hive.exec.parallel</name>
+   <value>true</value>
+   <description></description>
+</property>
+<property>
+   <name>hive.exec.compress.intermediate</name>
+   <value>true</value>
+   <description>intermediate files btw hive mr jobs are compressed</description>
 </property>
 
-<!-- metastore -->
+<!-- enable lock -->
+<property>
+  <name>hive.zookeeper.quorum</name>
+  <value>ip</value>
+</property>
+
+<property>
+  <name>hive.support.concurrency</name>
+  <value>true</value>
+</property>
+
+<!-- mapred -->
+<property>
+   <name>hive.mapred.mode</name>
+   <value>strict</value>
+   <description></description>
+</property>
+```
+
+## hivemetastore-site.xml
+
+```xml
+<!-- mysql -->
 <property>
   <name>hive.metastore.uris</name>
   <value>thrift://ip:9083</value>
@@ -99,7 +143,7 @@ DROP DATABASE IF EXISTS my_db;
 
 <property>
   <name>javax.jdo.option.ConnectionURL</name>
-  <value>jdbc:mysql://<ip>:3306/<table>?createDatabaseIfNotExist=true</value>
+  <value>jdbc:mysql://ip:3306/hive?createDatabaseIfNotExist=true</value>
   <description></description>
 </property>
 
@@ -116,22 +160,36 @@ DROP DATABASE IF EXISTS my_db;
 </property>
 
 <property>
+  <name>hadoop.security.credential.provider.path</name>
+  <value>jceks://file/usr/lib/hive/conf/hive.jceks</value>
+</property>
+<!-- <property>
   <name>javax.jdo.option.ConnectionPassword</name>
   <value></value>
   <description>password to use against metastore database</description>
-</property>
+</property> -->
 
-<!-- hiveserver2 -->
+<!-- enable storage based authorization -->
 <property>
-   <name>hive.server2.allow.user.substitution</name>
-   <value>true</value>
+  <name>hive.metastore.pre.event.listeners</name>
+  <value>org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener</value>
 </property>
 
 <property>
-   <name>hive.server2.enable.doAs</name>
-   <value>true</value>
+  <name>hive.security.metastore.authorization.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.authorization.StorageBasedAuthorizationProvider</value>
 </property>
 
+<property>
+  <name>hive.security.metastore.authenticator.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
+</property>
+```
+
+## hiveserver2-site.xml
+
+```xml
+<!-- thrift -->
 <property>
    <name>hive.server2.thrift.port</name>
    <value>10000</value>
@@ -140,5 +198,78 @@ DROP DATABASE IF EXISTS my_db;
 <property>
    <name>hive.server2.thrift.http.port</name>
    <value>10001</value>
+</property>
+
+<!-- enabled SQL Standards Based Authorization -->
+<property>
+   <name>hive.server2.enable.doAs</name>
+   <value>true</value>
+</property>
+
+<property>
+  <name>hive.security.authorization.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.security.authorization.createtable.owner.grants</name>
+  <value>ALL</value>
+</property>
+
+<property>
+  <name>hive.users.in.admin.role</name>
+  <value>hdfs</value>
+</property>
+```
+
+### using custom
+
+```xml
+<property>
+  <name>hive.server2.authentication</name>
+  <value>CUSTOM</value>
+</property>
+
+<property>
+    <name>hive.server2.custom.authentication.class</name>
+    <value>org.apache.hadoop.hive.contrib.auth.CustomPasswdAuthenticator</value>
+</property>
+```
+
+### using kerboros
+
+```xml
+<property>
+  <name>hive.server2.authentication</name>
+  <value>KERBEROS</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.principal</name>
+  <value>hive/_HOST@YOUR-REALM.COM</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.keytab</name>
+  <value>/etc/hive/conf/hive.keytab</value>
+</property>
+```
+
+### using LDAP
+
+```xml
+<property>
+  <name>hive.server2.authentication</name>
+  <value>ldap[s]://host:port</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.ldap.url</name>
+  <value>LDAP_URLL</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.ldap.Domain</name>
+  <value>AD_DOMAIN_ADDRESS</value>
 </property>
 ```
