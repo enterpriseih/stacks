@@ -30,6 +30,10 @@ git merge <branch>
 
 # merge specific file
 git checkout <feature_branch> my_file1 my_file2
+
+# opposite of strategy ours
+git merge -X theirs master
+#
 ```
 
 ## Tag
