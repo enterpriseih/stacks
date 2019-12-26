@@ -85,6 +85,13 @@ cat -e <file>
 cat *.csv>merged.csv
 ```
 
+## tail
+
+```bash
+# print file to screen continuously
+tail -f <file>
+```
+
 ## grep
 
 general regular expression print
