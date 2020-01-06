@@ -62,4 +62,12 @@ sudo killall coreaudiod
 # delete .DS
 cd /my/dir
 find . -name '.DS_Store' -type f -delete
+
+# batch download
+# 1. save url in a txt
+# 2. use wget
+wget -E -H -k -p -i /path/to/url/txt
+
+# open url in chromw
+/usr/bin/open -a "/Applications/Google Chrome.app"  'http://google.com'
 ```

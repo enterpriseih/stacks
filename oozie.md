@@ -17,6 +17,9 @@ sudo restart oozie
 sudo -u oozie oozie admin -sharelibupdate
 # list sharelib
 oozie admin -oozie http://$(hostname -f):11000/oozie -shareliblist
+
+# kill job
+oozie job -oozie http://<ip>:11000/oozie -auth KERBEROS -kill <job_id>
 ```
 
 ## error
