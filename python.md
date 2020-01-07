@@ -14,6 +14,17 @@ ps = pstats.Stats(pr, stream=s).sort_stats(SortKey.CUMULATIVE)
 ps.print_stats(10)
 print(s.getvalue())
 ```
+## logging
+```python
+from importlib import reload
+import logging
+reload(logging)
+
+logger = logging.getLogger('my_logger')
+logging.basicConfig(filename="/path/to/log/file",
+                    level=logging.DEBUG,
+                    format='%(asctime)s : %(levelname)s - %(message)s')
+```
 
 ## http server
 
