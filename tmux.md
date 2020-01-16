@@ -59,9 +59,9 @@ tmux kill-session -t <session_name>
 
 ## panes
 
-```bash
+```text
 # split horizontal
-<PREFIX> \"
+<PREFIX> "
 
 # split vertical
 <PREFIX> %
