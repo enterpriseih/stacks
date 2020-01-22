@@ -62,6 +62,12 @@ SET PASSWORD FOR <username> = '<password>'
 CREATE USER test with PASSWORD 'test'
 GRANT READ on mydb to test
 
+-- show grant
+SHOW GRANTS FOR test
+
+-- revoke
+REVOKE ALL ON mydb FROM test
+
 ```
 ### database
 ```sql
@@ -73,4 +79,17 @@ use mydb
 
 -- show
 SHOW DATABASES
+```
+
+### query
+```sql
+SELECT * FROM <measurement> LIMIT 10
+
+DELETE FROM <measurement>
+```
+
+### tag
+```sql
+-- show all tags
+SHOW TAG VALUES ON "<my_db>" FROM "<my_measurement>" WITH KEY in (<my_tag>)
 ```

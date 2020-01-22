@@ -11,15 +11,8 @@ source activate tensorflow
 
 # install dep
 pip install --ignore-installed --upgrade tensorflow
-conda install -c anaconda protobuf
-pip install pillow
-pip install lxml
-pip install Cython
-pip install jupyter
-pip install matplotlib
-pip install pandas
-pip install opencv-python
-conda install libgcc
+conda install -c anaconda protobuf libgcc
+pip install pillow lxml Cython jupyter matplotlib pandas opencv-python
 
 # in mac
 # use pythonw instead of python
