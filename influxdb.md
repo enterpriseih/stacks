@@ -93,3 +93,9 @@ DELETE FROM <measurement>
 -- show all tags
 SHOW TAG VALUES ON "<my_db>" FROM "<my_measurement>" WITH KEY in (<my_tag>)
 ```
+
+### series
+```bash
+# count total number of series
+influx -username admin -password '<password>' -database '<db>' -execute 'SHOW SERIES' | grep -v "name,_id,host" | wc -l
+```

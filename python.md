@@ -28,7 +28,7 @@ logging.basicConfig(filename="/path/to/log/file",
 
 ## http server
 
-1. 2open a http server to receive file
+1. open a http server to receive file
 
 ```python
 import os
