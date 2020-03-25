@@ -92,10 +92,27 @@ DELETE FROM <measurement>
 ```sql
 -- show all tags
 SHOW TAG VALUES ON "<my_db>" FROM "<my_measurement>" WITH KEY in (<my_tag>)
+
+SHOW TAG KEYS
 ```
 
 ### series
 ```bash
 # count total number of series
 influx -username admin -password '<password>' -database '<db>' -execute 'SHOW SERIES' | grep -v "name,_id,host" | wc -l
+```
+
+```sql
+-- count cardinality
+SHOW SERIES exact cardinality
+```
+
+### measurements
+```sql
+SHOW measurements
+```
+
+### field
+```sql
+SHOW FIELD KEYS on <my_db>
 ```

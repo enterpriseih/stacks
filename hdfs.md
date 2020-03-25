@@ -41,7 +41,7 @@ hadoop fs -df <path>
 hadoop fs -count <path>>
 ```
 
-## file & pathectory
+## file & directory
 
 ```bash
 # list files
@@ -58,8 +58,10 @@ hadoop fs -ls <URI>
 # put file
 hadoop fs -put <localsrc> <dst>
 
-# rm file/pathector
+# rm file
 hadoop fs -rm <URI>
+
+# rm directory
 hadoop fs -rm -r <path>
 
 # create dir
@@ -101,46 +103,46 @@ hdfs dfsadmin -refreshNodes
 ## docker-compose.yml
 
 ```yml
-version: '2'
+version: "2"
 services:
   datanode:
     image: uhopper/hadoop-datanode
     environment:
       CLUSTER_NAME: hadoop
       CORE_CONF_fs_defaultFS: hdfs://10.132.144.39:8020
-      HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: 'false'
+      HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: "false"
     stdin_open: true
     network_mode: host
     volumes:
-    - /data/hadoop/datanode:/hadoop/dfs/data
+      - /data/hadoop/datanode:/hadoop/dfs/data
     tty: true
     links:
-    - namenode:namenode
+      - namenode:namenode
     ports:
-    - 50010:50010/tcp
+      - 50010:50010/tcp
     labels:
       io.rancher.scheduler.affinity:host_label: hadoop-datanode=true
       io.rancher.container.hostname_override: container_name
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:container_label_ne: hadoop-datanode=true
-      hadoop-datanode: 'true'
+      hadoop-datanode: "true"
   namenode:
     image: uhopper/hadoop-namenode
     hostname: namenode
     environment:
       CLUSTER_NAME: hadoop
       CORE_CONF_fs_defaultFS: hdfs://10.132.144.39:8020
-      HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: 'false'
+      HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check: "false"
     stdin_open: true
     network_mode: host
     volumes:
-    - /data/hadoop/namenode:/hadoop/dfs/name
+      - /data/hadoop/namenode:/hadoop/dfs/name
     tty: true
     ports:
-    - 50070:50070/tcp
-    - 8020:8020/tcp
+      - 50070:50070/tcp
+      - 8020:8020/tcp
     labels:
-      hadoop-namenode: 'true'
+      hadoop-namenode: "true"
       io.rancher.scheduler.affinity:host_label: hadoop-namenode=true
       io.rancher.container.pull_image: always
 ```
@@ -148,7 +150,7 @@ services:
 ## rancher-compose.yml
 
 ```yml
-version: '2'
+version: "2"
 services:
   datanode:
     scale: 3

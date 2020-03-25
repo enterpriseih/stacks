@@ -34,34 +34,54 @@ sudo service mongod start
 
 ```js
 // create
-db.createUser({ user: "new_user", pwd: "new_password", roles:[{role:"dbOwner", db:"my_db"}],mechanisms : ["SCRAM-SHA-1"]})
+db.createUser({
+  user: "new_user",
+  pwd: "new_password",
+  roles: [{ role: "dbOwner", db: "my_db" }],
+  mechanisms: ["SCRAM-SHA-1"]
+});
 // updat
-db.updateUser("user_name", {pwd:"password", roles: [{ role: "read", db: "my_db" }]})
+db.updateUser("user_name", {
+  pwd: "password",
+  roles: [{ role: "read", db: "my_db" }]
+});
 
 // create role
-db.getSiblingDB('my_db').createUser({ user: "new_user", pwd: "new_password", roles:[{role:"readWrite", db:"my_db"}]})
+db.getSiblingDB("my_db").createUser({
+  user: "new_user",
+  pwd: "new_password",
+  roles: [{ role: "readWrite", db: "my_db" }]
+});
 ```
 
 ### db
 
 ```js
-db.copyDatabase("source_db","target_db")
+db.copyDatabase("source_db", "target_db");
 ```
 
 ### collection
 
 ```js
 // create collection
-db.createCollection('new_collection');
+db.createCollection("new_collection");
 
 // batch rename collections with prefix
-db.getCollectionInfos().forEach( col => db.getCollection(col.name).renameCollection('prefix'+col.name))
+db.getCollectionInfos().forEach(col =>
+  db.getCollection(col.name).renameCollection("prefix" + col.name)
+);
 
 // batch delete collection with prefix
-db.getCollectionInfos().forEach( col => {if(col.name.startsWith('prefix')){db.getCollection(col.name).drop()}})
+db.getCollectionInfos().forEach(col => {
+  if (col.name.startsWith("prefix")) {
+    db.getCollection(col.name).drop();
+  }
+});
 
 // copy from source_collection to target_collection
-db.source_collection.find().forEach(function(v){db.target_collection.insert(v)});
+db.source_collection.find().forEach(function(v) {
+  db.target_collection.insert(v);
+});
 ```
 
 ### document
@@ -216,8 +236,9 @@ db.my_collection.aggregate([
   ...
 ]).to_csv()
 
+// find unique and dedup
+var duplicates = []
 
-// find unique
 db.getCollection('my_collection').aggregate([
 {
   $group: {
@@ -232,11 +253,69 @@ db.getCollection('my_collection').aggregate([
   }
 }
 ])
+.toArray()
+.forEach(function(doc) {
+  doc.uniqueIds.shift();
+  doc.uniqueIds.forEach( function(dupId){
+    duplicates.push(dupId);
+  })
+})
+db.getCollection('my_collection').remove({_id:{$in:duplicates}})
+
 ```
 
 ## ~/.robomongorc.js
 
 ```javascript
 // DBCommandCursor is for aggregate, DBQuery is for .find()
-DBCommandCursor.prototype.to_csv = DBQuery.prototype.to_csv = function(deliminator, textQualifier){ var count = -1; var headers = []; var data = {};var cursor = this;deliminator = deliminator == null ? ',' : deliminator; textQualifier = textQualifier == null ? '\"' : textQualifier;while (cursor.hasNext()) {var array = new Array(cursor.next());count++;for (var index in array[0]) { if (headers.indexOf(index) == -1) { headers.push(index); } }for (var i = 0; i < array.length; i++) { for (var index in array[i]) { data[count + '_' + index] = array[i][index]; } } }var line = '';for (var index in headers) { line += textQualifier + headers[index] + textQualifier + deliminator; }line = line.slice(0, -1); print(line);for (var i = 0; i < count + 1; i++) {var line = ''; var cell = ''; for (var j = 0; j < headers.length; j++) { cell = data[i + '_' + headers[j]]; if (cell == undefined) cell = ''; line += textQualifier + cell + textQualifier + deliminator; }line = line.slice(0, -1); print(line); }}
+DBCommandCursor.prototype.to_csv = DBQuery.prototype.to_csv = function(
+  deliminator,
+  textQualifier
+) {
+  var count = -1;
+  var headers = [];
+  var data = {};
+  var cursor = this;
+  deliminator = deliminator == null ? "," : deliminator;
+  textQualifier = textQualifier == null ? '"' : textQualifier;
+  while (cursor.hasNext()) {
+    var array = new Array(cursor.next());
+    count++;
+    for (var index in array[0]) {
+      if (headers.indexOf(index) == -1) {
+        headers.push(index);
+      }
+    }
+    for (var i = 0; i < array.length; i++) {
+      for (var index in array[i]) {
+        data[count + "_" + index] = array[i][index];
+      }
+    }
+  }
+  var line = "";
+  for (var index in headers) {
+    line += textQualifier + headers[index] + textQualifier + deliminator;
+  }
+  line = line.slice(0, -1);
+  print(line);
+  for (var i = 0; i < count + 1; i++) {
+    var line = "";
+    var cell = "";
+    for (var j = 0; j < headers.length; j++) {
+      cell = data[i + "_" + headers[j]];
+      if (cell == undefined) cell = "";
+      line += textQualifier + cell + textQualifier + deliminator;
+    }
+    line = line.slice(0, -1);
+    print(line);
+  }
+};
+```
+
+## Index
+
+```js
+db.collection.getIndexes();
+
+db.collection.dropIndex("my_index_name");
 ```

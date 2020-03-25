@@ -1,5 +1,12 @@
 # kerberos
 
 ## basic
+
 ```bash
- kinit -kt <keytab_file> <principal>
+
+su <principal>
+
+# cd to  keytab folder
+
+kinit -kt <keytab_file> <principal>
+```
