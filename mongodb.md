@@ -262,6 +262,25 @@ db.getCollection('my_collection').aggregate([
 })
 db.getCollection('my_collection').remove({_id:{$in:duplicates}})
 
+// find all keys
+var allKeys = {};
+function traverse(obj,prefix){
+    Object.keys(obj).forEach(function(k){
+        var key = prefix + k
+        if(allKeys.hasOwnProperty(key)){
+            allKeys[key] = allKeys[key] +1
+        }else{
+            allKeys[key]=1
+        }
+        if (typeof obj[k] === 'object'){
+            traverse(obj[k], key+".")
+        }
+    })
+}
+var docs = db.getCollection('factory_test').find({}).toArray()
+for (let doc of docs){
+    traverse(doc,'')
+}
 ```
 
 ## ~/.robomongorc.js
