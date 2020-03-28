@@ -277,7 +277,7 @@ function traverse(obj,prefix){
         }
     })
 }
-var docs = db.getCollection('factory_test').find({}).toArray()
+var docs = db.getCollection('my_collection').find({}).toArray()
 for (let doc of docs){
     traverse(doc,'')
 }
