@@ -83,8 +83,20 @@ spark-shell \
 # open shell with jdbc
 spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.24.jar
 
+# open shell with application.conf
+spark-shell --jars /Users/zhiyang.wang/.ivy2/cache/com.typesafe/config/bundles/config-1.4.0.jar --files 'application.conf'
+
 # multiple line mode
 :paste
+```
+
+```scala
+// read conf
+import com.typesafe.config.ConfigFactory
+import java.io.File
+import org.apache.spark.SparkFiles
+
+val config = ConfigFactory.parseFile(new File(SparkFiles.get("application.conf")))
 ```
 
 ## spark-submit

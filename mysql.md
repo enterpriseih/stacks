@@ -98,5 +98,5 @@ tar -xzvf mysql-shell-8.0.18-linux-glibc2.12-x86-64bit.tar.gz
 
 #
 mv mysql-shell-8.0.18-linux-glibc2.12-x86-64bit mysql-shell
-./mysql-shell/bin/mysqlsh
+./mysql-shell/bin/mysqlsh -u <user> -h <ip>
 ```
