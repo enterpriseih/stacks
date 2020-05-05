@@ -30,28 +30,44 @@ sudo service mongod start
 
 ## shell
 
+### basic
+
+```js
+// switch db
+use my_db
+```
+
 ### user & role
 
 ```js
+// show users
+db.getUsers();
+
 // create
 db.createUser({
   user: "new_user",
   pwd: "new_password",
   roles: [{ role: "dbOwner", db: "my_db" }],
-  mechanisms: ["SCRAM-SHA-1"]
+  mechanisms: ["SCRAM-SHA-1"],
 });
 // updat
 db.updateUser("user_name", {
   pwd: "password",
-  roles: [{ role: "read", db: "my_db" }]
+  roles: [{ role: "read", db: "my_db" }],
 });
 
 // create role
 db.getSiblingDB("my_db").createUser({
   user: "new_user",
   pwd: "new_password",
-  roles: [{ role: "readWrite", db: "my_db" }]
+  roles: [{ role: "readWrite", db: "my_db" }],
 });
+
+// get role
+db.getRole("new_user");
+db.getRoles();
+
+// grant role
 ```
 
 ### db
@@ -67,19 +83,19 @@ db.copyDatabase("source_db", "target_db");
 db.createCollection("new_collection");
 
 // batch rename collections with prefix
-db.getCollectionInfos().forEach(col =>
+db.getCollectionInfos().forEach((col) =>
   db.getCollection(col.name).renameCollection("prefix" + col.name)
 );
 
 // batch delete collection with prefix
-db.getCollectionInfos().forEach(col => {
+db.getCollectionInfos().forEach((col) => {
   if (col.name.startsWith("prefix")) {
     db.getCollection(col.name).drop();
   }
 });
 
 // copy from source_collection to target_collection
-db.source_collection.find().forEach(function(v) {
+db.source_collection.find().forEach(function (v) {
   db.target_collection.insert(v);
 });
 ```
@@ -287,7 +303,7 @@ for (let doc of docs){
 
 ```javascript
 // DBCommandCursor is for aggregate, DBQuery is for .find()
-DBCommandCursor.prototype.to_csv = DBQuery.prototype.to_csv = function(
+DBCommandCursor.prototype.to_csv = DBQuery.prototype.to_csv = function (
   deliminator,
   textQualifier
 ) {
