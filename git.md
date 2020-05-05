@@ -17,7 +17,9 @@ git push -f <remote> <branch_name>
 git push -d origin <branch_name>
 
 # delete local branch
-git branch -d origin/bugfix
+git branch -d branch_name
+# delete local branch force
+git branch -D branch_name
 
 # rename local branch
 git branch -m <new_name>
@@ -33,7 +35,14 @@ git checkout <feature_branch> my_file1 my_file2
 
 # opposite of strategy ours
 git merge -X theirs master
-#
+```
+
+## diff
+
+```
+# compare files
+git diff branch1:path/to/file branch2:path/to/file
+git diff branch1name branch2name path/to/file
 ```
 
 ## Tag

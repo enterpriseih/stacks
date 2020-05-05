@@ -1,3 +1,8 @@
+# hbase
+
+## docker-compose.yml
+
+```yml
 version: "2"
 services:
   hbase-master:
@@ -96,3 +101,20 @@ services:
       hbase-thrift: "true"
       io.rancher.container.pull_image: always
       io.rancher.scheduler.affinity:container_label: hbase-master=true
+```
+
+## rancher-compose.yml
+
+```yml
+version: "2"
+services:
+  hbase-master:
+    scale: 1
+    start_on_create: true
+  hbase-regionserver:
+    scale: 3
+    start_on_create: true
+  hbase-thrift:
+    scale: 1
+    start_on_create: true
+```

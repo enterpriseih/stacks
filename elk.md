@@ -67,7 +67,6 @@ docker service create \
   --mount type=bind,source=/data/elasticsearch/data,destination=/usr/share/elasticsearch/data \
   docker.elastic.co/elasticsearch/elasticsearch:6.4.2
 
-
 # logstash
 docker service create \
   --network isa \
@@ -105,4 +104,77 @@ docker service create \
   --env-add RAW_FORMAT="{{ toJSON .Data }}\n" \
   gliderlabs/logspout:latest \
   multiline+raw://<kibana_host>:5000
+```
+
+## docker-compose.yml
+
+```yml
+version: "2"
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.4.2
+    environment:
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+      elasticsearch.url: http://elasticsearch:9200
+    stdin_open: true
+    tty: true
+    links:
+      - elasticsearch:elasticsearch
+    ports:
+      - 5000:5000/tcp
+      - 9600:9600/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: elk=true
+      logstash: "true"
+      io.rancher.container.pull_image: always
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.2
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      cluster.name: docker-cluster
+      discovery.type: zen
+      discovery.zen.ping.unicast.hosts: elasticsearch
+      xpack.security.enabled: "false"
+    stdin_open: true
+    volumes:
+      - /data/elasticsearch/data:/usr/share/elasticsearch/data
+    tty: true
+    ports:
+      - 9200:9200/tcp
+      - 64497:9300/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: elk=true
+      elasticsearch: "true"
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_ne: elasticsearch=true
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.4.2
+    environment:
+      elasticsearch.url: http://elasticsearch:9200
+    stdin_open: true
+    tty: true
+    links:
+      - elasticsearch:elasticsearch
+    ports:
+      - 5601:5601/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: elk=true
+      io.rancher.container.pull_image: always
+      kibana: ""
+```
+
+## rancher-compose.yml
+
+```yml
+version: "2"
+services:
+  logstash:
+    scale: 1
+    start_on_create: true
+  elasticsearch:
+    scale: 1
+    start_on_create: true
+  kibana:
+    scale: 1
+    start_on_create: true
 ```

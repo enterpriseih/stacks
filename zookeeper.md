@@ -56,3 +56,68 @@ cat 1 > myid
 ```bash
 /usr/lib/zookeeper/bin/zkCli.sh -server 127.0.0.1:2181
 ```
+
+## docker-compose.yml
+
+```yml
+version: "2"
+services:
+  zoo3:
+    image: zookeeper
+    environment:
+      ZOO_MY_ID: "3"
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+    stdin_open: true
+    tty: true
+    ports:
+      - 2181:2181/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: zookeeper=true
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_ne: zookeeper=true
+      zookeeper: "true"
+  zoo2:
+    image: zookeeper
+    environment:
+      ZOO_MY_ID: "2"
+      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    stdin_open: true
+    tty: true
+    ports:
+      - 2181:2181/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: zookeeper=true
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_ne: zookeeper=true
+      zookeeper: "true"
+  zoo1:
+    image: zookeeper
+    environment:
+      ZOO_MY_ID: "1"
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    stdin_open: true
+    tty: true
+    ports:
+      - 2181:2181/tcp
+    labels:
+      io.rancher.scheduler.affinity:host_label: zookeeper=true
+      io.rancher.container.pull_image: always
+      io.rancher.scheduler.affinity:container_label_ne: zookeeper=true
+      zookeeper: "true"
+```
+
+## rancher-compose.yml
+
+```yml
+version: "2"
+services:
+  zoo3:
+    scale: 1
+    start_on_create: true
+  zoo2:
+    scale: 1
+    start_on_create: true
+  zoo1:
+    scale: 1
+    start_on_create: true
+```
