@@ -1,4 +1,4 @@
-  w34r mad
+w34r mad
 
 ## basic
 
@@ -70,4 +70,12 @@ wget -E -H -k -p -i /path/to/url/txt
 
 # open url in chromw
 /usr/bin/open -a "/Applications/Google Chrome.app"  'http://google.com'
+
+# change brew source
+git -C "$(brew --re remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
+
+echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.bash_profile
+source ~/.bash_profile
 ```
