@@ -143,14 +143,26 @@ for (status <- statuses) {
 }
 ```
 
-## util
-
 ### time
 
 ```scala
 spark.time(
 // code
 )
+```
+
+### function
+
+```scala
+// ts => seconds
+unix_timestamp(col_time_string: Column) : col_number_of_seconds: Column
+unix_timestamp(col_time_string: Column, string_pattern: String) : col_number_of_seconds: Column
+// seconds => ts
+from_unixtime(col_number_of_seconds: Column) : col_time_string: Column
+// tz  ts => utc ts
+to_utc_timestamp(col_timezone_time_string: Column, timezone: String) : col_utc_time_string: Column
+// utc ts => tz ts
+from_utc_timestamp(col_utc_time_string: Column, timezone: String) : col_timezone_time_string: Column
 ```
 
 ### size
