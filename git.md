@@ -35,6 +35,10 @@ git checkout <feature_branch> my_file1 my_file2
 
 # opposite of strategy ours
 git merge -X theirs master
+
+# merge ignore folders
+git merge --no-ff --no-commit <source_branch>
+git reset -- <folder>
 ```
 
 ## diff

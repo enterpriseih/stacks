@@ -6,9 +6,12 @@
 # check disk
 df -h
 
+# check mounted
+df -HT
+
 # check dir size
 du -h my_dir
-du -h --max-depth=1
+du -h --max-depth=1 | sort -h
 
 # count files
 ls -1 | wc -l
@@ -143,7 +146,7 @@ a stream editor
 
 ## hexdump
 
-display  file contents in hexadecimal, decimal, octal, or ascii
+display file contents in hexadecimal, decimal, octal, or ascii
 
 ```bash
 # 0a -> LF
@@ -168,7 +171,7 @@ curl <address> -H "Content-Type: application/json" -X POST -d '@data.json'
 # copy folder
 cp -avr <source> <target>
 
-# move folder
+# move folder or multiple folders
 mv <source>.* <target>
 
 # rename files
@@ -199,4 +202,13 @@ unzip my.zip -d /path/to/dir
 ```bash
 # show  all user
 less /etc/passwd
+```
+
+# yum
+
+```bash
+# clean /var/cache/yum
+yum clean packages
+yum clean headers
+yum clean all
 ```

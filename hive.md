@@ -24,7 +24,6 @@ sudo service hive-server2 start
 $HIVE_HOME/bin/hiveserver2
 $HIVE_HOME/bin/hive --service hiveserver2
 
-
 # stop hiveserver2
 sudo service hive-server2 stop
 ```
@@ -72,6 +71,10 @@ via control user's hdfs permission
 # grant user test
 hadoop fs -setfacl -m user:test:rwx /user/hive/warehouse
 ```
+
+## udf
+
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+UDF
 
 ## hive-site.xml
 

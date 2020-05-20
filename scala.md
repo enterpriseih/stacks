@@ -43,7 +43,7 @@ run
 # build jar
 package
 
-# run with params运行带参数
+# run with params 运行带参数
 run <param1> <param2>
 
 # check plugins
@@ -74,3 +74,14 @@ assembly
 # show content
 jar tvf <path_to_my_jar>
 ```
+
+## repl
+
+```bash
+# with jar
+scala -cp /path/to/jar
+```
+
+## timezone
+
+https://garygregory.wordpress.com/2013/06/18/what-are-the-java-timezone-ids/
