@@ -157,12 +157,18 @@ spark.time(
 // ts => seconds
 unix_timestamp(col_time_string: Column) : col_number_of_seconds: Column
 unix_timestamp(col_time_string: Column, string_pattern: String) : col_number_of_seconds: Column
+unix_timestamp($"ts", "yyyy-MM-dd HH:mm:ss Z")
 // seconds => ts
 from_unixtime(col_number_of_seconds: Column) : col_time_string: Column
+from_unixtime($"seconds")
 // tz  ts => utc ts
 to_utc_timestamp(col_timezone_time_string: Column, timezone: String) : col_utc_time_string: Column
+to_utc_timestamp($"ts", "CST")
 // utc ts => tz ts
 from_utc_timestamp(col_utc_time_string: Column, timezone: String) : col_timezone_time_string: Column
+from_utc_timestamp($"utc_ts", "EST")
+
+java.sql.Timestamp.valueOf("2016-05-09 10:12:43")
 ```
 
 ### size
