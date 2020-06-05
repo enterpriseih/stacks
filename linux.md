@@ -182,6 +182,9 @@ rm -r /path/to/dir/*
 
 # remove all contents and the folder
 rm -r /path/to/dir
+
+# remove by regex
+find . -type d -name "name*" -exec rm -rf {} \;
 ```
 
 # http server
