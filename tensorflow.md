@@ -13,6 +13,11 @@ source activate tensorflow
 pip install --ignore-installed --upgrade tensorflow
 conda install -c anaconda protobuf libgcc
 pip install pillow lxml Cython jupyter matplotlib pandas opencv-python
+conda install gxx_linux-64
+pip install packaging fastparquet
+
+# install with  tsinghua
+pip install --ignore-installed --upgrade tensorflow -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # in mac
 # use pythonw instead of python
@@ -26,7 +31,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/anaconda3/envs/tensorflow/lib/:/ro
 ## tensorboard
 
 ```bash
-tensorboard --logdir=/path/to/train/dir
+tensorboard --logdir=/path/to/train/dir --host=0.0.0.0
 ```
 
 ## saved model

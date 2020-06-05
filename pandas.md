@@ -1,5 +1,12 @@
 # pandas
 
+## install
+
+```bash
+# show installed
+pd.show_versions()
+```
+
 ## read & write
 
 ```python
@@ -130,7 +137,7 @@ ts.resample('5Min').sum()
 df["grade"] = df["raw_grade"].astype("category")
 df["grade"].cat.categories = ["very good", "good", "very bad"]
 df["grade"] = df["grade"].cat.set_categories(["very bad", "bad", "medium", "good", "very good"])
-df.sort_values(by="grade") # 按category顺序
+df.sort_values(by="grade") # 按 category 顺序
 df.groupby("grade").size()
 
 # time
