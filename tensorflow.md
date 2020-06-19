@@ -65,3 +65,25 @@ curl -X POST \
 	"instances":[[0.5026455,0.48942696,0.67499523,0.3115942,...]]
 }'
 ```
+
+## jupyter
+
+```python
+# show device
+from tensorflow.python.client import device_lib
+device_lib.list_local_devices()
+# or
+import tensorflow as tf
+tf.config.experimental.list_physical_devices()
+
+```
+
+## cuda
+
+```version
+nvcc --version
+```
+
+```check status
+nvidia-smi
+```
