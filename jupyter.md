@@ -40,4 +40,7 @@ jupyter kernelspec list
 
 # remove kernel
 jupyter kernelspec uninstall <old_kernel>
+
+# start jupyter lab
+nohup jupyter lab >/dev/null 2>&1&
 ```

@@ -9,6 +9,7 @@ wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh
 bash Anaconda3-5.0.1-Linux-x86_64.sh
 export PATH=/data/anaconda3/bin:$PATH
 export PATH=/data/miniconda3/bin:$PATH
+export PATH=/home/zhiyang.wang/miniconda3/bin:$PATH
 
 
 # create new environment aws with python 3.6

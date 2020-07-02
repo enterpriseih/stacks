@@ -16,9 +16,11 @@ pip install pillow lxml Cython jupyter matplotlib pandas opencv-python
 conda install gxx_linux-64
 pip install packaging fastparquet
 
-# install with  tsinghua
+# install with tsinghua
 pip install --ignore-installed --upgrade tensorflow -i https://pypi.tuna.tsinghua.edu.cn/simple
 
+# install 1.14
+pip install tensorflow-gpu==1.14 -i https://pypi.tuna.tsinghua.edu.cn/simple
 # in mac
 # use pythonw instead of python
 conda install python.app
@@ -31,7 +33,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/root/anaconda3/envs/tensorflow/lib/:/ro
 ## tensorboard
 
 ```bash
-tensorboard --logdir=/path/to/train/dir --host=0.0.0.0
+nohup tensorboard --logdir=/path/to/train/dir --host=0.0.0.0 >/dev/null 2>&1&
 ```
 
 ## saved model
@@ -75,15 +77,28 @@ device_lib.list_local_devices()
 # or
 import tensorflow as tf
 tf.config.experimental.list_physical_devices()
+# or
+import tensorflow as tf
+tf.test.is_gpu_available()
+
+# error
+# FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+pip install "numpy<1.17"
+
+# check gpu
 
 ```
 
 ## cuda
 
-```version
+```bash
+# version
 nvcc --version
-```
 
-```check status
+# check status
 nvidia-smi
+
+# when gpu is not listed, check env
+export PATH=/usr/local/cuda-10.0:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
 ```

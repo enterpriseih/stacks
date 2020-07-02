@@ -56,6 +56,9 @@ kill -9 <PID>
 
 #  show all env
 printenv | more
+
+# check system version
+cat /etc/os-release
 ```
 
 ## cat
