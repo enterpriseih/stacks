@@ -1,0 +1,46 @@
+$themes: (
+    light: (
+      // TODO
+    ),
+    dark: (
+        background: #001622,
+        background-opaque: #00162266,
+        midground: #011d32,
+        midground-border:#003E52,
+        foreground: #00263C,
+        hover: #004B64,
+        outrange: #004B64,
+        inrange-background: #021E33,
+
+        color: #f0f1f1,
+        color2: #E6FAFA,
+        primary: #00bcbc,
+        secondary: #009292,
+        tertiary: #B7E8EA,
+
+        warning: #fff794,
+        serious: #FF6347,
+        error: #ff231e,
+        required: #f56c6c,
+
+        placeholder: #9B9DA9,
+        border:#9B9DA9,
+        scrollbar: #1B3B52,
+        button: #001622,
+        disabled: #001622,
+        disabled-background: #004B64,
+    )
+);
+
+@mixin themeify {
+  @each $theme-name, $theme-map in $themes {
+    $theme-map: $theme-map !global;
+    body[data-theme=#{$theme-name}] & {
+      @content;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
