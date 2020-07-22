@@ -114,6 +114,22 @@ git rm <submodule_path_or_local_dir_name>
 rm -rf .git/modules/<submodule_path_or_local_dir_name>
 ```
 
+## Stash
+
+```bash
+# show stashed
+git stash list
+
+# save current
+git stash push
+
+# apply latest
+git stash pop
+
+# clear all
+git stash clear
+```
+
 ## Error
 
 ```bash
