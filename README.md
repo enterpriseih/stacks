@@ -1,6 +1,6 @@
 # STACKS
 
-This project archives terminal **commands**, **configuration** files and code **templates** that I use intensively at work.
+This project archives terminal **commands**, **configurations**, code **templates** and **glues** that I use intensively at work.
 
 Everything here is **ephemeral** because softwares and hardwares constantly evolve.
 
