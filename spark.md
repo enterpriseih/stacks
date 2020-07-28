@@ -169,6 +169,9 @@ from_utc_timestamp(col_utc_time_string: Column, timezone: String) : col_timezone
 from_utc_timestamp($"utc_ts", "EST")
 
 java.sql.Timestamp.valueOf("2016-05-09 10:12:43")
+
+// format
+date_format($"col_timestamp","dd/MM/yyyy")
 ```
 
 ### size

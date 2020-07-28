@@ -122,6 +122,9 @@ db.my_collection.updateMany({}, {$rename: {"old_key": "new_key"}})
 
 // delete key
 db.my_collection.updateMany({}, {$unset: {"key": ""}})
+
+// delete key that not ends with 2
+db.my_collection.deleteMany({'key':{$not:/2$/}})
 ```
 
 ### aggregate operation
