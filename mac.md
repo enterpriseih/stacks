@@ -78,4 +78,7 @@ git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.ustc
 
 echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.bash_profile
 source ~/.bash_profile
+
+# mov to gif
+ffmpeg -i in.mov -s 600x300 -pix_fmt rgb24 -r 30 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
 ```
