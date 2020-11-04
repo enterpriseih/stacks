@@ -9,6 +9,24 @@ yum update
 sudo yum install mysql-server
 ```
 
+## start w/ docker
+
+```
+docker run -e MYSQL_ROOT_PASSWORD=123456  -p 3306:3306 -v ~/mysql:/var/lib/mysql -d mysql:5.7
+```
+
+## shutdown
+
+```
+/usr/local/mysql/bin/mysqladmin -u root -p shutdown
+sudo mysqld stop
+sudo /usr/local/mysql/bin/mysqld stop
+brew services stop mysql
+
+ps aux | grep mysqld
+kill -TERM <PID>
+```
+
 ## user
 
 ```sql
@@ -21,6 +39,9 @@ GRANT ALL ON * TO my_user;
 ```sql
 -- show all column names
 select * from information_schema.columns where TABLE_SCHEMA = 'my_table';
+
+-- version
+SHOW VARIABLES LIKE "%version%";
 ```
 
 ## database & table
@@ -85,6 +106,7 @@ insert into my_table (my_column1, my_column2, my_column3) values ('my_value1', '
 ```sql
 -- show process
 SHOW FULL PROCESSLIST
+SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST
 ```
 
 ## mysql shell

@@ -81,4 +81,7 @@ source ~/.bash_profile
 
 # mov to gif
 ffmpeg -i in.mov -s 600x300 -pix_fmt rgb24 -r 30 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
+
+# show port
+sudo lsof -iTCP -sTCP:LISTEN -n -P
 ```

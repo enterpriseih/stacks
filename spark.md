@@ -194,22 +194,23 @@ spark.sql("select * from db.table").explain
 - https://docs.cloudera.com/HDPDocuments/HDP3/HDP-3.1.4/integrating-hive/content/hive_hivewarehouseconnector_supported_types.html
 - https://www.simba.com/products/Hive/doc/JDBC_InstallGuide/content/jdbc/hi/features/datatypes.htm
 
-| pymongo                           | scala case class     | spark-connector<br>Bson Type | Spark         | Parquet    | HIVE      |
-| --------------------------------- | -------------------- | ---------------------------- | ------------- | ---------- | --------- |
-|                                   |                      | Document                     | StructType    | Struct     | STRUCT    |
-| list                              | List                 | Array                        | ArrayType     | array      | ARRAY     |
-|                                   | Short?               |                              | ByteType      |            | TINYINT   |
-|                                   | Short                | 16-bit integer               | ShortType     | int? short | SMALLINT  |
-| int                               | Int                  | 32-bit integer               | IntegerType   |            | INT       |
-| Int<br/>long<br/>json.int64.Int64 | long                 | 64-bit integer               | LongType      | long       | BIGINT    |
-|                                   |                      |                              | FloatType     |            | FLOAT     |
-|                                   | Double               | Double                       | DoubleType    | double     | DOUBLE    |
-|                                   | java.math.BigDecimal |                              | DecimalType   |            | DECIMAL   |
-| datetime.datetime                 | java.sql.Timestamp   | Date                         | TimestampType | timestamp  | TIMESTAMP |
-| string<br>unicode                 | String               | String                       | StringType    | string     | STRING    |
-|                                   |                      |                              | BinaryType    |            | BINARY    |
-| bool                              | Boolean              | Boolean                      | BooleanType   | Bool       | BOOLEAN   |
-| None                              | Option[]=None        | Null                         | Null          |            |           |
+| pymongo                           | scala case class                      | spark-connector<br>Bson Type | Spark         | Parquet    | HIVE           |
+| --------------------------------- | ------------------------------------- | ---------------------------- | ------------- | ---------- | -------------- |
+|                                   |                                       | Document                     | StructType    | Struct     | STRUCT         |
+| list                              | List                                  | Array                        | ArrayType     | array      | ARRAY          |
+|                                   | Short?                                |                              | ByteType      |            | TINYINT        |
+|                                   | Short                                 | 16-bit integer               | ShortType     | int? short | SMALLINT       |
+| int                               | Int                                   | 32-bit integer               | IntegerType   |            | INT            |
+| Int<br/>long<br/>json.int64.Int64 | long                                  | 64-bit integer               | LongType      | long       | BIGINT         |
+|                                   |                                       |                              | FloatType     |            | FLOAT          |
+|                                   | Double                                | Double                       | DoubleType    | double     | DOUBLE         |
+|                                   | java.math.BigDecimal                  |                              | DecimalType   |            | DECIMAL        |
+| datetime.datetime                 | java.sql.Timestamp/ java.time.Instant | Date                         | TimestampType | timestamp  | TIMESTAMP      |
+| string<br>unicode                 | String                                | String                       | StringType    | string     | STRING/VARCHAR |
+|                                   |                                       |                              | BinaryType    |            | BINARY         |
+| bool                              | Boolean                               | Boolean                      | BooleanType   | Bool       | BOOLEAN        |
+| datetime.date                     | java.sql.Date / java.time.LocalDate   |                              | DateType      |            | DATE           |
+| None                              | Option[]=None                         | Null                         | Null          |            |                |
 
 ## SimpleDateFormat
 

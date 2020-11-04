@@ -27,7 +27,7 @@ port 7001
 tcp-backlog 511
 timeout 0
 tcp-keepalive 300
-# 设置后台运行redis
+# 设置后台运行 redis
 daemonize yes
 supervised no
 pidfile /var/run/redis_7001.pid
@@ -83,4 +83,17 @@ client-output-buffer-limit slave 256mb 64mb 60
 client-output-buffer-limit pubsub 32mb 8mb 60
 hz 10
 aof-rewrite-incremental-fsync yes
+```
+
+## redis-cli
+
+```bash
+# download src
+wget http://download.redis.io/releases/redis-6.0.7.tar.gz
+tar xzf redis-6.0.7.tar.gz
+cd redis-6.0.7
+make
+
+# use
+src/redis-cli -h <host> -p <port> -a "mypass"
 ```

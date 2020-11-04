@@ -125,6 +125,15 @@ db.my_collection.updateMany({}, {$unset: {"key": ""}})
 
 // delete key that not ends with 2
 db.my_collection.deleteMany({'key':{$not:/2$/}})
+
+// swap key
+db.my_collection.find({}).forEach( function (doc) {
+  var col1 = doc.col2;
+  var col2 = doc.col1
+  doc.col1 = col1;
+  doc.col2 = col2
+  db.my_collection.save(doc);
+});
 ```
 
 ### aggregate operation
@@ -356,4 +365,16 @@ DBCommandCursor.prototype.to_csv = DBQuery.prototype.to_csv = function (
 db.collection.getIndexes();
 
 db.collection.dropIndex("my_index_name");
+```
+
+## stat
+
+```js
+db.stats(1024);
+
+// all collection stats
+db.getCollectionNames().forEach((col) => {
+  print(col);
+  print(db.getCollection(col).stats(1024 * 1024 * 1024));
+});
 ```
