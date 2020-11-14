@@ -45,6 +45,16 @@ str.substr(pos, length);
 
 // size
 str.size();
+
+// str -> stringstream -> vector<int>
+stringstream ss(str);
+vector<int> v;
+char ch;
+int i;
+while(ss >> i){
+    v.push_back(i);
+    ss >> ch;
+}
 ```
 
 ## map
