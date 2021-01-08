@@ -80,6 +80,7 @@ jar tvf <path_to_my_jar>
 ```bash
 # with jar
 scala -cp /path/to/jar
+scala -classpath /Users/zhiyang.wang/.ivy2/cache/org.json/json/jars/json-20090211.jar
 ```
 
 ## timezone

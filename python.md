@@ -69,3 +69,13 @@ if __name__ == '__main__':
 ```bash
 curl -X PUT --upload-file my_file.txt http://<ip>:8000
 ```
+
+### open server
+
+```bash
+# python2
+python -m SimpleHTTPServer 
+
+# python3
+python -m http.server
+```

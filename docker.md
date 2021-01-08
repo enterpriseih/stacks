@@ -64,12 +64,24 @@ docker container rm <container_id>
 
 # check ip
 docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name_or_id>
+
+# inspect
+docker container inspect <container_name>
+```
+## image
+```bash
+# save image to file
+docker save -o [ouput/file/path] golang:1.13.3
+
+# load image from file
+docker load -i [path/to/image/file]
 ```
 
 ## logs
 
 ```bash
 docker logs <container_name>
+docker logs <container_name> --tail 100
 ```
 
 ## swarm
@@ -288,7 +300,11 @@ CMD [ "npm", "start" ]
 ```bash
  curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io
 
- sudo systemctl restart docker
+# IMPORTANT! this will exit running containers
+sudo systemctl restart docker
+
+# start exited container
+docker start $(docker ps -a -q --filter "status=exited")
 ```
 
 ## exec

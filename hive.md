@@ -52,6 +52,10 @@ hive –e “show tables;”
 
 # show all partitions
 show partitions my_db.my_table
+
+# show partition location
+SHOW TABLE EXTENDED FROM my_db LIKE 'my_table' PARTITION(datetime='latest')
+
 ```
 
 ## security

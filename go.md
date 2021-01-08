@@ -28,3 +28,12 @@ go list -m all
 // install module
 go get -u github.com/gin-gonic/gin
 ```
+
+## test
+```go
+// run test
+go test
+
+// run 
+go test -v -run="<FUNCTION>"
+```

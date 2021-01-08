@@ -57,7 +57,7 @@ tmux kill-session -t <session_name>
 <PREFIX> n
 ```
 
-## panes
+## panels
 
 ```text
 # split horizontal
@@ -141,5 +141,7 @@ set-window-option -g automatic-rename on
 set-option -g set-titles on
 
 run-shell ~/.tmux/tmux-resurrect/resurrect.tmux
+# prefix + Ctrl-s - save
+# prefix + Ctrl-r - restore
 
 ```

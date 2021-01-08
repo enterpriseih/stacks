@@ -201,7 +201,7 @@ spark.sql("select * from db.table").explain
 |                                   | Short?                                |                              | ByteType      |            | TINYINT        |
 |                                   | Short                                 | 16-bit integer               | ShortType     | int? short | SMALLINT       |
 | int                               | Int                                   | 32-bit integer               | IntegerType   |            | INT            |
-| Int<br/>long<br/>json.int64.Int64 | long                                  | 64-bit integer               | LongType      | long       | BIGINT         |
+| Int<br/>long<br/>json.int64.Int64 | Long                                  | 64-bit integer               | LongType      | long       | BIGINT         |
 |                                   |                                       |                              | FloatType     |            | FLOAT          |
 |                                   | Double                                | Double                       | DoubleType    | double     | DOUBLE         |
 |                                   | java.math.BigDecimal                  |                              | DecimalType   |            | DECIMAL        |

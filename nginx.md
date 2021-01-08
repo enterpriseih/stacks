@@ -78,6 +78,18 @@ server {
             try_files $uri $uri/ /index.html;
     }
 
+    location ^~/dw/ {
+        # another way of serving file 
+        proxy_pass http://localhost:8080/dw/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header REMOTE-HOST $remote_addr;
+    }
+
     location /api/ {
         proxy_pass   http://127.0.0.1:<port>/api/;
         proxy_http_version 1.1;
@@ -97,6 +109,11 @@ server {
     }
 }
 
+```
+
+## service
+
+```bash
 # start service
 systemctl start nginx
 
@@ -105,16 +122,30 @@ service nginx restart
 
 # check status
 service nginx status -l
-```
 
-## check
+# stop service
+service nginx stop
 
-```bash
 # check syntax
-
 nginx -t -c /etc/nginx/nginx.conf
+
 ```
 
 ## docker
 
 /path/to/index/html/folder:/usr/share/nginx/html:ro
+
+## mac
+```bash
+# intall
+brew install nginx
+
+# start
+nginx -s reopen
+
+# restart
+nginx -s reload
+
+# edit config
+vim /usr/local/etc/nginx/nginx.conf
+```

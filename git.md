@@ -153,11 +153,31 @@ git remote add origin <github-uri>
 git push -u --force origin master
 ```
 
+## count lines
+
+```bash
+
+# by author
+git log --format='%aN'  | sort -u | 
+while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
+
+# filter time
+git log --format='%aN' | sort -u | 
+while read name; do echo -en "$name\t"; git log --author="$name" --since==2020-01.01 --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
+
+# filter include src but excluede assets 
+git log --format='%aN'  | sort -u | 
+while read name; do echo -en "$name\t"; git log --author="$name" --since==2020-01.01 --pretty=tformat: --numstat | grep src | grep -v assets | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
+
+# myself
+git log --author="zhiyang.wang" --since==2020-01.01 --pretty=tformat: --numstat | grep src | grep -v assets/js | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' 
+```
+
 ## .gitconfig
 
 ```bash
 # set email of a single respository
-git config user.email "zhiyang.wang@nio.com"
+git config user.email "wzy816@gmail.com"
 ```
 
 ```config
