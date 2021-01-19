@@ -132,6 +132,7 @@ spark-submit \
 ### fs
 
 ```scala
+// check status
 import org.apache.hadoop.fs.{FileSystem,Path}
 import org.apache.commons.io.FileUtils
 
@@ -141,6 +142,16 @@ for (status <- statuses) {
     println(status.toString())
     println(FileUtils.byteCountToDisplaySize(status.getLen()))
 }
+
+// delete folder
+import org.apache.hadoop.fs.{FileSystem,Path}
+import org.apache.commons.io.FileUtils
+import java.net.URI
+
+val fs = FileSystem.get(URI.create("s3a://../"), conf)
+val outPutPath = new Path("s3a://.../")
+if (fs.exists(outPutPath))
+  fs.delete(outPutPath, true)
 ```
 
 ### time
@@ -277,3 +288,9 @@ services:
     scale: 1
     start_on_create: true
 ```
+
+## error
+
+### java.lang.UnsupportedOperationException: parquet.column.values.dictionary.PlainValuesDictionary$PlainIntegerDictionary
+
+Cause: schema in parquet files doesn't match hive table schema.
