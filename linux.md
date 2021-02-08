@@ -89,6 +89,9 @@ cat -e <file>
 
 # merge files
 cat *.csv>merged.csv
+
+# download file from ssh
+ssh ... 'cat /path/on/remote' > /path/on/local
 ```
 
 ## tail
@@ -218,3 +221,18 @@ yum clean packages
 yum clean headers
 yum clean all
 ```
+
+# systemctl
+```bash
+# start
+sudo systemctl start application.service
+
+# stop
+sudo systemctl stop application.service
+
+# status
+systemctl status application.service
+
+# show full log
+journalctl -u application.service
+````

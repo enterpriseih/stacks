@@ -31,6 +31,9 @@ brew install mupdf
 # zip with maxsize
 zip -r -s 1g 20190516_bak.zip ./
 
+# maximun compression
+zip -9 ...
+
 # unzip error: Unzipping large file: bad zipfile offset (local header sig)
 zip -FF original.zip --out fixed.zip
 unzip fixed.zip
