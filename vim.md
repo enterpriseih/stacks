@@ -92,4 +92,4 @@
 
 ## syntax
 
-[c.vim & cpp.vim](https://github.com/octol/vim-cpp-enhanced-highlight/tree/master/after/syntax)
+[cpp.vim](https://github.com/octol/vim-cpp-enhanced-highlight/tree/master/after/syntax/cpp.vim)
