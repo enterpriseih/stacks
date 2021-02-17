@@ -84,7 +84,8 @@
     ""nmap <F11> :TrinityToggleNERDTree<CR>
 
     autocmd BufNewFile,BufRead *.md set filetype=markdown
-
+    
+    set guifont=Cascadia\ Mono\ PL:h10
 
 ## colors
 
@@ -93,3 +94,7 @@
 ## syntax
 
 [cpp.vim](https://github.com/octol/vim-cpp-enhanced-highlight/tree/master/after/syntax/cpp.vim)
+
+## font
+
+[CascadiaCode](https://github.com/microsoft/cascadia-code/releases/download/v2102.03/CascadiaCode-2102.03.zip)
