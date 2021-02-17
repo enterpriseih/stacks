@@ -28,11 +28,12 @@
     call vundle#end()
 
     ""color
-    colorscheme molokai_dark
+    colorscheme molokai-dark
     syntax enable
     set background=dark
     "  TabLineFill  tab pages line, where there are no labels
     hi TabLineFill term=none
+    
     hi TabLineFill ctermfg=DarkGrey
     hi TabLineFill guifg=#777777
     "  TabLineSel   tab pages line, active tab page label
@@ -83,3 +84,12 @@
     ""nmap <F11> :TrinityToggleNERDTree<CR>
 
     autocmd BufNewFile,BufRead *.md set filetype=markdown
+
+
+## colors
+
+[molokai-dark.vim](https://github.com/pR0Ps/molokai-dark/blob/master/colors/molokai-dark.vim)
+
+## syntax
+
+[c.vim & cpp.vim](https://github.com/octol/vim-cpp-enhanced-highlight/tree/master/after/syntax)
