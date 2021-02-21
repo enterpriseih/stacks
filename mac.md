@@ -60,7 +60,7 @@ sudo launchctl unload /Library/LaunchDaemons/com.airwatch.AWRemoteManagementDaem
 sudo launchctl unload /Library/LaunchDaemons/com.airwatch.AWRemoteTunnelAgent.plist
 
 # restart audio
-sudo killall coreaudiod
+sudo killall coreaudioud
 
 # delete .DS
 cd /my/dir
