@@ -75,7 +75,6 @@ wget -E -H -k -p -i /path/to/url/txt
 /usr/bin/open -a "/Applications/Google Chrome.app"  'http://google.com'
 
 # change brew source
-git -C "$(brew --re remote set-url origin https://mirrors.ustc.edu.cn/brew.git
 git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
 git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
 
