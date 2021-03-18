@@ -79,7 +79,7 @@ server {
     }
 
     location ^~/dw/ {
-        # another way of serving file 
+        # another way of serving file
         proxy_pass http://localhost:8080/dw/;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
@@ -136,11 +136,13 @@ nginx -t -c /etc/nginx/nginx.conf
 /path/to/index/html/folder:/usr/share/nginx/html:ro
 
 ## mac
+
 ```bash
 # intall
 brew install nginx
 
 # start
+nginx -c /usr/local/etc/nginx/nginx.conf
 nginx -s reopen
 
 # restart

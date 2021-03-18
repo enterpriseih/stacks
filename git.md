@@ -40,6 +40,9 @@ git merge -X theirs master
 git merge --no-ff --no-commit <source_branch>
 git reset -- <folder>
 
+# mrege by folders
+git merge --no-ff --no-commit <source_branch>
+
 #
 git checkout --orphan newBranch
 git add -A  # Add all files and commit them
@@ -48,6 +51,10 @@ git branch -D master  # Deletes the master branch
 git branch -m master  # Rename the current branch to master
 git push -f origin master  # Force push master branch to github
 git gc --aggressive --prune=all
+
+# update last commit message
+git commit --amend -m "<new_msg>"
+git push origin <branch> --force
 ```
 
 ## diff
@@ -158,19 +165,19 @@ git push -u --force origin master
 ```bash
 
 # by author
-git log --format='%aN'  | sort -u | 
+git log --format='%aN'  | sort -u |
 while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
 
 # filter time
-git log --format='%aN' | sort -u | 
+git log --format='%aN' | sort -u |
 while read name; do echo -en "$name\t"; git log --author="$name" --since==2020-01.01 --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
 
-# filter include src but excluede assets 
-git log --format='%aN'  | sort -u | 
+# filter include src but excluede assets
+git log --format='%aN'  | sort -u |
 while read name; do echo -en "$name\t"; git log --author="$name" --since==2020-01.01 --pretty=tformat: --numstat | grep src | grep -v assets | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
 
 # myself
-git log --author="zhiyang.wang" --since==2020-01.01 --pretty=tformat: --numstat | grep src | grep -v assets/js | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' 
+git log --author="zhiyang.wang" --since==2020-01.01 --pretty=tformat: --numstat | grep src | grep -v assets/js | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }'
 ```
 
 ## .gitconfig
