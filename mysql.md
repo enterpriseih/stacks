@@ -83,6 +83,12 @@ ALTER TABLE my_table AUTO_INCREMENT = 1010;
 
 -- drop
 DROP TABLE my_table
+
+-- show db size
+SELECT table_schema "DB", ROUND(SUM(data_length + index_length) / 1024 / 1024/1024, 1) "DB Size in GB" FROM information_schema.tables GROUP BY table_schema;
+
+-- show table size
+SELECT table_name AS `TABLE`, round(((data_length + index_length) / 1024 / 1024 / 1024), 2) `Size in GB` FROM information_schema.TABLES WHERE table_schema = "$DB_NAME";
 ```
 
 ## query
