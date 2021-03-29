@@ -7,12 +7,31 @@
 "+gp
 ```
 
-## header
+## template
 
 ```cpp
-#include<iostream>
+#include <iostream>
+#include <queue>
 #include <vector>
+#include <set>
+#include <algorithm>
+
 using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> solve(vector<vector<int>>& input) {
+        return ans;
+    }
+};
+
+int main() {
+    Solution s;
+    vector<vector<int>> input {{0,5,2},{2,5,3}};
+    vector<vector<int>> ans = s.solve(d);
+    return 0;
+}
+
 ```
 
 ## vector
@@ -80,6 +99,12 @@ v.insert(v.begin()+2,1);
 
 ```cpp
 sort(v.begin(), v.end());
+
+bool cmp(const int &l, const int &r)
+{
+    return l > r; // desc
+}
+sort(v.begin(), v.end(), cmp);
 ```
 
 ## set
@@ -110,6 +135,12 @@ for(it=s1.begin();it!=s1.end();it++)
 s.erase(5);
 ```
 
+### exits
+
+```cpp
+s.find(element) != s.end();
+```
+
 ## stack
 
 ```cpp
@@ -127,6 +158,15 @@ q.size()
 q.front()
 q.back()
 q.push(ele)
+q.pop()
+```
+
+## priority_queue (max-heap)
+
+```cpp
+#include<queue>
+priority_queue<int> q;
+q.push(2);
 q.pop()
 ```
 
