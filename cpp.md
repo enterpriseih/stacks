@@ -148,6 +148,7 @@ stack<int> s;
 s.push(ele)
 s.pop()
 s.top()
+s.size()
 ```
 
 ## queue
@@ -300,7 +301,7 @@ while(low< high){
         low = mid+1;
     }
 }
-return low // min(number) s.t. condition(number is True
+return low // min(number) s.t. condition(number) is True
 ```
 
 ## backtrack
