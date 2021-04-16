@@ -73,6 +73,9 @@ curl 'http://<ip>:8123'
 
 ```sql
 CREATE DATABASE IF NOT EXISTS tutorial
+
+-- show db
+SHOW DATABASES;
 ```
 
 #### table
@@ -80,10 +83,22 @@ CREATE DATABASE IF NOT EXISTS tutorial
 ```bash
 #insert from csv
 clickhouse-client --query "INSERT INTO tutorial.hits_v1 FORMAT TSV" --max_insert_block_size=100000 < hits_v1.tsv
+
 ```
 
 ```sql
 SELECT COUNT(*) FROM tutorial.hits_v1;
+
+-- show table
+SHOW TABLES from <db>;
+```
+
+#### partition
+
+```sql
+-- show partition
+SELECT partition, name, active　FROM system.parts　WHERE table = 'visits_v1';
+-- or go to <data_dir>/<database>/<table>
 ```
 
 ## operation
@@ -116,6 +131,7 @@ SELECT user, client_hostname,client_name,formatDateTime(query_start_time, '%T') 
 
 -- show current queries
 SELECT query_id, user, address, query  FROM system.processes ORDER BY query_id;
+show processlist；
 
 -- kill query
 KILL QUERY WHERE query_id = <query_id>;
