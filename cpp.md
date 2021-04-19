@@ -2,7 +2,7 @@
 
 ## vim
 
-```
+```cpp
 :%y+
 "+gp
 ```
@@ -34,73 +34,87 @@ int main() {
 
 ```
 
-## vector
-
-### print
+## acm template
 
 ```cpp
-for(const int& k : ks){
-    cout << k << " ";
+#include<iostream>
+using namespace std;
+int main(){
+    int N;
+    while(cin >> N){
+        while(N--){
+
+        }
+    }
+    return 0;
 }
 ```
 
-### concat
+## io
 
 ```cpp
+// get line
+string s;
+getline(cin,s);
+
+// return boolean 'true' / 'false'
+cout << boolalpha<< ans;
+```
+
+## array
+
+fixed-length
+
+```cpp
+// init
+int a[128] = {0}
+```
+
+## vector
+
+```cpp
+// print
+for(const int& k : ks){
+
+    cout << k << " ";
+}
+
+// concat
 b.insert(b.end(), a.begin(), a.end());
-```
 
-### slice
-
-```cpp
+// slice
 v2 = vector<int>(v1.begin() + 1, v1.end());
-```
 
-### iterate
-
-```cpp
+//  iterate
 for(const auto& v: values) {
     std::cout << v << "\n";
 }
 for(int i=0;i<v3.size();i++){
     cout<<v3[i]<<' ';
 }
-```
+for(int num : v){
 
-### delete
+}
 
-```cpp
+//  delete
 v.erase(v.begin()+1);
 v.erase(v.begin()+2,v.begin()+5);
-```
 
-### init
-
-```cpp
+//  init
 vector<int> vect{ 10, 20, 30 };
 vector<double> v3(10,0) // 10 zeros
 
-```
-
-### access
-
-```cpp
+//  access
 v3[2]= 1
-```
 
-### insert
-
-```cpp
+//  insert
 v.push_back(9);
 v.insert(v.begin()+2,1);
-```
 
-### sort
-
-```cpp
+//  sort
 sort(v.begin(), v.end());
 
-bool cmp(const int &l, const int &r)
+bool cmp(int & l, int & r)
 {
     return l > r; // desc
 }
@@ -109,35 +123,22 @@ sort(v.begin(), v.end(), cmp);
 
 ## set
 
-### init
-
 ```cpp
+//  init
 set<int> s;
-```
 
-### insert
-
-```cpp
+//  insert
 s.insert(5);
-```
 
-### loop
-
-```cpp
+//  loop
 set<int>::iterator it;
 for(it=s1.begin();it!=s1.end();it++)
     cout<<*it<<endl;
-```
 
-### delete
-
-```cpp
+//  delete
 s.erase(5);
-```
 
-### exits
-
-```cpp
+//  exits
 s.find(element) != s.end();
 ```
 
@@ -166,14 +167,27 @@ q.pop()
 
 ```cpp
 #include<queue>
+
 // max-heap
 priority_queue<int> q;
+
 // min-heap
 priority_queue <int, vector<int>, greater<int> > q;
+
 q.push(2);
 q.pop()
 q.size()
 q.empty()
+
+// custom compare
+struct compare
+{
+    bool operator()(const ListNode* n1, const ListNode* n2)
+    {
+        return n1->val > n2->val; // sim. greater
+    }
+};
+priority_queue<ListNode*, vector<ListNode*>,compare> pq; // sim. min-heap
 ```
 
 ## set / multiset
@@ -187,14 +201,12 @@ s.insert(1);
 s.erase(1);
 s.erase(s.equal_range(1).first);
 auto search = s.find(2);
-
 ```
 
 ## struct
 
-### init
-
 ```cpp
+// init
 struct subject {
     string name;
     int marks;
@@ -206,105 +218,93 @@ sub.push_back(subject());
 
 ## map
 
-### init
+internally red-black tree
 
 ```cpp
+// init
 map<int,int> map;
 map<int,int> map = {{1,1},{2,2}};
-```
 
-### assign
-
-```cpp
+// assign
 map[key] = value;
-```
 
-### check key exist
-
-```cpp
+// check key exist
 iter = mapStudent.find("123");
 if(iter != mapStudent.end())
-    cout<<"Find, the value is"<<iter->second<<endl;
+cout<<"Find, the value is"<<iter->second<<endl;
 else
-    cout<<"Do not Find"<<endl;
+cout<<"Do not Find"<<endl;
 
 if(map[key]){
-    ...
+...
 }
-```
 
-### iterate
+// iterate
+for(auto it=m.begin();it!=m.end();++it){
+    cout << it->first << ':' <<it->second << endl;
+}
 
-```cpp
-map<string,double>::iterator it;
-    for(it=m.begin();it!=m.end();it++)
-        cout<<(*it).first<<":"<<(*it).second<<endl;
-```
-
-### delete key
-
-```cpp
+// delete key
 m.erase("Jack");
+
+// clear all keys
+m.clear();
 ```
 
-### clear all keys
+## unordered_map
+
+hash map
 
 ```cpp
-m.clear();
+
 ```
 
 ## string
 
 ```cpp
-
-```
-
-### slice
-
-```cpp
+// slice
 s.substr(pos,len)
-```
 
-### length
-
-```cpp
+// length
 s.length()
+strlen(s);
+
+// string to vector<int>
+#include <sstream>
+
+stringstream linestream(str);
+vector<int> v;
+int num;
+while (linestream >> num) v.push_back(num);
 ```
 
 ## char
 
-### to int
-
 ```cpp
+// to int
 ch - '0'
-```
+(int)ch
 
-### to string
-
-```cpp
+// to string
 string s = ch
 ```
 
 ## int
 
-### to char
-
 ```cpp
+// to char
 i + '0'
 ```
 
 ## math
 
-### ceil
-
 ```cpp
+// ceil
 (x+y-1)/y
-```
 
-### max
-
-```cpp
-std::max(7,7);
+max(7,7);
+pow(base, e);
+round(1.2) // 四舍五入
 ```
 
 ## binary search
@@ -323,14 +323,13 @@ while(low< high){
 return low // min(number) s.t. condition(number) is True
 ```
 
-## backtrack
+## backtrack / dfs
 
 ```cpp
 void backtrack(candidate, state):
     if done;
         collect candidate to answer
-        return;
-
+    return;
     for c in candidates:
         make next_candidate
         backtrack(next_candidate, next_state)
