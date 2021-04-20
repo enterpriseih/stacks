@@ -67,7 +67,14 @@ fixed-length
 
 ```cpp
 // init
-int a[128] = {0}
+int a[128] = {0};
+
+// init multidimensional with zero
+int a[5][10][10];
+memset(a,0,sizeof(a));
+
+// copy(start,end, new start)
+copy(&a[4][0][0],&a[4][0][0]+10*10, &a[5][0][0])
 ```
 
 ## vector
