@@ -73,7 +73,19 @@ int a[128] = {0};
 int a[5][10][10];
 memset(a,0,sizeof(a));
 
-// copy(start,end, new start)
+// fill 1d list with number
+int a[10];
+fill(a, a+10,100);
+
+// fill 2d list with number
+int a[10][10];
+fill(a[0], a[0]+100,100);
+
+// copy 1d
+int b[128];
+copy(a,a+128, b);
+
+// copy multidimensional
 copy(&a[4][0][0],&a[4][0][0]+10*10, &a[5][0][0])
 ```
 
@@ -263,6 +275,11 @@ m.clear();
 hash map
 
 ```cpp
+// init
+unordered_map<string, string>umap = {{"12", "234"}};
+
+// delete key
+umap.erase("12);
 
 ```
 
@@ -308,7 +325,7 @@ i + '0'
 ```cpp
 // ceil
 (x+y-1)/y
-
+z
 max(7,7);
 pow(base, e);
 round(1.2) // 四舍五入
@@ -317,6 +334,7 @@ round(1.2) // 四舍五入
 ## binary search
 
 ```cpp
+// template
 int low=0;
 int hight =n;
 while(low< high){
@@ -328,6 +346,11 @@ while(low< high){
     }
 }
 return low // min(number) s.t. condition(number) is True
+
+//lower_bound: first element >= target
+int s[10]
+auto pos = lower_bound(s,s+10, target) - s;
+
 ```
 
 ## backtrack / dfs
