@@ -61,7 +61,7 @@ getline(cin,s);
 cout << boolalpha<< ans;
 
 // split line with custom separator
-# include<sstream>;
+#include<sstream>
 string tmp,s;
 getline(cin, s);
 for(int i=0;i<tmp.size();++i){
