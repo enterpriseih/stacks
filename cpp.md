@@ -59,6 +59,20 @@ getline(cin,s);
 
 // return boolean 'true' / 'false'
 cout << boolalpha<< ans;
+
+// split line with custom separator
+# include<sstream>;
+string tmp,s;
+getline(cin, s);
+for(int i=0;i<tmp.size();++i){
+    if(tmp[i] == ';'){
+        tmp[i] =' ';
+    }
+}
+stringstream ss(s);
+while(ss >> t) {
+    ...
+}
 ```
 
 ## array
@@ -300,6 +314,9 @@ stringstream linestream(str);
 vector<int> v;
 int num;
 while (linestream >> num) v.push_back(num);
+
+// to int, aggresively from start, if cannot throw error
+stoi(s)
 ```
 
 ## char
@@ -308,6 +325,9 @@ while (linestream >> num) v.push_back(num);
 // to int
 ch - '0'
 (int)ch
+
+// check is num
+(int)ch >= 48 && (int)ch <= 57
 
 // to string
 string s = ch
