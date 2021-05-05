@@ -175,6 +175,19 @@ s.erase(5);
 s.find(element) != s.end();
 ```
 
+## multiset
+
+search, insert, erase is O(log n)
+
+```cpp
+multiset <int, greater <int> > s;
+multiset <int, greater <int> > s (s1.begin(),s1.begin()+t);
+s.insert(1);
+s.erase(1);
+s.erase(s.equal_range(1).first);
+auto search = s.find(2);
+```
+
 ## stack
 
 ```cpp
@@ -221,19 +234,6 @@ struct compare
     }
 };
 priority_queue<ListNode*, vector<ListNode*>,compare> pq; // sim. min-heap
-```
-
-## set / multiset
-
-search, insert, erase is O(log n)
-
-```cpp
-multiset <int, greater <int> > s;
-ultiset <int, greater <int> > s (s1.begin(),s1.begin()+t);
-s.insert(1);
-s.erase(1);
-s.erase(s.equal_range(1).first);
-auto search = s.find(2);
 ```
 
 ## struct
@@ -317,6 +317,9 @@ while (linestream >> num) v.push_back(num);
 
 // to int, aggresively from start, if cannot throw error
 stoi(s)
+
+// dict sort
+a.compare(b)<0;
 ```
 
 ## char
