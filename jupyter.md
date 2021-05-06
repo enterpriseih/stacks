@@ -44,3 +44,14 @@ jupyter kernelspec uninstall <old_kernel>
 # start jupyter lab
 nohup jupyter lab >/dev/null 2>&1&
 ```
+
+## support c++
+
+```bash
+conda create -n cling
+conda activate cling
+conda install jupyter notebook
+conda install xeus-cling -c conda-forge
+jupyter kernelspec list
+jupyter notebook
+```

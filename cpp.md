@@ -16,6 +16,8 @@
 #include <set>
 #include <algorithm>
 #include <assert.h>
+#include <limits.h>
+
 using namespace std;
 
 class Solution {
@@ -73,6 +75,30 @@ stringstream ss(s);
 while(ss >> t) {
     ...
 }
+
+// read line by line
+string s;
+while(getline(cin,s)){
+    ...
+}
+```
+
+## class
+
+```cpp
+class Node
+{
+private:
+    int val {0};
+    Node* left {NULL};
+    Nodd* right {NULL};
+
+public:
+    Node(){};
+    Node(int val): val(val), left(NULL), right(NULL){}
+    Node(int val, Node* left, Node* right): val(val), left(left), right(right){}
+}
+
 ```
 
 ## array
@@ -234,6 +260,30 @@ struct compare
     }
 };
 priority_queue<ListNode*, vector<ListNode*>,compare> pq; // sim. min-heap
+```
+
+## set / multiset
+
+search, insert, erase is O(log n)
+
+```cpp
+multiset <int, greater <int> > s;
+ultiset <int, greater <int> > s (s1.begin(),s1.begin()+t);
+s.insert(1);
+s.erase(1);
+s.erase(s.equal_range(1).first);
+auto search = s.find(2);
+```
+
+## pair
+
+```cpp
+pair<int,int> p(1,1);
+
+pair<int, int> p;
+p = make_pair(1, 1);
+
+p.first = 2;
 ```
 
 ## struct
