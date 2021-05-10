@@ -81,6 +81,13 @@ string s;
 while(getline(cin,s)){
     ...
 }
+
+// read line by custom separator
+getline(cin, s)
+stringstream ss(s);
+string a;
+while(getline(ss,a,',')){
+}
 ```
 
 ## class
