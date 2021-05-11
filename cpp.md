@@ -398,6 +398,9 @@ string s = ch
 ```cpp
 // to char
 i + '0'
+
+// to string
+to_string(i)
 ```
 
 ## math
