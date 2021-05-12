@@ -309,6 +309,19 @@ struct subject {
 };
 vector<subject> sub;
 sub.push_back(subject());
+
+// ListNode
+
+struct ListNode
+{
+    int       m_nKey;
+    ListNode* m_pNext;
+};
+
+ListNode *head = new ListNode;
+ListNode *node = new ListNode;
+node->m_nKey = v;
+head->m_pNext = node;
 ```
 
 ## map
