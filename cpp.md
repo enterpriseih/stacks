@@ -379,6 +379,7 @@ while (linestream >> num) v.push_back(num);
 
 // to int, aggresively from start, if cannot throw error
 stoi(s)
+stoi(s, nullptr, 16) // hex string to int
 
 // dict sort
 a.compare(b)<0;
