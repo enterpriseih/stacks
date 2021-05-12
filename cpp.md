@@ -88,6 +88,11 @@ stringstream ss(s);
 string a;
 while(getline(ss,a,',')){
 }
+
+// read 1/2
+int a,b;
+char ch;
+cin >> a >> ch >> b;
 ```
 
 ## class
