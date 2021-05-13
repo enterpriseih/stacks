@@ -40,7 +40,9 @@ int main() {
 
 ```cpp
 #include<iostream>
+
 using namespace std;
+
 int main(){
     int N;
     while(cin >> N){
@@ -93,6 +95,12 @@ while(getline(ss,a,',')){
 int a,b;
 char ch;
 cin >> a >> ch >> b;
+
+// output float with precision
+#include<iomanip>
+cout << fixed <<setprecision(1) << 1.22; // 小数点后一位，输出 1.2
+cout << setprecision(1) << 1.22; // 保留一位，输出 1
+
 ```
 
 ## class
@@ -121,9 +129,9 @@ fixed-length
 // init
 int a[128] = {0};
 
-// init multidimensional with zero
+// init multidimensional with zero bit
 int a[5][10][10];
-memset(a,0,sizeof(a));
+memset(a,0,sizeof(a)); // old c function
 
 // fill 1d list with number
 int a[10];
@@ -396,6 +404,12 @@ stoi(s, nullptr, 16) // hex string to int
 
 // dict sort
 a.compare(b)<0;
+
+// find substr
+string s = "1234"
+s.find("123")
+s.find("3",1) // find from "2"
+s.find("5") == s.npos
 ```
 
 ## char
@@ -412,6 +426,26 @@ ch - '0'
 string s = ch
 ```
 
+## bitset
+
+```cpp
+#include<bitset>
+// from string
+string a = "0101"
+bitset<8> a2(a); // [0,0,0,0,0,1,0,1]
+
+// from unsigned long
+unsigned long  b = 123;
+bitset<8> b2(b);
+
+// to string
+a2.to_string() // "00000101"
+
+// to int
+(int)(a2.to_ulong())
+
+```
+
 ## int
 
 ```cpp
@@ -420,6 +454,12 @@ i + '0'
 
 // to string
 to_string(i)
+
+// to bit
+#include <bitset>
+bitset<8> b(836);
+cout << b << endl;
+b.to_string(); // to bit string
 ```
 
 ## math
@@ -427,7 +467,6 @@ to_string(i)
 ```cpp
 // ceil
 (x+y-1)/y
-z
 max(7,7);
 pow(base, e);
 round(1.2) // 四舍五入

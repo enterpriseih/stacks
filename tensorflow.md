@@ -102,3 +102,93 @@ nvidia-smi
 export PATH=/usr/local/cuda-10.0:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH
 ```
+
+## tf.op
+
+### tf.unstack
+
+把 Tensor value 按 axis 拆成 list of Tensors
+
+```python
+tf.unstack(
+    value, num=None, axis=0, name='unstack'
+)
+```
+
+### tf.transpose
+
+把 Tensor 按 perm 转置
+
+```python
+tf.transpose(
+    a, perm=None, conjugate=False, name='transpose'
+)
+```
+
+### tf.scan
+
+遍历 elems 每个 item 的第一维，apply fn which take (acc,cur) as arg，initializer 是 acc 的初始值
+
+```python
+tf.scan(
+    fn,
+    elems,
+    initializer
+  ...
+```
+
+### tf.einsum
+
+element-wise computation
+
+```python
+tf.einsum(
+    equation,...
+)
+
+# Matrix multiplication
+einsum('ij,jk->ik', m0, m1)  # output[i,k] = sum_j m0[i,j] * m1[j, k]
+
+# Dot product
+einsum('i,i->', u, v)  # output = sum_i u[i]*v[i]
+
+# Outer product
+einsum('i,j->ij', u, v)  # output[i,j] = u[i]*v[j]
+
+# Transpose
+einsum('ij->ji', m)  # output[j,i] = m[i,j]
+
+# Trace
+einsum('ii', m)  # output[j,i] = trace(m) = sum_i m[i, i]
+
+# Batch matrix multiplication
+einsum('aij,ajk->aik', s, t)  # out[a,i,k] = sum_j s[a,i,j] * t[a, j, k]
+```
+
+### tf.broadcast_to
+
+把 input 按 shape 复制
+
+```python
+tf.broadcast_to(
+    input, shape, name=None
+)
+```
+
+### tf.random.truncated_normal
+
+只在 mean +/- 2\*stddev 内采样
+
+```python
+tf.random.truncated_normal(
+    shape, mean=0.0, stddev=1.0, dtype=tf.dtypes.float32, seed=None, name=None
+)
+```
+
+## tfp
+
+### tfp.distributions.RelaxedOneHotCategorical
+
+即 Gumbel-Softmax (Jang et al., 2016) and Concrete (Maddison et al., 2016) distributions
+
+https://github.com/tensorflow/probability/blob/v0.11.0/tensorflow_probability/python/distributions/relaxed_onehot_categorical.py#L398-L547
