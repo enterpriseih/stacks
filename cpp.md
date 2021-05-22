@@ -121,6 +121,31 @@ public:
 
 ```
 
+## struct
+
+```cpp
+// init
+struct subject {
+    string name;
+    int marks;
+    int credits;
+};
+vector<subject> sub;
+sub.push_back(subject());
+
+// ListNode
+struct ListNode
+{
+    int       m_nKey;
+    ListNode* m_pNext;
+};
+
+ListNode *head = new ListNode;
+ListNode *node = new ListNode;
+node->m_nKey = v;
+head->m_pNext = node;
+```
+
 ## array
 
 fixed-length
@@ -154,7 +179,6 @@ copy(&a[4][0][0],&a[4][0][0]+10*10, &a[5][0][0])
 ```cpp
 // print
 for(const int& k : ks){
-
     cout << k << " ";
 }
 
@@ -306,32 +330,6 @@ p = make_pair(1, 1);
 p.first = 2;
 ```
 
-## struct
-
-```cpp
-// init
-struct subject {
-    string name;
-    int marks;
-    int credits;
-};
-vector<subject> sub;
-sub.push_back(subject());
-
-// ListNode
-
-struct ListNode
-{
-    int       m_nKey;
-    ListNode* m_pNext;
-};
-
-ListNode *head = new ListNode;
-ListNode *node = new ListNode;
-node->m_nKey = v;
-head->m_pNext = node;
-```
-
 ## map
 
 internally red-black tree
@@ -376,7 +374,7 @@ hash map
 unordered_map<string, string>umap = {{"12", "234"}};
 
 // delete key
-umap.erase("12);
+umap.erase("12");
 
 ```
 
@@ -393,10 +391,10 @@ strlen(s);
 // string to vector<int>
 #include <sstream>
 
-stringstream linestream(str);
+stringstream ss(str);
 vector<int> v;
 int num;
-while (linestream >> num) v.push_back(num);
+while (ss >> num) v.push_back(num);
 
 // to int, aggresively from start, if cannot throw error
 stoi(s)
@@ -465,8 +463,7 @@ b.to_string(); // to bit string
 ## math
 
 ```cpp
-// ceil
-(x+y-1)/y
+(x+y-1)/y // ceil
 max(7,7);
 pow(base, e);
 round(1.2) // 四舍五入
