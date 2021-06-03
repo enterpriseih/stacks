@@ -26,6 +26,7 @@ conda list
 
 # exit aws env
 source deactivate
+conda deactivate
 
 # remove env
 conda env remove --name aws
