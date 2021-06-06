@@ -69,6 +69,9 @@ hadoop fs -mkpath -p <path>
 
 # find file name that match a pattern
 hadoop fs -find <path> -name <pattern> -print
+
+# add acl
+hdfs dfs -setfacl -R -m user:group:rwx hdfs://path/
 ```
 
 ## snapshot
