@@ -198,6 +198,20 @@ SizeEstimator.estimate(df)
 spark.sql("select * from db.table").explain
 ```
 
+### write to mysql
+```scala
+import java.util.{Properties}
+
+val url = "jdbc:mysql://ip/mydb?" + "characterEncoding=UTF-8&useSSL=false&useUnicode=true"
+val props = new Properties()
+props.put("user", "username")
+props.put("password", "password")
+
+spark.sql("""
+select * from db.table
+""").write.mode("overwrite").jdbc(url, "mytable", props)
+```
+
 ## types
 
 - https://www.bookstack.cn/read/PyMongo-3.9/b2bcf525882e3f6e.md
