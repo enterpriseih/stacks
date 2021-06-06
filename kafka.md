@@ -5,6 +5,14 @@
 ```bash
 # install command line tool
 brew install kafka
+
+# linux
+useradd kafka -m
+passwd kafka
+wget https://downloads.apache.org/kafka/2.7.0/kafka_2.12-2.7.0.tgz
+tar -xvzf kafka_2.12-2.7.0.tgz
+cd kafka_2.12-2.7.0.tgz
+./kafka-topics.sh --describe --zookeeper <ip:port> --topic <topic>
 ```
 
 ## topic
