@@ -59,6 +59,16 @@ printenv | more
 
 # check system version
 cat /etc/os-release
+
+# check domain
+ping <domain>
+
+# show network status
+ifconfig -a
+
+# open network interface
+vi /etc/netplan
+netplan apply
 ```
 
 ## cat
