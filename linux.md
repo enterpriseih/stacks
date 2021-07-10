@@ -69,24 +69,55 @@ ifconfig -a
 # open network interface
 vi /etc/netplan
 netplan apply
-```
 
-## cat
+# check current user
+who
 
-concatenate files
+# list wildcard
+ls f*
+ls file?
 
-```bash
+# show one-line description
+whatis who
+
+# show manual
+man cp
+
+# match name in manual
+apropos cp
+
+# copy folder
+cp -avr <source> <target>
+
+# move folder or multiple folders
+mv <source>.* <target>
+
+# rename files
+for f in <file_regex>; do mv -v "$f" "${f/<old_string>/<new_string>}";done;
+
+# remove all contents, not the folder
+rm -r /path/to/dir/*
+
+# remove all contents and the folder
+rm -r /path/to/dir
+
+# remove by regex
+find . -type d -name "name*" -exec rm -rf {} \;
+
 # print file w/ line number
 cat -n <file>
 
 # show file1 and file2 content
-cat <input_file> <output_file>
+cat file1 file2
 
 # copy file1 to file2
-cat <input_file> > <output_file>
+cat file1 > file2
 
 # append file1 to the end of file2
-cat <input_file> >> <output_file>
+cat file1 >> file2
+
+# join file1 and file2 to create bigfile
+cat file1 file2 > bigfile
 
 # omit the repeated empty
 cat -s <file>
@@ -102,13 +133,39 @@ cat *.csv>merged.csv
 
 # download file from ssh
 ssh ... 'cat /path/on/remote' > /path/on/local
-```
 
-## tail
+# print file1 to screen continuously
+tail -f file1
 
-```bash
-# print file to screen continuously
-tail -f <file>
+# print first 5 lins
+head -5 file1
+
+# change permision
+chmod [ugoa][+-][rwx] file1
+
+# show  all user
+less /etc/passwd
+
+# show all suspend and background jobs
+jobs
+
+# add & to start job in the background
+sleep 1 &
+
+# forground job 1
+fg %1
+
+# show process statuses
+ps
+
+# check os
+echo $OSTYPE
+
+# check all env variables
+printenv | less
+
+# show shell history
+echo $history
 ```
 
 ## grep
@@ -152,14 +209,6 @@ grep <file>
 grep -E <file>
 ```
 
-## sed
-
-a stream editor
-
-```bash
-
-```
-
 ## hexdump
 
 display file contents in hexadecimal, decimal, octal, or ascii
@@ -181,28 +230,6 @@ curl <address> -H "Content-Type: application/json" -X POST -d '{"key1":"value1",
 curl <address> -H "Content-Type: application/json" -X POST -d '@data.json'
 ```
 
-## fs
-
-```bash
-# copy folder
-cp -avr <source> <target>
-
-# move folder or multiple folders
-mv <source>.* <target>
-
-# rename files
-for f in <file_regex>; do mv -v "$f" "${f/<old_string>/<new_string>}";done;
-
-# remove all contents, not the folder
-rm -r /path/to/dir/*
-
-# remove all contents and the folder
-rm -r /path/to/dir
-
-# remove by regex
-find . -type d -name "name*" -exec rm -rf {} \;
-```
-
 # http server
 
 ```bash
@@ -216,12 +243,6 @@ unzip my.zip
 unzip my.zip -d /path/to/dir
 ```
 
-# user
-
-```bash
-# show  all user
-less /etc/passwd
-```
 
 # yum
 
