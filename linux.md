@@ -216,10 +216,10 @@ display file contents in hexadecimal, decimal, octal, or ascii
 ```bash
 # 0a -> LF
 # 0d -> CR
-hexdump -e '"%08_ad (0x%08_ax)    "8/1 "%02x ""   "8/1 "%02x "' -e '"    "8/1 "%_p""|"8/1 "%_p""\n"'  <file>
+hexdump -e '"%08_ad (0x%08_ax)    "8/1 "%02x ""   "8/1 "%02x "' -e '"    "8/1 "%_p""|"8/1 "%_p""\n"' -s 0 <file>
 ```
 
-## curl
+## curhl
 
 ```bash
 # download file
@@ -243,7 +243,6 @@ unzip my.zip
 unzip my.zip -d /path/to/dir
 ```
 
-
 # yum
 
 ```bash
@@ -254,6 +253,7 @@ yum clean all
 ```
 
 # systemctl
+
 ```bash
 # start
 sudo systemctl start application.service
@@ -266,4 +266,4 @@ systemctl status application.service
 
 # show full log
 journalctl -u application.service
-````
+```

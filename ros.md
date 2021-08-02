@@ -1,6 +1,58 @@
 # ros
 
-## docker
+## ros1
+
+### bag
+```bash
+# show info
+rosbag info <bag_file_name>
+
+# install ros_readbagfile
+# download script
+wget https://raw.githubusercontent.com/ElectricRCAircraftGuy/eRCaGuy_dotfiles/master/useful_scripts/ros_readbagfile.py
+# make script executable
+chmod +x ros_readbagfile.py
+# move to bin
+mkdir -p ~/bin
+mv ros_readbagfile.py ~/bin/ros_readbagfile
+# add export PATH="$HOME/bin:$PATH" in .bashrc
+source ~/.bashrc
+ros_readbagfile -h
+
+# extract message by topic
+ros_readbagfile <bag_file> <topic1> >> <output_file>
+
+# play bag
+# in terminal 1
+roscore
+# in terminal 2
+rosbag play -i <bag_file>
+```
+
+### rqt
+
+```bash
+rqt_bag
+```
+
+### rviz
+
+```bash
+roscore
+
+```
+
+### velodyne
+```bash
+sudo apt-get install libpcap0.8-dev
+sudo apt-get install ros-noetic-velodyne-*
+sudo apt-get install ros-noetic-velodyne
+
+```
+
+## ros2
+
+### use foxy using docker
 ```bash
 # pull image
 docker pull ros:foxy
@@ -21,11 +73,11 @@ docker commit -p <container_id> <image_name>
 docker container run --name foxy -it <image_name>:latest
 ```
 
-## install on ubuntu focal
+### install galactic on ubuntu focal
 
 <https://docs.ros.org/en/galactic/Installation/Ubuntu-Install-Debians.html>
 
-## basic
+### basic
 
 ```bash
 #
@@ -48,9 +100,11 @@ ros2 run rqt_console rqt_console
 
 # run from launch file
 ros2 launch <launch_file>
+
+# doctor
 ```
 
-## node
+### node
 
 ```bash
 # list
@@ -60,7 +114,7 @@ ros2 node list
 ros2 node info <node_name>
 ```
 
-## topic
+### topic
 
 ```bash
 # list
@@ -83,7 +137,7 @@ ros2 topic pub <topic_name> <msg_type> '<data_yaml>' --rate 1
 ros2 topic hz <topic_name>
 ```
 
-## service
+### service
 
 ```bash
 # list
@@ -103,7 +157,7 @@ ros2 interface show <service_type>
 ros2 service call <service_name> <service_type> <arguments>
 ```
 
-## param
+### param
 
 ```bash
 # list
@@ -122,7 +176,7 @@ ros2 param dump <node_name>
 ros2 param load <node_name> <param_file>
 ```
 
-## action
+### action
 
 ```bash
 # list
@@ -139,7 +193,7 @@ ros2 action send_goal <action_name> <action_type> <values>
 ros2 action send_goal <action_name> <action_type> <values> --feedback
 ```
 
-## bag
+### bag
 
 ```bash
 # record
@@ -147,4 +201,32 @@ ros2 bag record <topic_name>
 
 # show info
 ros2 bag info <bag_file_name>
+```
+
+### package
+
+```bash
+# create
+ros2 pkg create --build-type ament_cmake --node-name <node_name> <package_name>
+ros2 pkg create --build-type ament_cmake <package_name> --dependencies <dep1> <dep2>
+
+
+# check dep
+rosdep install -i --from-path src --rosdistro galactic -y
+
+# build all packages
+colcon build
+
+# build one package
+colcon build --packages-select <package_name>
+
+# will create build  install  log dirs
+
+# open new terminal
+
+# source underlay
+source /opt/ros/galactic/setup.bash
+
+# source overlay
+. install/local_setup.bash
 ```
