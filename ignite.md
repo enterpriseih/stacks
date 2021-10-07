@@ -29,4 +29,4 @@ docker-compose up -d
 
 ## run test scripts
 
-(examples)[https://github.com/apache/ignite-python-thin-client/tree/master/examples]
+[examples](https://github.com/apache/ignite-python-thin-client/tree/master/examples)
