@@ -230,20 +230,20 @@ curl <address> -H "Content-Type: application/json" -X POST -d '{"key1":"value1",
 curl <address> -H "Content-Type: application/json" -X POST -d '@data.json'
 ```
 
-# http server
+## http server
 
 ```bash
 python3 -m http.server
 ```
 
-# zip
+## zip
 
 ```bash
 unzip my.zip
 unzip my.zip -d /path/to/dir
 ```
 
-# yum
+## yum
 
 ```bash
 # clean /var/cache/yum
@@ -252,7 +252,7 @@ yum clean headers
 yum clean all
 ```
 
-# systemctl
+## systemctl
 
 ```bash
 # start
@@ -266,4 +266,55 @@ systemctl status application.service
 
 # show full log
 journalctl -u application.service
+```
+
+## sar
+
+```bash
+# install sar
+yum install sysstat
+# on mac
+brew install sysstat
+
+# show config
+cat /etc/sysconfig/sysstat
+cat /etc/cron.d/sysstat
+
+# check log dir
+ls /var/log/sa
+
+# check report
+cat /var/log/sa/sar14
+
+# show report
+# -f use file
+# -d : block device
+# -F : mounted filesystem
+# -H : hugepages
+# -n DEV: network
+# -r : memory
+# -S : swap space
+# -u : cpu
+# -v : inode
+# -W : swapping
+cat -u -f /var/log/sa/sar14
+```
+
+## timeout
+
+```bash
+timeout 7d [command] > [output file] &
+```
+
+## nvme
+
+```bash
+# install
+yum install nvme-cli
+
+# list all devices
+nvme list
+
+# check log
+nvme smart-log /dev/nvme0n1
 ```

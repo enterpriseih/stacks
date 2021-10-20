@@ -60,7 +60,7 @@ aws configure list --profile=my_profile_1
 aws s3 ls s3://my_bucket/my_path --profile=my_profile_1
 
 # list
- aws s3 ls s3://my_bucket/my_path --recursive | grep <pattern>
+aws s3 ls s3://my_bucket/my_path --recursive | grep <pattern>
 
 # total size
 aws s3 ls s3://my_bucket/my_path --profile=my_profile_1 --human-readable --recursive --summarize
