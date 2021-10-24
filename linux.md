@@ -252,9 +252,12 @@ yum clean headers
 yum clean all
 ```
 
-## systemctl
+## systemctl, hostnamectl
 
 ```bash
+# show version
+systemctl --version
+
 # start
 sudo systemctl start application.service
 
@@ -266,6 +269,9 @@ systemctl status application.service
 
 # show full log
 journalctl -u application.service
+
+# show hostname
+hostnamectl
 ```
 
 ## sar
@@ -317,4 +323,26 @@ nvme list
 
 # check log
 nvme smart-log /dev/nvme0n1
+```
+
+## screen
+
+```bash
+# list
+screen -ls
+
+# create new session
+screen -S [session]
+
+# attach
+screen -r [session id]
+
+# exit current session
+ctrl+a+d
+```
+
+## iperf
+
+```bash
+iperf3 -c 172.18.136.245   -b 40G -f M -P 8 -t 1
 ```
