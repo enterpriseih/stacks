@@ -1,12 +1,18 @@
 # mysql
 
-## install
+## install 5.7 on centos7
 
 ```bash
-wget <http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm>
-sudo rpm -ivh mysql-community-release-el7-5.noarch.rpm
-yum update
-sudo yum install mysql-server
+
+wget http://repo.mysql.com/mysql57-community-release-el7-11.noarch.rpm
+rpm -ivh mysql57-community-release-el7-11.noarch.rpm
+yum install mysql-server -y
+service mysqld start
+service mysqld status
+systemctl enable mysqld.service
+grep "password" /var/log/mysqld.log
+mysql -uroot -p 
+
 ```
 
 ## start w/ docker
@@ -30,11 +36,10 @@ kill -TERM <PID>
 ## user
 
 ```sql
-CREATE USER my_user IDENTIFIED BY 'my_password';
-GRANT ALL ON * TO my_user;
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'my_password'
 
-CREATE USER 'my_user'@'%' IDENTIFIED BY 'my_password';
-GRANT ALL PRIVILEGES ON *.* TO 'my_user'@'%' WITH GRANT OPTION;
+CREATE USER 'root'@'%' IDENTIFIED BY 'my_password';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 
 ```
 
