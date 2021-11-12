@@ -32,6 +32,10 @@ kill -TERM <PID>
 ```sql
 CREATE USER my_user IDENTIFIED BY 'my_password';
 GRANT ALL ON * TO my_user;
+
+CREATE USER 'my_user'@'%' IDENTIFIED BY 'my_password';
+GRANT ALL PRIVILEGES ON *.* TO 'my_user'@'%' WITH GRANT OPTION;
+
 ```
 
 ## profile
