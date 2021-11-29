@@ -3,10 +3,10 @@
 ```bash
 # check version
 ceph --version
-```
 
-## gateway
+# status
+ceph status
 
-```bash
-
+# log
+ls /var/log/ceph
 ```
