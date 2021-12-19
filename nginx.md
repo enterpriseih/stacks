@@ -150,4 +150,7 @@ nginx -s reload
 
 # edit config
 vim /usr/local/etc/nginx/nginx.conf
+
+# stop
+nginx -s stop
 ```
