@@ -213,7 +213,7 @@ git config user.email "wzy816@gmail.com"
     pl= pull origin HEAD
     ps= push origin HEAD
     pss= push --set-upstream origin HEAD
-
+    pst= push origin HEAD --tags
 [color]
     ui = always
 ```
