@@ -77,3 +77,29 @@ launchctl start sync.git
 ```bash
 ssh -i '/path/to/your/pem'  -o 'ProxyCommand=/usr/local/bin/ncat --proxy <proxy_ip>:<proxy_port> --proxy-type http %h %p' <user_name>@<ip>
 ```
+
+### login with key
+
+```bash
+# 1. generate or reuse local key pair
+ssh-gen
+
+# 2. login to remote server with password
+
+# 3. copy local pub key to  ~/.ssh/authorized_keys
+
+# 4. update /etc/ssh/sshd_config
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+
+# 5. restart service
+sudo service sshd restart
+
+# 6. login again with key
+ssh username@<ip>
+ssh -i /path/to/private/key username@<ip>
+
+# 7. disable password 
+# in /etc/ssh/sshd_config
+PasswordAuthentication no
+```
