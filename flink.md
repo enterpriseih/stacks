@@ -1,73 +1,42 @@
 # flink
 
-## basic
+## deployment session mode on k8s
+
+[setup](https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/resource-providers/standalone/kubernetes/#kubernetes-setup)
 
 ```bash
-# 配置 username 和 password 验证
-yum install httpd-tools
+kubectl create namespace flink-cluster
 
-# create file
-htpasswd -c /etc/flink/.htpasswd flink
+# create service account
+kubectl create serviceaccount flink -n flink-cluster
 
-# add more account
-htpasswd /etc/flink/.htpasswd flink2
-```
+# create cluster role binding
+kubectl create clusterrolebinding flink-role-binding-flink \
+  --clusterrole=edit \
+  --serviceaccount=flink-cluster:flink
 
-## job
+# create configmap
+kubectl create -f flink-configuration-configmap.yaml
 
-```bash
-# run job
-flink run -c <main_class> <path_to_jar>
-```
+# create jobmanager service
+kubectl create -f jobmanager-service.yaml
+#kubectl get service flink-jobmanager
 
-## docker
+# create jobmanager deployment
+kubectl create -f jobmanager-session-deployment-ha.yaml
 
-### docker-compose.yml
+# create task manager deployment
+kubectl create -f taskmanager-session-deployment.yaml
+# kubectl get pods
 
-```yml
-version: "2"
-services:
-  jobmanager:
-    image: flink:latest
-    environment:
-      JOB_MANAGER_RPC_ADDRESS: jobmanager
-    stdin_open: true
-    tty: true
-    ports:
-      - 8081:8081/tcp
-      - 6123:6123/tcp
-    command:
-      - jobmanager
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.scheduler.affinity:host_label: flink=true
-  taskmanager:
-    image: flink:latest
-    environment:
-      JOB_MANAGER_RPC_ADDRESS: jobmanager
-    stdin_open: true
-    tty: true
-    links:
-      - jobmanager:jobmanager
-    ports:
-      - 6121:6121/tcp
-      - 6122:6122/tcp
-    command:
-      - taskmanager
-    labels:
-      io.rancher.container.pull_image: always
-      io.rancher.scheduler.affinity:host_label: flink=true
-```
+# enable Nginx Ingress Controller plugin
 
-### rancher-compose.yml
+# create ingress config for flink-cluster
+# endpoint_ip flink-jobmanager.your.domain > flink-jobmanager 8081
 
-```yml
-version: "2"
-services:
-  jobmanager:
-    scale: 1
-    start_on_create: true
-  taskmanager:
-    scale: 1
-    start_on_create: true
+# edit local /etc/hosts
+endpoint_ip  flink-jobmanager.your.domain
+
+# open dashboard at flink-jobmanager.your.domain
+
 ```

@@ -39,6 +39,8 @@ tail /var/log/v2ray/error.log
 systemctl stop firewalld
 systemctl disable firewalld
 
+# check ECS security rule to allow port
+
 ```
 
 ## client
@@ -51,6 +53,7 @@ https://github.com/yichengchen/clashX/releases
 https://v2raytech.com/clash_template2.yaml
 
 # modify vmess config
+# don't change v2ray name in yaml
 - name: "v2ray"
   type: vmess
   server: 1.2.3.4
