@@ -87,3 +87,9 @@ ffmpeg -i in.mov -s 600x300 -pix_fmt rgb24 -r 30 -f gif - | gifsicle --optimize=
 # show port
 sudo lsof -iTCP -sTCP:LISTEN -n -P
 ```
+
+## sdk
+
+```bash
+curl -s "https://get.sdkman.io" | bash
+```

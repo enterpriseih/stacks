@@ -1,8 +1,11 @@
 # flink
 
-## deployment session mode on k8s
+- scala 2.12.15
+- flink 1.14.2
 
-[setup](https://nightlies.apache.org/flink/flink-docs-master/docs/deployment/resource-providers/standalone/kubernetes/#kubernetes-setup)
+## deployment non-ha session mode on k8s
+
+[1.14 setup](https://nightlies.apache.org/flink/flink-docs-release-1.14/docs/deployment/resource-providers/standalone/kubernetes/)
 
 ```bash
 kubectl create namespace flink-cluster
@@ -20,14 +23,14 @@ kubectl create -f flink-configuration-configmap.yaml
 
 # create jobmanager service
 kubectl create -f jobmanager-service.yaml
-#kubectl get service flink-jobmanager
+kubectl get service flink-jobmanager
 
 # create jobmanager deployment
-kubectl create -f jobmanager-session-deployment-ha.yaml
+kubectl create -f jobmanager-session-deployment-non-ha.yaml
 
 # create task manager deployment
 kubectl create -f taskmanager-session-deployment.yaml
-# kubectl get pods
+kubectl get pods
 
 # enable Nginx Ingress Controller plugin
 

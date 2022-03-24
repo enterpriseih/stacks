@@ -3,19 +3,14 @@
 ## sbt
 
 ```bash
-# ~/.sbt/repositories
-[repositories]
-  local
-  aliyun nexus: http://maven.aliyun.com/nexus/content/groups/public/
-  type safe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
-  maven-central
-  sonatype-snapshots: https://oss.sonatype.org/content/repositories/snapshots
+# java 17 ready
+java -version
 
-# install
-brew install sbt@1
+# scala
+sdk list scala
 
-# update
-brew upgrade sbt
+# install with sdk 1.6.2
+sdk install sbt
 
 # check version
 sbt sbtVersion
