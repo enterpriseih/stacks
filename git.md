@@ -196,8 +196,10 @@ git config user.email "wzy816@gmail.com"
 [core]
     editor = vim
     compression = 0
+	pager = cat
 [alias]
     l = log --oneline --decorate --graph --all
+    l5 = log --oneline --decorate --graph -5
     l20 = log --oneline --decorate --graph -20
 
     s = status
