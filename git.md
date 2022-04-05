@@ -219,3 +219,36 @@ git config user.email "wzy816@gmail.com"
 [color]
     ui = always
 ```
+
+## lfs
+
+```bash
+# clone without downloading large fies
+git lfs install --skip-smudge
+git clone <repo>
+
+# pull single file
+git lfs pull --include=<filename>
+```
+
+```bash
+# install
+brew install git-lfs
+yum install git-lfs
+
+git lfs install
+
+# add .gitattributes
+git lfs track "*.psd"
+
+# show tracked files
+git lfs ls-files
+
+# migrate file to lfs pointer
+git lfs migrate info
+git lfs migrate import --include="*.psd"
+
+# download file
+git lfs pull
+
+```
