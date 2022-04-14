@@ -11,7 +11,7 @@ service mysqld start
 service mysqld status
 systemctl enable mysqld.service
 grep "password" /var/log/mysqld.log
-mysql -uroot -p 
+mysql -uroot -p
 
 ```
 
@@ -37,6 +37,8 @@ kill -TERM <PID>
 
 ```sql
 ALTER USER 'root'@'localhost' IDENTIFIED BY 'my_password'
+ALTER USER 'root' IDENTIFIED BY 'my_password'
+FLUSH PRIVILEGES;
 
 CREATE USER 'root'@'%' IDENTIFIED BY 'my_password';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;

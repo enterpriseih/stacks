@@ -251,4 +251,9 @@ git lfs migrate import --include="*.psd"
 # download file
 git lfs pull
 
+# status
+git lfs status
+
+# push
+git lfs push origin master
 ```
