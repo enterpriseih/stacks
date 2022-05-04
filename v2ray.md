@@ -3,18 +3,21 @@
 ## server
 
 ```bash
+# tutorial at
 # https://github.com/233boy/v2ray/wiki/V2Ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC
 
 # install
 bash <(curl -s -L https://git.io/v2ray-setup.sh)
 
-# config example
-#  地址 (Address) = 1.2.3.4.
-#  端口 (Port) = 8888
-#  用户 ID (User ID / UUID) = xxx
-#  额外 ID (Alter Id) = 0
-#  传输协议 (Network) = tcp
-#  伪装类型 (header type) = none
+# 1. use script
+# file at /etc/v2ray/
+v2ray
+
+# 2. use as systemd
+
+# check config
+ls /etc/systemd/system/v2ray.service.d
+cat /etc/systemd/system/v2ray.service.d/10-donot_touch_single_conf.conf
 
 # enable as systemd
 sudo systemctl enable v2ray
@@ -28,9 +31,6 @@ sudo systemctl restart v2ray
 # check status
 systemctl status v2ray
 
-# check config
-ls /etc/systemd/system/v2ray.service.d
-
 # check log
 ll /var/log/v2ray/
 tail /var/log/v2ray/error.log
@@ -39,7 +39,7 @@ tail /var/log/v2ray/error.log
 systemctl stop firewalld
 systemctl disable firewalld
 
-# check ECS security rule to allow port
+# update ECS security rule to allow port
 
 ```
 
@@ -57,9 +57,8 @@ https://v2raytech.com/clash_template2.yaml
 - name: "v2ray"
   type: vmess
   server: 1.2.3.4
-  port: 8888
+  port: xxxx
   uuid: xxx
   alterId: 0
   cipher: auto
-
 ```
