@@ -19,13 +19,13 @@ cd kafka_2.12-2.7.0.tgz
 
 ```bash
 # create topic
-kafka-topics --create --zookeeper <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
+kafka-topics --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
 
 # topic list
-kafka-topics --zookeeper <ip:port> --list
+kafka-topics --bootstrap-server <ip:port> --list
 
 # describe topic
-kafka-topics --describe --zookeeper <ip:port> --topic <topic>
+kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## jaas.properties file
