@@ -30,15 +30,23 @@ kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 
 ## jaas.properties file
 
+```
 > sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
 > security.protocol=SASL_PLAINTEXT
 > sasl.mechanism=PLAIN
+```
 
 ## consumer
 
 ```bash
 # consume message
 kafka-console-consumer --bootstrap-server <ip:port> --from-beginning --topic <topic> --consumer.config <path_to_jaas> --group <consumer_group> --property print.key=true --property print.value=true
+
+# describe group
+./bin/kafka-consumer-groups.sh --all-groups --describe  --bootstrap-server <ip:port>
+
+# reset group offset
+./bin/kafka-consumer-groups.sh  --bootstrap-server <ip:port> --group <consumer_group> --reset-offsets --to-earliest --all-topics --execute
 ```
 
 ## docker-compose.yml
