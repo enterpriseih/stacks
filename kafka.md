@@ -28,7 +28,7 @@ kafka-topics --bootstrap-server <ip:port> --list
 kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 
 # get topic offset in all partitions
-./bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list <ip:port> --topic <topic>
+./bin/kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## jaas.properties file
