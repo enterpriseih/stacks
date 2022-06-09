@@ -29,6 +29,9 @@ kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 
 # get topic offset in all partitions
 ./bin/kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
+
+# increase topic partitions
+ ./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
 ```
 
 ## jaas.properties file
