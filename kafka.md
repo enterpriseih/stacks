@@ -48,6 +48,9 @@ kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 # consume message
 kafka-console-consumer --bootstrap-server <ip:port> --from-beginning --topic <topic> --consumer.config <path_to_jaas> --group <consumer_group> --property print.key=true --property print.value=true
 
+# consume transaction state message with formatter
+ ./bin/kafka-console-consumer.sh --bootstrap-server <ip:port> --from-beginning --topic <topic>  --group <consumer_group> --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter"  --property print.key=true --property print.value=true
+
 # describe group
 ./bin/kafka-consumer-groups.sh --all-groups --describe  --bootstrap-server <ip:port>
 

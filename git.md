@@ -256,4 +256,7 @@ git lfs status
 
 # push
 git lfs push origin master
+
+# replace large file with lfs pointer
+git read-tree HEAD && GIT_LFS_SKIP_SMUDGE=1 git checkout -f HEAD
 ```
