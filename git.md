@@ -43,7 +43,7 @@ git reset -- <folder>
 # mrege by folders
 git merge --no-ff --no-commit <source_branch>
 
-#
+# clean history
 git checkout --orphan newBranch
 git add -A  # Add all files and commit them
 git commit
