@@ -31,7 +31,10 @@ kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
 ./bin/kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
 
 # increase topic partitions
- ./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
+./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
+ 
+# delete topic
+./bin/kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## jaas.properties file
