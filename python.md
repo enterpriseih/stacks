@@ -79,3 +79,12 @@ python -m SimpleHTTPServer
 # python3
 python -m http.server
 ```
+
+### delete python3.10 in MacOS
+
+```bash
+sudo rm -rf /Library/Frameworks/Python.framework/Versions/3.10
+sudo rm -rf “/Applications/Python 3.10”
+ls -l /usr/local/bin | grep ‘../Library/Frameworks/Python.framework/Versions/3.10’
+# check $PATH
+```
