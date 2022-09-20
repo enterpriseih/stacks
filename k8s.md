@@ -80,6 +80,9 @@ kubectl get namespace
 # get all pods in ns
 kubectl get pods --namespace=default
 
+# get all running pods
+kubectl get pods -A --field-selector=status.phase==Running
+
 # run w/ ns
 kubectl run nginx --image=nginx --namespace=default
 
