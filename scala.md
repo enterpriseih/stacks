@@ -74,10 +74,13 @@ jar tvf <path_to_my_jar>
 
 ```bash
 # with jar
-scala -cp /path/to/jar
+scala -cp 
 scala -classpath /Users/zhiyang.wang/.ivy2/cache/org.json/json/jars/json-20090211.jar
+java -cp "/path/to/jar1:/path/to/jar2" main.class
 ```
 
 ## timezone
 
 https://garygregory.wordpress.com/2013/06/18/what-are-the-java-timezone-ids/
+
+
