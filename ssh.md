@@ -24,29 +24,29 @@ chmod 400 ./.ssh/your_key
 echo `date`
 printf "\n"
 
-filenames=$(ls -d */*/.git)
+filenames=$(ls -d ~/data/*/*/.git)
 
 for name in $filenames
 do
-    folder=~/${name::${#name} - 4}
-    echo $folder
-    cd $folder
+    cd $name
+    cd ..
+    pwd
     git pull --all && git submodule update
     printf "\n"
 done
 ```
 
-## /Users/zhiyang.wang/Library/LaunchAgents/sync.git.plist
+## /Users/[user]/Library/LaunchAgents/sync.git.plist
 
 ```bash
 # check validity
-plutil /Users/zhiyang.wang/Library/LaunchAgents/sync.git.plist
+plutil /Users/[user]/Library/LaunchAgents/sync.git.plist
 
 # load
-launchctl load /Users/zhiyang.wang/Library/LaunchAgents/sync.git.plist
+launchctl load /Users/[user]/Library/LaunchAgents/sync.git.plist
 
 # unload
-launchctl unload /Users/zhiyang.wang/Library/LaunchAgents/sync.git.plist
+launchctl unload /Users/[user]/Library/LaunchAgents/sync.git.plist
 
 # start
 launchctl start sync.git
@@ -60,7 +60,7 @@ launchctl start sync.git
 <key>Label</key>
 <string>sync.git</string>
 <key>Program</key>
-<string>/Users/zhiyang.wang/sync.sh</string>
+<string>/Users/[user]/sync.sh</string>
 <key> StartCalendarInterval</key>
 <dict>
 <key>Hour</key>
