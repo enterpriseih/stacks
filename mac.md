@@ -71,15 +71,8 @@ find . -name '.DS_Store' -type f -delete
 # 2. use wget
 wget -E -H -k -p -i /path/to/url/txt
 
-# open url in chromw
+# open url in chrome
 /usr/bin/open -a "/Applications/Google Chrome.app"  'http://google.com'
-
-# change brew source
-git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
-git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
-
-echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.bash_profile
-source ~/.bash_profile
 
 # mov to gif
 ffmpeg -i in.mov -s 600x300 -pix_fmt rgb24 -r 30 -f gif - | gifsicle --optimize=3 --delay=3 > out.gif
@@ -92,4 +85,54 @@ sudo lsof -iTCP -sTCP:LISTEN -n -P
 
 ```bash
 curl -s "https://get.sdkman.io" | bash
+```
+
+## brew
+
+```bash
+# fix invalid formula
+rm -fr $(brew --repo homebrew/core)  # because you can't `brew untap homebrew/core`
+brew tap homebrew/core
+
+# change brew source
+git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.git
+echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.zshrc
+source ~/.zshrc
+
+```
+
+## jenv
+
+```bash
+# install
+git clone https://github.com/jenv/jenv.git ~/.jenv
+echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.zshrc
+echo 'eval "$(jenv init -)"' >> ~/.zshrc
+source ~/.zshrc
+
+brew install openjdk@11
+jenv add /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+jenv versions
+jenv local 11.0
+```
+
+## ~/sync.sh
+
+```bash
+#!/bin/bash
+
+echo `date`
+printf "\n"
+
+filenames=$(ls -d ~/data/*/*/.git)
+
+for name in $filenames
+do
+    cd $name
+    cd ..
+    pwd
+    git pull --all && git submodule update
+    printf "\n"
+done
 ```

@@ -16,26 +16,6 @@ chmod 400 ./.ssh/your_key
       IdentityFile ~/.ssh/id_rsa
       StrictHostKeyChecking no
 
-## ~/sync.sh
-
-```bash
-#!/bin/bash
-
-echo `date`
-printf "\n"
-
-filenames=$(ls -d ~/data/*/*/.git)
-
-for name in $filenames
-do
-    cd $name
-    cd ..
-    pwd
-    git pull --all && git submodule update
-    printf "\n"
-done
-```
-
 ## /Users/[user]/Library/LaunchAgents/sync.git.plist
 
 ```bash
@@ -68,7 +48,6 @@ launchctl start sync.git
 <key>Minute</key>
 <integer>40</integer>
 </dict>
-</dict>
 </plist>
 ```
 
@@ -99,7 +78,7 @@ sudo service sshd restart
 ssh username@<ip>
 ssh -i /path/to/private/key username@<ip>
 
-# 7. disable password 
+# 7. disable password
 # in /etc/ssh/sshd_config
 PasswordAuthentication no
 ```
