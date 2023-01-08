@@ -6,14 +6,21 @@
 # tutorial at
 # https://github.com/233boy/v2ray/wiki/V2Ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC
 
-# install
+# 1. install
 bash <(curl -s -L https://git.io/v2ray-setup.sh)
 
-# 1. use script
+# 2.1 use script
 # file at /etc/v2ray/
 v2ray
+# change port to non-default
+# change network to tcp
 
-# 2. use as systemd
+# change alterId in /etc/v2ray/config.json to 64
+vi /etc/v2ray/config.json
+
+# restart v2ray
+
+# 2.2 use as systemd
 
 # check config
 ls /etc/systemd/system/v2ray.service.d
@@ -35,12 +42,11 @@ systemctl status v2ray
 ll /var/log/v2ray/
 tail /var/log/v2ray/error.log
 
-# firewall
+# 3. stop firewall
 systemctl stop firewalld
 systemctl disable firewalld
 
-# update ECS security rule to allow port
-
+# 4. update ECS firewall rule to allow port
 ```
 
 ## client
