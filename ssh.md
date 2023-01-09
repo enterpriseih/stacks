@@ -81,4 +81,7 @@ ssh -i /path/to/private/key username@<ip>
 # 7. disable password
 # in /etc/ssh/sshd_config
 PasswordAuthentication no
+
+# 8. check log
+journalctl -u sshd.service -e
 ```
