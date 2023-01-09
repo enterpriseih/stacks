@@ -61,15 +61,16 @@ ssh -i '/path/to/your/pem'  -o 'ProxyCommand=/usr/local/bin/ncat --proxy <proxy_
 
 ```bash
 # 1. generate or reuse local key pair
-ssh-gen
+ssh-keygen
 
 # 2. login to remote server with password
 
-# 3. copy local pub key to  ~/.ssh/authorized_keys
+# 3. copy local pub key to file ~/.ssh/authorized_keys
 
 # 4. update /etc/ssh/sshd_config
 PubkeyAuthentication yes
 AuthorizedKeysFile .ssh/authorized_keys
+PasswordAuthentication no
 
 # 5. restart service
 sudo service sshd restart
@@ -77,10 +78,6 @@ sudo service sshd restart
 # 6. login again with key
 ssh username@<ip>
 ssh -i /path/to/private/key username@<ip>
-
-# 7. disable password
-# in /etc/ssh/sshd_config
-PasswordAuthentication no
 
 # 8. check log
 journalctl -u sshd.service -e
