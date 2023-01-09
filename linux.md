@@ -332,13 +332,21 @@ nvme smart-log /dev/nvme0n1
 screen -ls
 
 # create new session
+screen
 screen -S [session]
 
 # attach
+screen -r -d
 screen -r [session id]
 
 # exit current session
-ctrl+a+d
+cmd+a d
+
+# delete window
+cmd+a k
+
+# create window
+cmd+a c
 ```
 
 ## iperf
