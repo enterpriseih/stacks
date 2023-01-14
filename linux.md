@@ -354,3 +354,13 @@ cmd+a c
 ```bash
 iperf3 -c 172.18.136.245   -b 40G -f M -P 8 -t 1
 ```
+
+## socat
+
+```bash
+# install
+yum install socat
+
+# forward local PORT to IP:PORT
+socat TCP4-LISTEN:<PORT>,fork TCP4:<IP>:<PORT>
+```
