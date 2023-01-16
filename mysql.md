@@ -139,3 +139,10 @@ tar -xzvf mysql-shell-8.0.18-linux-glibc2.12-x86-64bit.tar.gz
 mv mysql-shell-8.0.18-linux-glibc2.12-x86-64bit mysql-shell
 ./mysql-shell/bin/mysqlsh -u <user> -h <ip>
 ```
+
+## mysqladmin
+
+```bash
+# fix blocked because of many connection error
+mysqladmin -u root -p flush-hosts
+```
