@@ -364,3 +364,17 @@ yum install socat
 # forward local PORT to IP:PORT
 socat TCP4-LISTEN:<PORT>,fork TCP4:<IP>:<PORT>
 ```
+
+## timezone
+
+```bash
+# check timezone
+ls -al /etc/localtime
+
+# list timezone
+ls /usr/share/zoneinfo
+ls /usr/share/zoneinfo/Asia
+
+# set timezone
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+```
