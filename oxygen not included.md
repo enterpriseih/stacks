@@ -1,5 +1,13 @@
 # oxygen not included
 
+## 入门视频
+
+- [关于《缺氧》的一些二手知识](https://www.douban.com/group/topic/271422575)
+
+- [【完结】缺氧正式版萌新入门系列合集](https://www.bilibili.com/video/BV1q4411o7dr)
+
+- [缺氧正式版类地星球实况大合集](https://www.bilibili.com/video/BV1pE41117C5)
+
 ## 自动化
 
 - 缓冲门 ：推迟红色信号；绿转红时会绿一段时间才红，红转绿立刻变化；
@@ -13,3 +21,7 @@
 - 过滤门+异或门：长红，红转绿时输出一段绿，又变红
 
 - 计时器：输入红，脉冲起作用；输入绿，长绿
+
+## 火箭
+
+- [燃料计算器](https://oni-assistant.com/tools/rocketcalculator)
