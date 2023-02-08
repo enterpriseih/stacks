@@ -13,52 +13,54 @@ wget https://downloads.apache.org/kafka/2.7.0/kafka_2.12-2.7.0.tgz
 tar -xvzf kafka_2.12-2.7.0.tgz
 cd kafka_2.12-2.7.0.tgz
 ./kafka-topics.sh --describe --zookeeper <ip:port> --topic <topic>
+
+# add kafka_2.12-3.1.0/bin to PATH
 ```
 
 ## topic
 
 ```bash
 # create topic
-kafka-topics --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
+kafka-topics.sh --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
 
 # topic list
-kafka-topics --bootstrap-server <ip:port> --list
+kafka-topics.sh --bootstrap-server <ip:port> --list
 
 # describe topic
-kafka-topics --describe --bootstrap-server <ip:port> --topic <topic>
+kafka-topics.sh --describe --bootstrap-server <ip:port> --topic <topic>
 
 # get topic offset in all partitions
-./bin/kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
+kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
 
 # increase topic partitions
-./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
+kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
  
 # delete topic
-./bin/kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
+kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## jaas.properties file
 
 ```
-> sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
-> security.protocol=SASL_PLAINTEXT
-> sasl.mechanism=PLAIN
+sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=PLAIN
 ```
 
 ## consumer
 
 ```bash
 # consume message
-kafka-console-consumer --bootstrap-server <ip:port> --from-beginning --topic <topic> --consumer.config <path_to_jaas> --group <consumer_group> --property print.key=true --property print.value=true
+kafka-console-consumer.sh --bootstrap-server <ip:port> --from-beginning --topic <topic> --consumer.config <path_to_jaas> --group <consumer_group> --property print.key=true --property print.value=true
 
 # consume transaction state message with formatter
- ./bin/kafka-console-consumer.sh --bootstrap-server <ip:port> --from-beginning --topic <topic>  --group <consumer_group> --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter"  --property print.key=true --property print.value=true
+kafka-console-consumer.sh --bootstrap-server <ip:port> --from-beginning --topic <topic>  --group <consumer_group> --formatter "kafka.coordinator.transaction.TransactionLog\$TransactionLogMessageFormatter"  --property print.key=true --property print.value=true
 
 # describe group
-./bin/kafka-consumer-groups.sh --all-groups --describe  --bootstrap-server <ip:port>
+kafka-consumer-groups.sh --all-groups --describe  --bootstrap-server <ip:port>
 
 # reset group offset
-./bin/kafka-consumer-groups.sh  --bootstrap-server <ip:port> --group <consumer_group> --reset-offsets --to-earliest --all-topics --execute
+kafka-consumer-groups.sh  --bootstrap-server <ip:port> --group <consumer_group> --reset-offsets --to-earliest --all-topics --execute
 ```
 
 ## docker-compose.yml
