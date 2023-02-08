@@ -11,14 +11,13 @@ useradd kafka -m
 passwd kafka
 wget https://downloads.apache.org/kafka/2.7.0/kafka_2.12-2.7.0.tgz
 tar -xvzf kafka_2.12-2.7.0.tgz
-cd kafka_2.12-2.7.0.tgz
-# add kafka_2.12-3.1.0 to PATH
+# add kafka_2.12-2.7.0/bin to PATH
 ```
 
 ## SSL
 
 ```bash
-./bin/kafka-topics.sh --bootstrap-server <ip:port> --list --command-config /path/to/config.properties
+kafka-topics.sh --bootstrap-server <ip:port> --list --command-config /path/to/config.properties
 ```
 
 ### config.properties
@@ -43,22 +42,22 @@ KafkaClient {
 
 ```bash
 # create topic
-./bin/kafka-topics.sh --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
+kafka-topics.sh --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
 
 # topic list
-./bin/kafka-topics.sh --bootstrap-server <ip:port> --list
+kafka-topics.sh --bootstrap-server <ip:port> --list
 
 # describe topic
-./bin/kafka-topics.sh --describe --bootstrap-server <ip:port> --topic <topic>
+kafka-topics.sh --describe --bootstrap-server <ip:port> --topic <topic>
 
 # get topic offset in all partitions
 kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
 
 # increase topic partitions
-./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
+kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
  
 # delete topic
-./bin/kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
+kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## consumer
