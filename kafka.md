@@ -12,39 +12,53 @@ passwd kafka
 wget https://downloads.apache.org/kafka/2.7.0/kafka_2.12-2.7.0.tgz
 tar -xvzf kafka_2.12-2.7.0.tgz
 cd kafka_2.12-2.7.0.tgz
-./kafka-topics.sh --describe --zookeeper <ip:port> --topic <topic>
+# add kafka_2.12-3.1.0 to PATH
+```
 
-# add kafka_2.12-3.1.0/bin to PATH
+## SSL
+
+```bash
+./bin/kafka-topics.sh --bootstrap-server <ip:port> --list --command-config /path/to/config.properties
+```
+
+### config.properties
+
+```bash
+java.security.auth.login.config=/path/to/kafka_client_jaas.conf
+ssl.truststore.location=/path/to/truststore.jks
+security.protocol=SSL
+```
+
+### kafka_client_jaas.conf
+
+```
+KafkaClient {
+  org.apache.kafka.common.security.plain.PlainLoginModule required
+  username="<username>"
+  password="<password>";
+};
 ```
 
 ## topic
 
 ```bash
 # create topic
-kafka-topics.sh --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
+./bin/kafka-topics.sh --create --bootstrap-server <ip:port> --replication-factor 3 --partitions 1 --topic <topic>
 
 # topic list
-kafka-topics.sh --bootstrap-server <ip:port> --list
+./bin/kafka-topics.sh --bootstrap-server <ip:port> --list
 
 # describe topic
-kafka-topics.sh --describe --bootstrap-server <ip:port> --topic <topic>
+./bin/kafka-topics.sh --describe --bootstrap-server <ip:port> --topic <topic>
 
 # get topic offset in all partitions
 kafka-run-class.sh kafka.tools.GetOffsetShell --bootstrap-server <ip:port> --topic <topic>
 
 # increase topic partitions
-kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
+./bin/kafka-topics.sh --bootstrap-server <ip:port> --topic <topic> --alter --partitions 10
  
 # delete topic
-kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
-```
-
-## jaas.properties file
-
-```
-sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="<username>" password="<password>";
-security.protocol=SASL_PLAINTEXT
-sasl.mechanism=PLAIN
+./bin/kafka-topics.sh --delete --bootstrap-server <ip:port> --topic <topic>
 ```
 
 ## consumer
