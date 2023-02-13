@@ -146,3 +146,9 @@ mv mysql-shell-8.0.18-linux-glibc2.12-x86-64bit mysql-shell
 # fix blocked because of many connection error
 mysqladmin -u root -p flush-hosts
 ```
+
+## mysqldump
+
+```bash
+mysqldump -u root -p <database> > /path/to/dump/file
+```
