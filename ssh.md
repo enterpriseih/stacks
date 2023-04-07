@@ -65,7 +65,7 @@ ssh-keygen
 
 # 2. login to remote server with password
 
-# 3. copy local pub key to file ~/.ssh/authorized_keys
+# 3. copy local pub key to file /<username>/.ssh/authorized_keys
 
 # 4. update /etc/ssh/sshd_config
 PubkeyAuthentication yes
