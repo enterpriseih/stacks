@@ -7,30 +7,25 @@
 # https://github.com/233boy/v2ray/wiki/V2Ray%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC
 
 # 1. install
-bash <(curl -s -L https://git.io/v2ray-setup.sh)
+bash <(curl -s -L https://git.io/v2ray-setup.sh
 
-# 2.1 use script
-# file at /etc/v2ray/
-v2ray
+# 2. edit /etc/v2ray/config.json
 # change port to non-default
-# change network to tcp
+# change streamSettings.network to tcp, delete kcp
+# change settings.clients.alterId to 64
+vim /etc/v2ray/config.json
 
-# change alterId in /etc/v2ray/config.json to 64
-vi /etc/v2ray/config.json
+# 3. create systemd
+touch /etc/systemd/system/v2ray.service.d
 
-# restart v2ray
+[Service]
+ExecStart=
+ExecStart=/usr/local/bin/v2ray -config /etc/v2ray/config.json
+User=root
 
-# 2.2 use as systemd
-
-# check config
-ls /etc/systemd/system/v2ray.service.d
-cat /etc/systemd/system/v2ray.service.d/10-donot_touch_single_conf.conf
-
-# enable as systemd
+# 4. enable
 sudo systemctl enable v2ray
 sudo systemctl disable v2ray
-
-# start
 sudo systemctl start v2ray
 sudo systemctl stop v2ray
 sudo systemctl restart v2ray
@@ -42,11 +37,11 @@ systemctl status v2ray
 ll /var/log/v2ray/
 tail /var/log/v2ray/error.log
 
-# 3. stop firewall
+# 5. stop firewall
 systemctl stop firewalld
 systemctl disable firewalld
 
-# 4. update ECS firewall rule to allow port
+# 6. update ECS firewall rule to allow port
 ```
 
 ## client
