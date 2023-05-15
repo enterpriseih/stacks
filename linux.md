@@ -92,6 +92,11 @@ cp -avr <source> <target>
 # move folder or multiple folders
 mv <source>.* <target>
 
+# remove all except one folder
+mv exceptionFolder ..
+rm -rf *
+mv ../exceptionFolder .
+
 # rename files
 for f in <file_regex>; do mv -v "$f" "${f/<old_string>/<new_string>}";done;
 
