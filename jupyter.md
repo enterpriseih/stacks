@@ -15,6 +15,13 @@ jupyter notebook
 # install extension
 pip install jupyter_contrib_nbextensions
 jupyter contrib nbextension install --user
+
+# conda env not show in notebook
+# in base env
+conda install nb_conda_kernels
+# in target env
+conda install ipykernel
+# restart notebook, target env will show
 ```
 
 ## lab
