@@ -1,4 +1,4 @@
-# centos
+# linux
 
 ## basic
 
@@ -382,4 +382,14 @@ ls /usr/share/zoneinfo/Asia
 
 # set timezone
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+```
+
+## wget
+
+```bash
+# download in the background continously
+wget -c -b [url]
+
+# check download
+tail wget-log
 ```
