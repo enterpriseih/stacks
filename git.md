@@ -14,7 +14,7 @@ sudo yum install git
 git push -f <remote> <branch_name>
 
 # delete remote branch
-git push -d origin <branch_name>
+git push origin --delete <branch_name>
 
 # delete local branch
 git branch -d branch_name
