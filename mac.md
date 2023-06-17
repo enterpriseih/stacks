@@ -28,11 +28,11 @@ brew install mupdf
 ./caj2pdf show <source.pdf>
 ./caj2pdf convert <source.pdf> -o <target.pdf>
 
-# zip with maxsize
-zip -r -s 1g 20190516_bak.zip ./
+# zip 
+zip -9 -r target.zip ./ -x '*/.git/*' -x '*/node_modules/*' -x '*/dist/*' -x '*__pycache__*' -x '*/target/streams/*' -x '*.DS_Store'  -x '*/target/scala-*'
 
-# maximun compression
-zip -9 ...
+# with maxsize
+zip -s 1g 
 
 # unzip error: Unzipping large file: bad zipfile offset (local header sig)
 zip -FF original.zip --out fixed.zip
