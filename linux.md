@@ -49,6 +49,9 @@ find / -name <file_name_prefix>*.jar
 # find by pattern and print in one line separated with space
 find $PWD/Astro* | tr '\n' ' '
 
+# find large files
+find . -type f -size +100M
+
 # process
 ps aux --sort=-pcpu | head -n 10
 # kill process
