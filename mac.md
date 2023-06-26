@@ -132,6 +132,8 @@ do
     cd $name
     cd ..
     pwd
+    git fetch origin
+    git fetch --all
     git pull --all && git submodule update
     printf "\n"
 done
